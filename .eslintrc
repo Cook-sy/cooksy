@@ -4,6 +4,9 @@
     "node": true
   },
   "rules": {
+    "semi": ["error", "always"],
+    "func-names": ["error", "never"],
+    "space-before-function-paren": ["error", "never"]
   },
-  "extends": ["eslint:recommended"]
+  "extends": ["airbnb-base/legacy"]
 }
