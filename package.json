@@ -5,12 +5,20 @@
   "license": "ISC",
   "description": "Eat food from real home cooks",
   "scripts": {
+    "lint": "eslint --cache --ignore-pattern .gitignore server*.js src/**/*.js",
     "start": "node server.js",
     "start:watch": "nodemon server.js"
+  },
+  "pre-commit": {
+    "silent": true,
+    "run": ["lint"]
   },
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "pre-commit": "^1.2.2"
+  }
 }
