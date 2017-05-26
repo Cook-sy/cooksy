@@ -5,9 +5,11 @@
   "license": "ISC",
   "description": "Eat food from real home cooks",
   "scripts": {
-    "lint": "eslint --cache --ignore-pattern .gitignore server.js src/*.js src/**/*.js",
-    "start": "node server.js",
-    "start:watch": "nodemon server.js"
+    "start": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "client": "cd client && npm start",
+    "server": "node server.js",
+    "server:dev": "nodemon server.js",
+    "lint": "eslint --cache --ignore-pattern .gitignore server.js src/*.js src/**/*.js"
   },
   "pre-commit": {
     "silent": true,
@@ -21,6 +23,7 @@
     "morgan": "^1.8.2"
   },
   "devDependencies": {
+    "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
