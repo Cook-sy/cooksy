@@ -1,0 +1,16 @@
+{
+  "name": "cooksy",
+  "version": "1.0.0",
+  "author": "",
+  "license": "ISC",
+  "description": "Eat food from real home cooks",
+  "scripts": {
+    "start": "node server.js",
+    "start:watch": "nodemon server.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3"
+  },
+  "devDependencies": {}
+}
