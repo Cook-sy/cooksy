@@ -9,7 +9,7 @@
     "client": "cd client && npm start",
     "server": "node server.js",
     "server:dev": "nodemon server.js",
-    "lint": "eslint --cache --ignore-pattern .gitignore server.js src/*.js src/**/*.js"
+    "lint": "eslint ."
   },
   "pre-commit": {
     "silent": true,
