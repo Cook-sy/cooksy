@@ -1,4 +1,4 @@
-var app = require('./server-config');
+var app = require('./src/server-config');
 
 var port = process.env.PORT || 3001;
 

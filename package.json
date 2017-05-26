@@ -5,7 +5,7 @@
   "license": "ISC",
   "description": "Eat food from real home cooks",
   "scripts": {
-    "lint": "eslint --cache --ignore-pattern .gitignore server*.js src/**/*.js",
+    "lint": "eslint --cache --ignore-pattern .gitignore server.js src/**/*.js",
     "start": "node server.js",
     "start:watch": "nodemon server.js"
   },

@@ -1,7 +1,7 @@
 var express = require('express');
 var morgan = require('morgan');
 
-var indexRoutes = require('./src/routes/index');
+var indexRoutes = require('./routes/index');
 
 var app = express();
 
