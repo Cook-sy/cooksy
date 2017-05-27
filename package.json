@@ -9,13 +9,8 @@
     "client": "cd client && npm start",
     "server": "node server.js",
     "server:dev": "nodemon server.js",
-    "lint": "eslint ."
-  },
-  "pre-commit": {
-    "silent": true,
-    "run": [
-      "lint"
-    ]
+    "lint": "eslint .",
+    "precommit": "npm run lint"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -27,6 +22,6 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
-    "pre-commit": "^1.2.2"
+    "husky": "^0.13.3"
   }
 }
