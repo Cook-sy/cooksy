@@ -14,3 +14,10 @@ To develop on the frontend, navigate to the `client` directory in a separate ter
 - `npm test`
 
 The tests will be run in an interactive/watch mode.
+
+## Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
+
+### Roadmap
+
+View the project roadmap [here](https://github.com/Cook-sy/cooksy/issues)
