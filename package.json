@@ -16,6 +16,7 @@
     "server": "node server.js",
     "server:dev": "nodemon server.js",
     "lint": "eslint .",
+    "test:client": "cd client && npm test",
     "precommit": "npm run lint && lint-staged"
   },
   "dependencies": {
