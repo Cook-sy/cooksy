@@ -17,6 +17,8 @@
     "server:dev": "nodemon server.js",
     "lint": "eslint .",
     "test:client": "cd client && npm test",
+    "test:server": "nyc mocha test/*",
+    "test:html": "nyc --reporter=html mocha test/*",
     "precommit": "npm run lint && lint-staged"
   },
   "dependencies": {
@@ -25,12 +27,18 @@
     "morgan": "^1.8.2"
   },
   "devDependencies": {
+    "chai": "^4.0.0",
     "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-plugin-import": "^2.3.0",
     "husky": "^0.13.3",
     "lint-staged": "^3.5.0",
-    "prettier": "^1.3.1"
+    "mocha": "^3.4.2",
+    "nyc": "^10.3.2",
+    "prettier": "^1.3.1",
+    "sinon": "^2.3.2",
+    "sinon-test": "^1.0.2",
+    "supertest": "^3.0.0"
   }
 }
