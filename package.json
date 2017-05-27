@@ -17,6 +17,7 @@
     "server:dev": "nodemon server.js",
     "lint": "eslint .",
     "test:client": "cd client && npm test",
+    "test:server": "mocha test/*",
     "precommit": "npm run lint && lint-staged"
   },
   "dependencies": {
