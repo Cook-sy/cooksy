@@ -1,0 +1,11 @@
+{
+  "env": {
+    "browser": false,
+    "node": true
+  },
+  "rules": {
+    "func-names": ["error", "never"],
+    "space-before-function-paren": ["error", "never"]
+  },
+  "extends": ["airbnb-base/legacy"]
+}
