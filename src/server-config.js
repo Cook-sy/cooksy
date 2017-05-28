@@ -1,3 +1,4 @@
+var dotenv = require('dotenv');
 var path = require('path');
 var express = require('express');
 var morgan = require('morgan');
@@ -5,6 +6,8 @@ var morgan = require('morgan');
 var indexRoutes = require('./routes/index');
 
 var app = express();
+
+dotenv.load();
 
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('common'));

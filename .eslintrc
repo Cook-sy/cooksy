@@ -5,6 +5,7 @@
   },
   "rules": {
     "func-names": ["error", "never"],
+    "no-unused-vars": ["error", { "args": "none" }],
     "space-before-function-paren": ["error", "never"]
   },
   "extends": ["airbnb-base/legacy"]
