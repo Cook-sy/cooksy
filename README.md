@@ -1,21 +1,14 @@
 # Cooksy
 
 ## Getting started
+
+### Configuring environment variables
+Create a `.env` file in the root directory and follow the example `.env.example`.
+
+### Installing dependencies
 To get started with development, clone the repo and run the following commands:
 - `cd cooksy`
 - `npm install`
-
-### Configuring Environment Variables
-Create a `.env` file in the root directory and follow the example `.env.example`.
-
-### Setting up database
-Install PostgreSQL, and create a new user and database. Then run the command
-```
-$ sequelize db:migrate --url postgres://username:password@localhost:5432/dbname
-```
-where `username`, `password`, and `dbname` are the user information and database name that was created earlier. If `sequelize-cli` is not installed globally, then replace `sequelize` with `node_modules/.bin/sequelize`.
-
-Finally, we can run
 - `npm start`
 
 The `npm start` command will start up two servers. It will start up the backend server which is found at `http://localhost:3001`. The second server is for the frontend which is found at `http://localhost:3000`.
