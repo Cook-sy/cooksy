@@ -5,8 +5,10 @@
   },
   "rules": {
     "func-names": ["error", "never"],
+    "no-plusplus": "off",
     "no-unused-vars": ["error", { "args": "none" }],
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    "vars-on-top": "off"
   },
   "extends": ["airbnb-base/legacy"]
 }
