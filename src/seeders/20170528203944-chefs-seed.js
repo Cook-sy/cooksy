@@ -1,12 +1,13 @@
 'use strict';
 
 var faker = require('faker');
-faker.seed(38448);
+faker.seed(88457);
 
 var chefs = [];
 
 for (var i = 0; i < 3; i++) {
   chefs.push({
+    id: i,
     username: faker.internet.userName(),
     password: faker.internet.password(),
     image: faker.image.avatar(),

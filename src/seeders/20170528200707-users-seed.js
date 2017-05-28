@@ -7,6 +7,7 @@ var users = [];
 
 for (var i = 0; i < 5; i++) {
   users.push({
+    id: i,
     username: faker.internet.userName(),
     password: faker.internet.password(),
     zipcode: faker.address.zipCode(),
