@@ -19,6 +19,13 @@ To develop on the frontend, navigate to the `client` directory in a separate ter
 
 The tests will be run in an interactive/watch mode.
 
+### Seeding database
+If you want to seed the database, run the command
+```
+$ sequelize db:seed:all
+```
+from the root directory. Replace `sequelize` with `node_modules/.bin/sequelize` if `sequelize-cli` is not installed globally.
+
 ### Tests on the server side
 
 The provided tests utilize the Mocha, Chai, supertest and Sinon testing libraries, and may be run with the `npm run test:server` command from within the `cooksy` directory. This command will also generate and display a coverage report, provided by the Istanbul/nyc utility.
