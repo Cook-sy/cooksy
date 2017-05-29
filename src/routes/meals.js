@@ -1,9 +1,21 @@
 var express = require('express');
 var router = express.Router();
+var db = require('../models');
 
-// root route
+// /api/meals
+// Get all non-expired meals
 router.get('/', function(req, res) {
-  res.send('Hello from /api/meals' + req.path);
+  db.Meal
+    .findAll({
+      where: {
+        deliveryDateTime: {
+          $gt: new Date()
+        }
+      }
+    })
+    .then(function(meals) {
+      res.json(meals);
+    });
 });
 
 module.exports = router;
