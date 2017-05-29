@@ -2,6 +2,7 @@
 var dotenv = require('dotenv').load();
 var path = require('path');
 var express = require('express');
+var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var db = require('./models');
 
@@ -19,6 +20,9 @@ if (process.env.NODE_ENV === 'production') {
 } else {
   app.use(morgan('dev'));
 }
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use('/', indexRoutes);
 app.use('/api/meals', mealsRoutes);
