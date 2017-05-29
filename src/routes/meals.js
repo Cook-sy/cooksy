@@ -18,6 +18,8 @@ router.get('/', function(req, res) {
     });
 });
 
+// /api/meals/:id
+// Get a specific meal by id
 router.get('/:id', function(req, res) {
   db.Meal
     .findById(req.params.id)
