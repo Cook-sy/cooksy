@@ -6,6 +6,7 @@
   "rules": {
     "func-names": ["error", "never"],
     "no-console": "off",
+    "no-param-reassign": "off",
     "no-plusplus": "off",
     "no-unused-vars": ["error", { "args": "none" }],
     "space-before-function-paren": ["error", "never"],

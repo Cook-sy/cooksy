@@ -1,5 +1,7 @@
 'use strict';
 
+var bcrypt = require('bcryptjs');
+
 module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define(
     'User',
@@ -38,8 +40,26 @@ module.exports = function(sequelize, DataTypes) {
             as: 'userRequests'
           });
         }
+      },
+
+      instanceMethods: {
+        comparePassword: function(password) {
+          return bcrypt.compare(password, this.password);
+        }
       }
     }
   );
+
+  User.beforeCreate(function(user, options) {
+    return bcrypt
+      .genSalt(10)
+      .then(function(salt) {
+        return bcrypt.hash(user.password, salt);
+      })
+      .then(function(hashedPassword) {
+        user.password = hashedPassword;
+      });
+  });
+
   return User;
 };
