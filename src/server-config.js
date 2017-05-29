@@ -4,11 +4,17 @@ var path = require('path');
 var express = require('express');
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
+var passport = require('passport');
+// database
 var db = require('./models');
+
+// passport strategies
+var localSignupUserStrategy = require('./passport/local-signup-user');
 
 // routes
 var indexRoutes = require('./routes/index');
 var mealsRoutes = require('./routes/meals');
+var usersRoutes = require('./routes/usersRoutes');
 
 var app = express();
 
@@ -24,7 +30,12 @@ if (process.env.NODE_ENV === 'production') {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+// initialize passport strategies
+app.use(passport.initialize());
+passport.use('local-signup-user', localSignupUserStrategy);
+
 app.use('/', indexRoutes);
 app.use('/api/meals', mealsRoutes);
+app.use('/api/users', usersRoutes);
 
 module.exports = app;
