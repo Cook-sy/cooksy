@@ -60,3 +60,8 @@ typings/
 # test coverage files
 .nyc_output/*
 coverage/*
+
+# floobits
+.floo
+.floobit
+.flooignore

@@ -5,7 +5,9 @@ var express = require('express');
 var morgan = require('morgan');
 var db = require('./models');
 
+// routes
 var indexRoutes = require('./routes/index');
+var mealsRoutes = require('./routes/meals');
 
 var app = express();
 
@@ -19,5 +21,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use('/', indexRoutes);
+app.use('/api/meals', mealsRoutes);
 
 module.exports = app;
