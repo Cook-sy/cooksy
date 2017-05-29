@@ -18,4 +18,28 @@ router.get('/', function(req, res) {
     });
 });
 
+router.get('/:id', function(req, res) {
+  db.Meal
+    .findById(req.params.id)
+    .then(function(meal) {
+      if (!meal) {
+        return res.status(404).json({
+          success: false,
+          message: 'Meal not found'
+        });
+      }
+      return res.json({
+        success: true,
+        message: 'Meal found',
+        meal: meal
+      });
+    })
+    .catch(function(error) {
+      return res.status(404).json({
+        success: false,
+        message: 'Meal not found'
+      });
+    });
+});
+
 module.exports = router;
