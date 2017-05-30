@@ -1,7 +1,10 @@
 import { combineReducers } from 'redux';
+import MealsReducer from './mealsReducer';
+import ActiveMealReducer from './activeMealReducer';
 
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  meals: MealsReducer,
+  activeMeal: ActiveMealReducer
 });
 
 export default rootReducer;

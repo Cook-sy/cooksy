@@ -57,6 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+
 # test coverage files
 .nyc_output/*
 coverage/*
@@ -65,3 +66,6 @@ coverage/*
 .floo
 .floobit
 .flooignore
+
+#.DS_Store
+.DS_Store
