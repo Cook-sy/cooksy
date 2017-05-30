@@ -1,5 +1,7 @@
 'use strict';
 
+var bcrypt = require('bcryptjs');
+
 module.exports = function(sequelize, DataTypes) {
   var Chef = sequelize.define(
     'Chef',
@@ -51,8 +53,26 @@ module.exports = function(sequelize, DataTypes) {
             as: 'chefMeals'
           });
         }
+      },
+
+      instanceMethods: {
+        comparePassword: function(password) {
+          return bcrypt.compare(password, this.password);
+        }
       }
     }
   );
+
+  Chef.beforeCreate(function(chef, options) {
+    return bcrypt
+      .genSalt(10)
+      .then(function(salt) {
+        return bcrypt.hash(chef.password, salt);
+      })
+      .then(function(hashedPassword) {
+        chef.password = hashedPassword;
+      });
+  });
+
   return Chef;
 };
