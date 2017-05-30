@@ -10,11 +10,11 @@ import { Provider } from 'react-redux';
 import { NewMealForm } from './NewMealForm';
 
 const store = createStore(() => ({}));
-const Decorated = reduxForm({ form: 'testForm' })(NewMealForm);
+const Decorated = reduxForm({ form: 'NewMealForm' })(NewMealForm);
 
 describe('NewMealForm', () => {
   it('renders without crashing', () => {
-    shallow(<NewMealForm />);
+    shallow(<Decorated />);
   });
 
   it('renders correctly', () => {
