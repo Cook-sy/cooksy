@@ -41,7 +41,9 @@ module.exports = new Strategy(
             sub: user.id
           };
 
-          var token = jwt.sign(payload, process.env.JWT_SECRET);
+          var token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: '7d'
+          });
 
           return done(null, token);
         });
