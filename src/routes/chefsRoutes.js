@@ -30,7 +30,7 @@ router.post('/login', function(req, res, next) {
 // /api/chefs/signup
 // Signup for chefs
 router.post('/signup', function(req, res, next) {
-  return passport.authenticate('local-signup-chef', function(err) {
+  return passport.authenticate('local-signup-chef', function(err, token) {
     if (err) {
       return res.status(400).json({
         success: false,
@@ -39,7 +39,8 @@ router.post('/signup', function(req, res, next) {
     }
 
     return res.status(200).json({
-      success: true
+      success: true,
+      token: token
     });
   })(req, res, next);
 });

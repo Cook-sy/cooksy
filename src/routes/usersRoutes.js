@@ -30,7 +30,7 @@ router.post('/login', function(req, res, next) {
 // /api/users/signup
 // Signup for users
 router.post('/signup', function(req, res, next) {
-  return passport.authenticate('local-signup-user', function(err) {
+  return passport.authenticate('local-signup-user', function(err, token) {
     if (err) {
       return res.status(400).json({
         success: false,
@@ -39,7 +39,8 @@ router.post('/signup', function(req, res, next) {
     }
 
     return res.status(200).json({
-      success: true
+      success: true,
+      token: token
     });
   })(req, res, next);
 });
