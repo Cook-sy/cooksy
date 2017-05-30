@@ -12,6 +12,7 @@ var db = require('./models');
 var localSignupUserStrategy = require('./passport/local-signup-user');
 var localLoginUserStrategy = require('./passport/local-login-user');
 var localSignupChefStrategy = require('./passport/local-signup-chef');
+var localLoginChefStrategy = require('./passport/local-login-chef');
 
 // routes
 var indexRoutes = require('./routes/index');
@@ -38,6 +39,7 @@ app.use(passport.initialize());
 passport.use('local-signup-user', localSignupUserStrategy);
 passport.use('local-login-user', localLoginUserStrategy);
 passport.use('local-signup-chef', localSignupChefStrategy);
+passport.use('local-login-chef', localLoginChefStrategy);
 
 app.use('/', indexRoutes);
 app.use('/api/meals', mealsRoutes);
