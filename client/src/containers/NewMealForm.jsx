@@ -34,7 +34,7 @@ const renderTextAreaField = ({
   label,
   meta: { touched, error },
   ...custom
-}) => <TextField hintText={label} floatingLabelText={label} {...input} />;
+}) => <TextField hintText={label} floatingLabelText={label} errorText={touched && error} {...input} />;
 
 const renderDateField = ({
   input,
@@ -47,6 +47,7 @@ const renderDateField = ({
     <DatePicker
       {...input}
       {...custom}
+      errorText={touched && error}
       value={input.value !== "" ? new Date(input.value) : null}
       onChange={(event, value) => input.onChange(value)}
     />
@@ -64,13 +65,14 @@ const renderTimeField = ({
     <TimePicker
       {...input}
       {...custom}
+      errorText={touched && error}
       value={input.value !== "" ? new Date(input.value) : null}
       onChange={(event, value) => input.onChange(value)}
     />
   );
 };
 
-class NewMealForm extends Component {
+export class NewMealForm extends Component {
   submitForm(values) {
     createMeal(values, this.props.history.push("/"));
   }
@@ -103,13 +105,13 @@ class NewMealForm extends Component {
           <div>
             <Field
               hintText="Delivery Date"
-              name="delivery-date"
+              name="deliveryDate"
               component={renderDateField}
               autoOk={true}
             />
             <Field
               hintText="Delivery Time"
-              name="delivery-time"
+              name="deliveryTime"
               component={renderTimeField}
               autoOk={true}
             />
@@ -167,6 +169,15 @@ class NewMealForm extends Component {
             />
           </div>
           <div>
+            <Field
+              name="pickupInfo"
+              component={renderTextAreaField}
+              label="Pickup Info"
+              multiLine={true}
+              rows={2}
+            />
+          </div>
+          <div>
             <Field name="address" component={renderTextField} label="Address" />
           </div>
           <div>
@@ -187,8 +198,33 @@ class NewMealForm extends Component {
   }
 }
 
-function validate() {
-  // TODO: I will add some validations in here after we agree on them
+export const validate = values => {
+  const errors = {}
+  if (!values.mealName) {
+    errors.mealName = 'Required';
+  } 
+
+  if (!values.deliveryDate) {
+    errors.deliveryDate = 'Required';
+  } 
+
+  if (!values.deliveryTime) {
+    errors.deliveryTime = 'Required';
+  }
+
+  if (!values.pickupInfo) {
+    errors.pickupInfo = 'Required';
+  }
+
+  if (!values.price) {
+    errors.price = 'Required';
+  }
+
+  if (!values.servings) {
+    errors.servings = 'Required';
+  }
+
+  return errors
 }
 
 export default reduxForm({
