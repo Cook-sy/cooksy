@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import TimePicker from "material-ui/TimePicker";
+import uuid from "uuid";
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from "react-tap-event-plugin";
@@ -26,6 +27,7 @@ const renderTextField = ({
     errorText={touched && error}
     {...input}
     {...custom}
+    id={uuid.v4()}
   />
 );
 
@@ -34,7 +36,13 @@ const renderTextAreaField = ({
   label,
   meta: { touched, error },
   ...custom
-}) => <TextField hintText={label} floatingLabelText={label} errorText={touched && error} {...input} />;
+}) => <TextField
+    hintText={label} 
+    id={uuid.v4()} 
+    floatingLabelText={label} 
+    errorText={touched && error} 
+    {...input} 
+  />;
 
 const renderDateField = ({
   input,
@@ -50,6 +58,7 @@ const renderDateField = ({
       errorText={touched && error}
       value={input.value !== "" ? new Date(input.value) : null}
       onChange={(event, value) => input.onChange(value)}
+      id={uuid.v4()}
     />
   );
 };
@@ -68,6 +77,7 @@ const renderTimeField = ({
       errorText={touched && error}
       value={input.value !== "" ? new Date(input.value) : null}
       onChange={(event, value) => input.onChange(value)}
+      id={uuid.v4()}
     />
   );
 };
