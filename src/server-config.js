@@ -17,6 +17,7 @@ var localSignupChefStrategy = require('./passport/local-signup-chef');
 var indexRoutes = require('./routes/index');
 var mealsRoutes = require('./routes/meals');
 var usersRoutes = require('./routes/usersRoutes');
+var chefsRoutes = require('./routes/chefsRoutes');
 
 var app = express();
 
@@ -41,5 +42,6 @@ passport.use('local-signup-chef', localSignupChefStrategy);
 app.use('/', indexRoutes);
 app.use('/api/meals', mealsRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/chefs', chefsRoutes);
 
 module.exports = app;
