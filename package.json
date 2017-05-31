@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "chai": "^4.0.0",
+    "chai-json-schema": "^1.4.0",
     "concurrently": "^3.4.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
