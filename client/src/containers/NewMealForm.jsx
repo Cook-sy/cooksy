@@ -1,11 +1,16 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
-import RaisedButton from "material-ui/RaisedButton";
+import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import { createMeal } from "../actions";
-import { renderTextAreaField, renderTimeField, renderTextField, renderDateField} from '../utils/FormHelper';
-import "./NewMealForm.css";
+import { createMeal } from '../actions';
+import {
+  renderTextAreaField,
+  renderTimeField,
+  renderTextField,
+  renderDateField
+} from '../utils/FormHelper';
+import './NewMealForm.css';
 
 export class NewMealForm extends Component {
   submitForm(values) {
