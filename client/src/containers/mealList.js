@@ -16,6 +16,12 @@ class MealList extends Component {
           <Link to={`/meals/${meal.id}`}>
             {meal.name}
           </Link>
+          <div>
+            <img src={meal.images} width="200" height="200" />
+          </div>
+          <div>
+            {meal.description}
+          </div>
         </li>
       );
     });

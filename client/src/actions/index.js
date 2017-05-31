@@ -23,7 +23,7 @@ export function fetchMeals() {
 }
 
 export function fetchMealDetail(id) {
-  const request = axios.get('/api/meals/:id');
+  const request = axios.get(`/api/meals/${id}`);
 
   return {
     type: FETCH_MEALDETAIL,
