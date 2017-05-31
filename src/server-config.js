@@ -27,7 +27,7 @@ db.sequelize.sync();
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('common'));
   app.use(express.static(path.join(__dirname, '../client/build')));
-} else {
+} else if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 

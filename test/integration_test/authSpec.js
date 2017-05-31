@@ -21,6 +21,18 @@ describe('User account creation', function() {
       });
   });
 
+  after(function(done) {
+    db.User
+      .destroy({
+        where: {
+          username: 'oicki'
+        }
+      })
+      .then(function() {
+        done();
+      });
+  });
+
   it('should create a new user on signup', function(done) {
     request(app)
       .post('/api/users/signup')
@@ -82,6 +94,105 @@ describe('User account creation', function() {
         var decoded = jwt.decode(res.body.token);
         expect(decoded.user).to.equal('oicki');
         expect(decoded.zipcode).to.equal('00000');
+      })
+      .end(done);
+  });
+});
+
+describe('User account login', function() {
+  before(function(done) {
+    db.User
+      .create({
+        username: 'oicki',
+        password: 'hunter2',
+        zipcode: '00000'
+      })
+      .then(function() {
+        return db.User.destroy({
+          where: { username: 'bonopono' }
+        });
+      })
+      .then(function() {
+        done();
+      });
+  });
+
+  after(function(done) {
+    db.User
+      .destroy({
+        where: {
+          username: 'oicki'
+        }
+      })
+      .then(function() {
+        done();
+      });
+  });
+
+  it('should return an auth token on successful login', function(done) {
+    request(app)
+      .post('/api/users/login')
+      .send({
+        username: 'oicki',
+        password: 'hunter2'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .expect(function(res) {
+        expect(res.body).to.be.jsonSchema({
+          type: 'object',
+          required: ['success', 'token'],
+          properties: {
+            success: true,
+            token: {
+              type: 'string',
+              pattern: '(.*?).(.*?).(.*?)'
+            }
+          }
+        });
+      })
+      .end(done);
+  });
+
+  it('should return a payload with username and zipcode', function(done) {
+    request(app)
+      .post('/api/users/login')
+      .send({
+        username: 'oicki',
+        password: 'hunter2'
+      })
+      .expect(function(res) {
+        var decoded = jwt.decode(res.body.token);
+        expect(decoded.user).to.equal('oicki');
+        expect(decoded.zipcode).to.equal('00000');
+      })
+      .end(done);
+  });
+
+  it('should not login a user that does not exist', function(done) {
+    request(app)
+      .post('/api/users/login')
+      .send({
+        username: 'bonopono',
+        password: 'password'
+      })
+      .expect(400)
+      .expect(function(res) {
+        expect(res.body.token).to.be.undefined;
+      })
+      .end(done);
+  });
+
+  it('should not login user that input an incorrect password', function(done) {
+    request(app)
+      .post('/api/users/login')
+      .send({
+        username: 'oicki',
+        password: 'wrongpassword'
+      })
+      .expect(400)
+      .expect(function(res) {
+        expect(res.body.token).to.be.undefined;
       })
       .end(done);
   });
