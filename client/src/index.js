@@ -15,7 +15,6 @@ import NewMealForm from './containers/NewMealForm';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
@@ -24,10 +23,10 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <Switch>
-            <Route exact path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/meals" component={MealList} />
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/" component={App} />
+            <Route exact path="/post-new-meal" component={NewMealForm} />
           </Switch>
         </div>
       </BrowserRouter>
