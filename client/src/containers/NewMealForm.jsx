@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
-import TextField from "material-ui/TextField";
-import DatePicker from "material-ui/DatePicker";
-import TimePicker from "material-ui/TimePicker";
-import uuid from "uuid";
+import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
+import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
+import uuid from 'uuid';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
-import injectTapEventPlugin from "react-tap-event-plugin";
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
-import { createMeal } from "../actions";
-import RaisedButton from "material-ui/RaisedButton";
-import "./NewMealForm.css";
+import { createMeal } from '../actions';
+import RaisedButton from 'material-ui/RaisedButton';
+import './NewMealForm.css';
 
 injectTapEventPlugin();
 
