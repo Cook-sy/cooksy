@@ -4,11 +4,17 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "axios": "^0.16.1",
+    "material-ui": "^0.18.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
-    "redux": "^3.6.0"
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "redux-form": "^6.7.0",
+    "redux-form-material-ui": "^4.2.0",
+    "redux-promise": "^0.5.3"
   },
   "devDependencies": {
     "enzyme": "^2.8.2",
