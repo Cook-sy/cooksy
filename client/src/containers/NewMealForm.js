@@ -14,17 +14,14 @@ import './NewMealForm.css';
 
 export class NewMealForm extends Component {
   submitForm(values) {
-    createMeal(values, this.props.history.push("/"));
+    createMeal(values, this.props.history.push('/'));
   }
 
   render() {
     const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div>
-        <form
-          className="new-meal-form"
-          onSubmit={handleSubmit(this.submitForm.bind(this))}
-        >
+        <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
           <h1>Submit a New Meal</h1>
           <div>
             <Field
@@ -139,14 +136,14 @@ export class NewMealForm extends Component {
 }
 
 export const validate = values => {
-  const errors = {}
+  const errors = {};
   if (!values.mealName) {
     errors.mealName = 'Required';
-  } 
+  }
 
   if (!values.deliveryDate) {
     errors.deliveryDate = 'Required';
-  } 
+  }
 
   if (!values.deliveryTime) {
     errors.deliveryTime = 'Required';
@@ -164,10 +161,10 @@ export const validate = values => {
     errors.servings = 'Required';
   }
 
-  return errors
-}
+  return errors;
+};
 
 export default reduxForm({
   validate,
-  form: "NewMealForm"
+  form: 'NewMealForm'
 })(connect(null, { createMeal })(NewMealForm));

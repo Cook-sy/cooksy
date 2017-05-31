@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 
-import { createMeal } from '../actions';
+import { signup } from '../actions';
 import {
   renderTextAreaField,
   renderTimeField,
@@ -15,7 +15,7 @@ import './NewMealForm.css';
 
 export class SignUpForm extends Component {
   submitForm(values) {
-    createMeal(values, this.props.history.push('/'));
+    signup(values, this.props.history.push('/'));
   }
 
   render() {
@@ -105,4 +105,4 @@ export const validate = values => {
 export default reduxForm({
   validate,
   form: 'SignUpForm'
-})(connect(null, { createMeal })(SignUpForm));
+})(connect(null, { signup })(SignUpForm));
