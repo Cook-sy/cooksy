@@ -2,6 +2,38 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
+var validateUserLogin = function(payload) {
+  var errors = {};
+  var isFormValid = true;
+
+  var username = payload.username;
+  var password = payload.password;
+
+  if (
+    !payload ||
+    typeof username !== 'string' ||
+    username.trim().length === 0
+  ) {
+    isFormValid = false;
+    errors.username = 'Please enter a username';
+  }
+
+  if (
+    !payload ||
+    typeof password !== 'string' ||
+    password.trim().length === 0
+  ) {
+    isFormValid = false;
+    errors.password = 'Please enter a password';
+  }
+
+  return {
+    success: isFormValid,
+    message: !isFormValid ? 'Check the form for errors' : '',
+    errors: errors
+  };
+};
+
 var validateUserSignup = function(payload) {
   var errors = {};
   var isFormValid = true;
@@ -43,6 +75,15 @@ var validateUserSignup = function(payload) {
 // /api/users/login
 // Login for users
 router.post('/login', function(req, res, next) {
+  var validation = validateUserLogin(req.body);
+  if (!validation.success) {
+    return res.status(400).json({
+      success: false,
+      message: validation.message,
+      errors: validation.errors
+    });
+  }
+
   return passport.authenticate('local-login-user', function(err, token) {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
