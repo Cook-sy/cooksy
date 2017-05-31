@@ -16,17 +16,19 @@ import './NewMealForm.css';
 
 export class SignUpForm extends Component {
   submitForm(values) {
-	createMeal(values, this.props.history.push("/"));
+		createMeal(values, this.props.history.push("/"));
   }
 
   render() {
 		const { handleSubmit, pristine, submitting } = this.props;
 
 		return (
-		  <form>
+		  <form 
+		  	onSubmit={handleSubmit(this.submitForm.bind(this))} 
+		  >
 		  	<h1>Signup Form</h1>
         <div>
-          <label><Field name="account" component="input" type="radio" value="user" checked/> User</label>
+          <label><Field name="account" component="input" type="radio" value="user"/> User</label>
           <label><Field name="account" component="input" type="radio" value="chef"/> Chief</label>
         </div>
 				<div>
@@ -56,10 +58,17 @@ export class SignUpForm extends Component {
 			  		component={renderTextField}
 			    />
 				</div>
+					<div>
+					  <Field
+							name="zipcode"
+							label="Zipcode"
+							component={renderTextField}
+					  />
+					</div>
 				<div>
 					<Field
 						name="address"
-						label="address"
+						label="Address"
 						component={renderTextAreaField}
 						multiLine={true}
 						rows={2}
@@ -75,9 +84,35 @@ export class SignUpForm extends Component {
   }  
 }
 
-function validate() {
+export const validate = values => {
+  const errors = {}
+  if (!values.username) {
+    errors.username = 'Required';
+  } 
 
+  if (!values.password) {
+    errors.password = 'Required';
+  } 
+
+  if (!values.zipcode) {
+    errors.zipcode = 'Required';
+  }
+
+  if (!values.address && values.account === 'chef') {
+    errors.address = 'Required';
+  }
+
+  if (!values.city && values.account === 'chef') {
+    errors.city = 'Required';
+  }
+
+  if (!values.state && values.account === 'chef') {
+    errors.state = 'Required';
+  }
+
+  return errors;
 }
+
 export default reduxForm({
   validate,
   form: "SignUpForm"
