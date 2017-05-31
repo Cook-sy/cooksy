@@ -2,6 +2,38 @@ var express = require('express');
 var passport = require('passport');
 var router = express.Router();
 
+var validateChefLogin = function(payload) {
+  var errors = {};
+  var isFormValid = true;
+
+  var username = payload.username;
+  var password = payload.password;
+
+  if (
+    !payload ||
+    typeof username !== 'string' ||
+    username.trim().length === 0
+  ) {
+    isFormValid = false;
+    errors.username = 'Please enter a username';
+  }
+
+  if (
+    !payload ||
+    typeof password !== 'string' ||
+    password.trim().length === 0
+  ) {
+    isFormValid = false;
+    errors.password = 'Please enter a password';
+  }
+
+  return {
+    success: isFormValid,
+    message: !isFormValid ? 'Check the form for errors' : '',
+    errors: errors
+  };
+};
+
 var validateChefSignup = function(payload) {
   var errors = {};
   var isFormValid = true;
@@ -61,6 +93,15 @@ var validateChefSignup = function(payload) {
 // /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {
+  var validation = validateChefLogin(req.body);
+  if (!validation.success) {
+    return res.status(400).json({
+      success: false,
+      message: validation.message,
+      errors: validation.errors
+    });
+  }
+
   return passport.authenticate('local-login-chef', function(err, token) {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
