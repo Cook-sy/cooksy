@@ -38,10 +38,15 @@ module.exports = new Strategy(
           }
 
           var payload = {
-            sub: user.id
+            sub: user.id,
+            user: user.username,
+            role: 'user',
+            zipcode: user.zipcode
           };
 
-          var token = jwt.sign(payload, process.env.JWT_SECRET);
+          var token = jwt.sign(payload, process.env.JWT_SECRET, {
+            expiresIn: '7d'
+          });
 
           return done(null, token);
         });
