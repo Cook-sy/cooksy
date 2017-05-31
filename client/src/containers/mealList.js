@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { selectMeal } from '../actions/index';
-import { bindActionCreators } from 'redux'; //flows through all reducers
+import { fetchMeals } from '../actions/index';
+import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
-class Meallist extends Component {
-  renderList() {
-    console.log(this.props);
-    return this.props.meals.map(meal => {
+class MealList extends Component {
+  componentDidMount() {
+    this.props.fetchMeals();
+  }
+
+  renderMeals() {
+    return _.map(this.props.meals, meal => {
       return (
-        <li
-          key={meal.name}
-          onClick={() => this.props.selectMeal(meal)}
-          className="list-group-item"
-        >
-          <h3>{meal.name}</h3>
-          {meal.description}
+        <li key={meal.id}>
+          <Link to={`/meals/${meal.id}`}>
+            {meal.name}
+          </Link>
         </li>
       );
     });
   }
 
   render() {
+    console.log(this.props.meals);
     return (
       <div>
         <h1>List of Food</h1>
-        <ul className="list-group col-sm-4">
-          {this.renderList()}
+        <ul>
+          {this.renderMeals()}
         </ul>
       </div>
     );
@@ -33,13 +35,7 @@ class Meallist extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    meals: state.meals
-  };
+  return { meals: state.meals };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ selectMeal: selectMeal }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Meallist);
+export default connect(mapStateToProps, { fetchMeals: fetchMeals })(MealList);

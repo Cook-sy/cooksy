@@ -3,24 +3,25 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import promise from 'redux-promise';
 import MealList from './containers/mealList';
-import MealDetail from './containers/mealDetail';
+import MealDetails from './containers/mealDetails';
 
 import reducers from './reducers';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
-const createStoreWithMiddleware = applyMiddleware()(createStore);
+const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
     <BrowserRouter>
       <div>
         <Switch>
-          <Route exact path="/" component={App} />
           <Route exact path="/meals" component={MealList} />
-          <Route exact path="/meal" component={MealDetail} />
+          <Route exact path="/meals/:id" component={MealDetails} />
+          <Route exact path="/" component={App} />
         </Switch>
       </div>
     </BrowserRouter>
