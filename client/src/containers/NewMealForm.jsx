@@ -1,86 +1,11 @@
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
-import uuid from 'uuid';
+import React, { Component } from "react";
+import { Field, reduxForm } from "redux-form";
+import { connect } from "react-redux";
+import RaisedButton from "material-ui/RaisedButton";
 
-// Import injectTapEvent to get rid of Unknown props onTouchTap error
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-import { createMeal } from '../actions';
-import RaisedButton from 'material-ui/RaisedButton';
-import './NewMealForm.css';
-
-injectTapEventPlugin();
-
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-    id={uuid.v4()}
-  />
-);
-
-const renderTextAreaField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => <TextField
-    hintText={label} 
-    id={uuid.v4()} 
-    floatingLabelText={label} 
-    errorText={touched && error} 
-    {...input} 
-  />;
-
-const renderDateField = ({
-  input,
-  label,
-  value,
-  meta: { touched, error },
-  ...custom
-}) => {
-  return (
-    <DatePicker
-      {...input}
-      {...custom}
-      errorText={touched && error}
-      value={input.value !== "" ? new Date(input.value) : null}
-      onChange={(event, value) => input.onChange(value)}
-      id={uuid.v4()}
-    />
-  );
-};
-
-const renderTimeField = ({
-  input,
-  label,
-  value,
-  meta: { touched, error },
-  ...custom
-}) => {
-  return (
-    <TimePicker
-      {...input}
-      {...custom}
-      errorText={touched && error}
-      value={input.value !== "" ? new Date(input.value) : null}
-      onChange={(event, value) => input.onChange(value)}
-      id={uuid.v4()}
-    />
-  );
-};
+import { createMeal } from "../actions";
+import { renderTextAreaField, renderTimeField, renderTextField, renderDateField} from '../utils/FormHelper';
+import "./NewMealForm.css";
 
 export class NewMealForm extends Component {
   submitForm(values) {
