@@ -1,4 +1,2 @@
 client/
 coverage/
-test/unit_test/unit_test_example.js
-test/integration_test/integration_test_example.js
