@@ -13,86 +13,75 @@ import {
 import './SignUpForm.css';
 import './NewMealForm.css';
 
-
 export class SignUpForm extends Component {
   submitForm(values) {
-		createMeal(values, this.props.history.push("/"));
+    createMeal(values, this.props.history.push('/'));
   }
 
   render() {
-		const { handleSubmit, pristine, submitting } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
 
-		return (
-		  <form 
-		  	onSubmit={handleSubmit(this.submitForm.bind(this))} 
-		  >
-		  	<h1>Signup Form</h1>
+    return (
+      <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
+        <h1>Signup Form</h1>
         <div>
-          <label><Field name="account" component="input" type="radio" value="user"/> User</label>
-          <label><Field name="account" component="input" type="radio" value="chef"/> Chief</label>
+          <label>
+            <Field name="account" component="input" type="radio" value="user" />
+            {' '}
+            User
+          </label>
+          <label>
+            <Field name="account" component="input" type="radio" value="chef" />
+            {' '}
+            Chief
+          </label>
         </div>
-				<div>
-				  <Field
-						name="username"
-						label="Username"
-						component={renderTextField}
-				  />
-				</div>
-				<div>
-				  <Field
-						name="password"
-						label="Password"
-						type="password"
-						component={renderTextField}
-				  />
-				</div>
-				<div>
-				  <Field
-						name="city"
-						label="City"
-						component={renderTextField}
-				  />
-			    <Field
-			  		name="state"
-			  		label="State"
-			  		component={renderTextField}
-			    />
-				</div>
-					<div>
-					  <Field
-							name="zipcode"
-							label="Zipcode"
-							component={renderTextField}
-					  />
-					</div>
-				<div>
-					<Field
-						name="address"
-						label="Address"
-						component={renderTextAreaField}
-						multiLine={true}
-						rows={2}
-					/>
-				</div>
-				<div>
-				  <RaisedButton type="submit" disabled={pristine || submitting}>
-				    Submit
-				  </RaisedButton>
-				</div>
-		  </form>
-		)
-  }  
+        <div>
+          <Field name="username" label="Username" component={renderTextField} />
+        </div>
+        <div>
+          <Field
+            name="password"
+            label="Password"
+            type="password"
+            component={renderTextField}
+          />
+        </div>
+        <div>
+          <Field name="city" label="City" component={renderTextField} />
+          <Field name="state" label="State" component={renderTextField} />
+        </div>
+        <div>
+          <Field name="zipcode" label="Zipcode" component={renderTextField} />
+        </div>
+        <div>
+          <Field
+            name="address"
+            label="Address"
+            component={renderTextAreaField}
+            multiLine={true}
+            rows={2}
+          />
+        </div>
+        <div>
+          <RaisedButton type="submit" disabled={pristine || submitting}>
+            Submit
+          </RaisedButton>
+        </div>
+      </form>
+    );
+  }
 }
 
 export const validate = values => {
-  const errors = {}
+  const errors = {};
   if (!values.username) {
     errors.username = 'Required';
-  } 
+  }
 
   if (!values.password) {
     errors.password = 'Required';
-  } 
+  }
 
   if (!values.zipcode) {
     errors.zipcode = 'Required';
@@ -111,9 +100,9 @@ export const validate = values => {
   }
 
   return errors;
-}
+};
 
 export default reduxForm({
   validate,
-  form: "SignUpForm"
+  form: 'SignUpForm'
 })(connect(null, { createMeal })(SignUpForm));
