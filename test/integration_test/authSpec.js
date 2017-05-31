@@ -1,5 +1,6 @@
 var chai = require('chai');
 var request = require('supertest');
+var jwt = require('jsonwebtoken');
 var db = require('../../src/models');
 var expect = chai.expect;
 
@@ -7,7 +8,7 @@ chai.use(require('chai-json-schema'));
 
 var app = require('../../src/server-config');
 
-describe('/api/users/login', function() {
+describe('User account creation', function() {
   beforeEach(function(done) {
     db.User
       .destroy({
@@ -65,6 +66,22 @@ describe('/api/users/login', function() {
             }
           }
         });
+      })
+      .end(done);
+  });
+
+  it('should return a payload with username and zipcode', function(done) {
+    request(app)
+      .post('/api/users/signup')
+      .send({
+        username: 'oicki',
+        password: 'hunter2',
+        zipcode: '00000'
+      })
+      .expect(function(res) {
+        var decoded = jwt.decode(res.body.token);
+        expect(decoded.user).to.equal('oicki');
+        expect(decoded.zipcode).to.equal('00000');
       })
       .end(done);
   });
