@@ -39,4 +39,46 @@ describe('Form validation', function() {
       expect(validationResult.success).to.be.true;
     }));
   });
+
+  describe('User signup validation', function() {
+    it('should not validate if payload is not defined', sinon.test(function() {
+      expect(form.validateUserSignup().success).to.be.false;
+    }));
+
+    it('should not validate if username is empty', sinon.test(function() {
+      var validationResult = form.validateUserSignup({
+        username: '',
+        password: 'hunter2',
+        zipcode: '12922'
+      });
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if password is empty', sinon.test(function() {
+      var validationResult = form.validateUserSignup({
+        username: 'wicki',
+        password: '',
+        zipcode: '12922'
+      });
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if zipcode is empty', sinon.test(function() {
+      var validationResult = form.validateUserSignup({
+        username: 'wicki',
+        password: 'hunter',
+        zipcode: ''
+      });
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should validate if username and password are non-empty', sinon.test(function() {
+      var validationResult = form.validateUserSignup({
+        username: 'wicki',
+        password: 'hunter2',
+        zipcode: '12922'
+      });
+      expect(validationResult.success).to.be.true;
+    }));
+  });
 });
