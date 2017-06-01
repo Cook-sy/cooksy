@@ -28,7 +28,6 @@ class MealList extends Component {
   }
 
   render() {
-    console.log(this.props.meals);
     return (
       <div>
         <h1>List of Food</h1>
