@@ -9,7 +9,7 @@ chai.use(require('chai-json-schema'));
 var app = require('../../src/server-config');
 
 describe('/api/chefs', function() {
-  describe('/api/chefs/post', function() {
+  describe('Create a new meal', function() {
     var chefToken;
     var userToken;
 
