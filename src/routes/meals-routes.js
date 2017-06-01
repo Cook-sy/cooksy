@@ -1,18 +1,11 @@
 var express = require('express');
+var mealCtrl = require('../controllers/meal-ctrl');
 var router = express.Router();
-var db = require('../models');
 
 // /api/meals
 // Get all non-expired meals
 router.get('/', function(req, res) {
-  db.Meal
-    .findAll({
-      where: {
-        deliveryDateTime: {
-          $gt: new Date()
-        }
-      }
-    })
+  return mealCtrl.getNonExpiredMeals()
     .then(function(meals) {
       res.json(meals);
     });
@@ -21,8 +14,7 @@ router.get('/', function(req, res) {
 // /api/meals/:id
 // Get a specific meal by id
 router.get('/:id', function(req, res) {
-  db.Meal
-    .findById(req.params.id)
+  return mealCtrl.getMeal(req.params.id)
     .then(function(meal) {
       if (!meal) {
         return res.status(404).json({
