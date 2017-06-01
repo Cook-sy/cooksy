@@ -19,6 +19,9 @@ export class NewMealForm extends Component {
   }
 
   submitForm(values) {
+    //values.images = `${values.photo_1},${values.photo_2},${values.photo_3},${values.photo_4}`;
+    values.images = values.photo_1 || values.photo_2 || values.photo_3 || values.photo_4;
+    values.deliveryDateTime = `${values.deliveryDate.toDateString()} ${values.deliveryTime}`;
     createMeal(values, this.props.history.push('/'));
   }
 
@@ -30,7 +33,7 @@ export class NewMealForm extends Component {
           <h1>Submit a New Meal</h1>
           <div>
             <Field
-              name="mealName"
+              name="name"
               component={renderTextField}
               label="Meal Name"
             />
@@ -52,10 +55,8 @@ export class NewMealForm extends Component {
               autoOk={true}
             />
             <Field
-              hintText="Delivery Time"
               name="deliveryTime"
               component={renderTimeField}
-              autoOk={true}
             />
           </div>
           <div className="images-container">
@@ -142,8 +143,8 @@ export class NewMealForm extends Component {
 
 export const validate = values => {
   const errors = {};
-  if (!values.mealName) {
-    errors.mealName = 'Required';
+  if (!values.name) {
+    errors.name = 'Required';
   }
 
   if (!values.deliveryDate) {
