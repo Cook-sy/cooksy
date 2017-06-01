@@ -61,7 +61,8 @@ export class SignUpForm extends Component {
         <div>
           <Field
             name="image"
-            label="Image"
+            label="http://example.com/image.jpeg"
+            floatingLabelText="Image"
             component={renderTextField}
           />
         </div>
