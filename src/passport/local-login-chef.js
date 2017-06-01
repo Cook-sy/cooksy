@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var Strategy = require('passport-local').Strategy;
-var db = require('../models');
+var chefCtrl = require('../controllers/chef-ctrl');
 
 module.exports = new Strategy(
   {
@@ -15,12 +15,7 @@ module.exports = new Strategy(
       password: password.trim()
     };
 
-    return db.Chef
-      .findOne({
-        where: {
-          username: userData.username
-        }
-      })
+    return chefCtrl.findChefByUsername(userData.username)
       .then(function(chef) {
         if (!chef) {
           var error = new Error('Incorrect username or password');
