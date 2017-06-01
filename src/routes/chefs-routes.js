@@ -126,4 +126,23 @@ router.delete('/meals/:id', isChef, function(req, res) {
     });
 });
 
+// GET /api/chefs/meals
+// Get all meals created by a specific chef
+router.get('/meals', function(req, res) {
+  return mealCtrl.findChef(req.userId)
+    .then(function(meals) {
+      return res.status(200).json({
+        success: true,
+        meals: meals
+      });
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
+    });
+});
+
 module.exports = router;
