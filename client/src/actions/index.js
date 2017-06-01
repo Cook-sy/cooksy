@@ -40,7 +40,7 @@ export function signUpUser(values, cb) {
 
   return {
     type: SIGN_UP_USER,
-    payload: Request
+    payload: request
   };
 }
 
@@ -52,6 +52,6 @@ export function signUpChef(values, cb) {
 
   return {
     type: SIGN_UP_CHEF,
-    payload: Request
+    payload: request
   };
 }
