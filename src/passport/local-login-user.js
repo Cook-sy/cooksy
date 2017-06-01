@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
 var Strategy = require('passport-local').Strategy;
-var db = require('../models');
+var userCtrl = require('../controllers/user-ctrl');
 
 module.exports = new Strategy(
   {
@@ -15,12 +15,7 @@ module.exports = new Strategy(
       password: password.trim()
     };
 
-    return db.User
-      .findOne({
-        where: {
-          username: userData.username
-        }
-      })
+    return userCtrl.findUserByUsername(userData.username)
       .then(function(user) {
         if (!user) {
           var error = new Error('Incorrect username or password');
@@ -31,10 +26,10 @@ module.exports = new Strategy(
 
         return user.comparePassword(userData.password).then(function(isMatch) {
           if (!isMatch) {
-            var error = new Error('Incorrect username or password');
-            error.name = 'IncorrectCredentialsError';
+            var err = new Error('Incorrect username or password');
+            err.name = 'IncorrectCredentialsError';
 
-            return done(error);
+            return done(err);
           }
 
           var payload = {

@@ -16,7 +16,7 @@ var localLoginChefStrategy = require('./passport/local-login-chef');
 
 // routes
 var indexRoutes = require('./routes/index');
-var mealsRoutes = require('./routes/meals');
+var mealsRoutes = require('./routes/meals-routes');
 var usersRoutes = require('./routes/users-routes');
 var chefsRoutes = require('./routes/chefs-routes');
 

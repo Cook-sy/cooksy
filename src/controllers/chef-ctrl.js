@@ -1,6 +1,25 @@
 var db = require('../models');
 
-exports.createMeal = function(chefId, body) {
-  body.chefId = chefId;
-  return db.Meal.create(body);
+exports.createChef = function(body, username, password) {
+  return db.Chef.create({
+    username: username.trim(),
+    password: password.trim(),
+    image: body.image.trim(),
+    address: body.address.trim(),
+    city: body.city.trim(),
+    state: body.state.trim(),
+    zipcode: body.zipcode.trim()
+  });
+};
+
+exports.findChef = function(userId) {
+  return db.Chef.findById(userId);
+};
+
+exports.findChefByUsername = function(username) {
+  return db.Chef.findOne({
+    where: {
+      username: username
+    }
+  });
 };

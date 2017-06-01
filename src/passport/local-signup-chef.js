@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
-var db = require('../models');
 var Strategy = require('passport-local').Strategy;
+var chefCtrl = require('../controllers/chef-ctrl');
 
 module.exports = new Strategy(
   {
@@ -10,16 +10,7 @@ module.exports = new Strategy(
     passReqToCallback: true
   },
   function(req, username, password, done) {
-    db.Chef
-      .create({
-        username: username.trim(),
-        password: password.trim(),
-        image: req.body.image.trim(),
-        address: req.body.address.trim(),
-        city: req.body.city.trim(),
-        state: req.body.state.trim(),
-        zipcode: req.body.zipcode.trim()
-      })
+    return chefCtrl.createChef(req.body, username, password)
       .then(function(chef) {
         var payload = {
           sub: chef.id,

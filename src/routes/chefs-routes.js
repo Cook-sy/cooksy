@@ -3,7 +3,7 @@ var passport = require('passport');
 var validateLogin = require('../utils/form-validation').validateLogin;
 var validateChefSignup = require('../utils/form-validation').validateChefSignup;
 var isChef = require('../middleware/is-authenticated').isChef;
-var chefCtrl = require('../controllers/chef-ctrl');
+var mealCtrl = require('../controllers/meal-ctrl');
 var router = express.Router();
 
 // POST /api/chefs/login
@@ -80,7 +80,7 @@ router.post('/signup', function(req, res, next) {
 // POST /api/chefs/meals
 // Create a new meal for a specific chef
 router.post('/meals', isChef, function(req, res) {
-  return chefCtrl.createMeal(req.userId, req.body)
+  return mealCtrl.createMeal(req.userId, req.body)
     .then(function(meal) {
       return res.status(201).json({
         success: true,
