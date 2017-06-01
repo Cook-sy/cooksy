@@ -26,10 +26,10 @@ module.exports = new Strategy(
 
         return user.comparePassword(userData.password).then(function(isMatch) {
           if (!isMatch) {
-            var error = new Error('Incorrect username or password');
-            error.name = 'IncorrectCredentialsError';
+            var err = new Error('Incorrect username or password');
+            err.name = 'IncorrectCredentialsError';
 
-            return done(error);
+            return done(err);
           }
 
           var payload = {
