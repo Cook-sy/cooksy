@@ -1,6 +1,5 @@
 var chai = require('chai');
 var request = require('supertest');
-var db = require('../../src/models');
 var expect = chai.expect;
 
 chai.use(require('chai-json-schema'));
