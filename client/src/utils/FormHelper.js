@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import TimePicker from "material-ui/TimePicker";
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from "react-tap-event-plugin";
@@ -79,3 +80,20 @@ export const renderTimeField = ({
     />
   );
 };
+
+export const renderRadioGroup = ({
+  input,
+  selected,
+  meta: { touched, error },
+  ...custom
+}) => (
+  <div>
+    <RadioButtonGroup
+      {...input}
+      {...custom}
+      valueSelected={input.value }
+      onChange={(event, value) => input.onChange(value)}
+    />
+    {touched && error && <span className="error">{error}</span>}
+  </div>
+);
