@@ -1,7 +1,6 @@
 import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
@@ -66,13 +65,14 @@ export const renderTimeField = ({
   meta: { touched, error },
   ...custom
 }) =>
-  <TimePicker
+  <TextField
+    hintText={label}
+    floatingLabelText={label}
+    errorText={touched && error}
+    id={uuid.v4()}
+    type='time'
     {...input}
     {...custom}
-    errorText={touched && error}
-    value={input.value}
-    onChange={(event, value) => input.onChange(value)}
-    id={uuid.v4()}
   />;
 
 export const renderRadioGroup = ({
