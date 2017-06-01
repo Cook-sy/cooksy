@@ -8,6 +8,6 @@ var sinonTest = require('sinon-test');
 sinon.test = sinonTest.configureTest(sinon);
 sinon.testCase = sinonTest.configureTestCase(sinon);
 
-describe('Name of the file you are testing', function() {
-  it('some test case', sinon.test(function() {}));
-});
+// describe('Name of the file you are testing', function() {
+//   it('some test case', sinon.test(function() {}));
+// });

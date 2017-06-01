@@ -1,9 +1,13 @@
 exports.validateLogin = function(payload) {
   var errors = {};
   var isFormValid = true;
+  var username;
+  var password;
 
-  var username = payload.username;
-  var password = payload.password;
+  if (payload) {
+    username = payload.username;
+    password = payload.password;
+  }
 
   if (
     !payload ||
@@ -33,13 +37,21 @@ exports.validateLogin = function(payload) {
 exports.validateChefSignup = function(payload) {
   var errors = {};
   var isFormValid = true;
+  var username;
+  var password;
+  var address;
+  var city;
+  var state;
+  var zipcode;
 
-  var username = payload.username;
-  var password = payload.password;
-  var address = payload.address;
-  var city = payload.city;
-  var state = payload.state;
-  var zipcode = payload.zipcode;
+  if (payload) {
+    username = payload.username;
+    password = payload.password;
+    address = payload.address;
+    city = payload.city;
+    state = payload.state;
+    zipcode = payload.zipcode;
+  }
 
   if (
     !payload ||
@@ -89,10 +101,15 @@ exports.validateChefSignup = function(payload) {
 exports.validateUserSignup = function(payload) {
   var errors = {};
   var isFormValid = true;
+  var username;
+  var password;
+  var zipcode;
 
-  var username = payload.username;
-  var password = payload.password;
-  var zipcode = payload.zipcode;
+  if (payload) {
+    username = payload.username;
+    password = payload.password;
+    zipcode = payload.zipcode;
+  }
 
   if (
     !payload ||
