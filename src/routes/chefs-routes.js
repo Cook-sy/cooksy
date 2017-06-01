@@ -96,4 +96,37 @@ router.post('/meals', isChef, function(req, res) {
     });
 });
 
+// DELETE /api/chefs/meals/:id
+// Delete a meal that is owned by a chef
+router.delete('/meals/:id', isChef, function(req, res) {
+  // Check if meal is owned by chef
+  return mealCtrl.getMeal(req.params.id)
+    .then(function(meal) {
+      if (!meal) {
+        return res.status(404).json({
+          sucess: false,
+          message: 'Meal not found'
+        });
+      }
+
+      return meal.chefId === req.userId;
+    })
+    .then(function(isOwned) {
+      if (!isOwned) {
+        return res.status(403).json({
+          success: false,
+          message: 'The meal is not owned by you'
+        });
+      }
+
+      return mealCtrl.deleteMeal(req.params.id);
+    })
+    .then(function(meal) {
+      return res.status(200).json({
+        success: true,
+        meal: meal
+      });
+    });
+});
+
 module.exports = router;
