@@ -3,6 +3,8 @@ import axios from 'axios';
 export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
+export const SIGN_UP_CHEF = 'SIGN_UP_CHEF';
+export const SIGN_UP_USER = 'SIGN_UP_USER';
 
 export function createMeal(values, cb) {
   const request = axios.post('/api/chefs/meals', values).then(cb);
@@ -28,5 +30,28 @@ export function fetchMealDetail(id) {
   return {
     type: FETCH_MEALDETAIL,
     payload: request
+  };
+}
+
+export function signUpUser(values, cb) {
+  const request = axios
+    .post('/api/users/signup', values)
+    .then(({ token }) => cb(token));
+
+  return {
+    type: SIGN_UP_USER,
+    payload: Request
+  };
+}
+
+export function signUpChef(values, cb) {
+  values.image = !values.image ? '' : values.image;
+  const request = axios
+    .post('/api/chefs/signup', values)
+    .then(({ token }) => cb(token));
+
+  return {
+    type: SIGN_UP_CHEF,
+    payload: Request
   };
 }
