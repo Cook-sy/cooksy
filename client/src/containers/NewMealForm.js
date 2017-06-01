@@ -19,6 +19,8 @@ export class NewMealForm extends Component {
   }
 
   submitForm(values) {
+    values.images = `${values.photo_1},${values.photo_2},${values.photo_3},${values.photo_4}`;
+    values.deliveryDateTime = `${values.deliveryDate.toDateString()} ${values.deliveryTime.toTimeString()}`;
     createMeal(values, this.props.history.push('/'));
   }
 
