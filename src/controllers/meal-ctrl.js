@@ -5,6 +5,14 @@ exports.createMeal = function(chefId, body) {
   return db.Meal.create(body);
 };
 
+exports.deleteMeal = function(id) {
+  return db.Meal.findById(id)
+    .then(function(meal) {
+      meal.destroy();
+      return meal;
+    });
+};
+
 exports.getNonExpiredMeals = function() {
   return db.Meal.findAll({
     where: {
