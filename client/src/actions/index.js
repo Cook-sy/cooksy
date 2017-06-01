@@ -7,7 +7,13 @@ export const SIGN_UP_CHEF = 'SIGN_UP_CHEF';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 
 export function createMeal(values, cb) {
-  const request = axios.post('/api/chefs/meals', values).then(cb);
+  console.log('CREATE MEAL')
+  const token = sessionStorage.getItem('cooksy');
+  const headers = {'x-access-token': `Bearer ${token}`};
+  const request = axios.post('/api/chefs/meals', values, { headers: headers })
+    .then((res) => {
+      cb
+    });
 
   return {
     type: CREATE_MEAL,
