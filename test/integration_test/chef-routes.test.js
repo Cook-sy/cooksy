@@ -122,4 +122,49 @@ describe('/api/chefs', function() {
         });
     });
   });
+
+  describe('Delete a meal', function() {
+    var mealId;
+
+    beforeEach(function(done) {
+      request(app)
+        .post('/api/chefs/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(mealObj)
+        .expect(201)
+        .expect(function(meal) {
+          mealId = meal.id;
+        })
+        .end(done);
+    });
+
+    afterEach(function(done) {
+      db.Meal.destroy({
+        where: { name: 'rubber' }
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should not allow access if no auth token is sent', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not allow access if user is not a chef', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not delete if chef does not own meal', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + 8)
+        .expect(401)
+        .end(done);
+    });
+  });
 });
