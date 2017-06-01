@@ -1,6 +1,6 @@
 var jwt = require('jsonwebtoken');
-var db = require('../models');
 var Strategy = require('passport-local').Strategy;
+var userCtrl = require('../controllers/user-ctrl');
 
 module.exports = new Strategy(
   {
@@ -10,12 +10,7 @@ module.exports = new Strategy(
     passReqToCallback: true
   },
   function(req, username, password, done) {
-    db.User
-      .create({
-        username: username.trim(),
-        password: password.trim(),
-        zipcode: req.body.zipcode.trim()
-      })
+    return userCtrl.createUser(req.body, username, password)
       .then(function(user) {
         var payload = {
           sub: user.id,
