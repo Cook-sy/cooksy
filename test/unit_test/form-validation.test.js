@@ -11,73 +11,70 @@ sinon.testCase = sinonTest.configureTestCase(sinon);
 
 describe('Form validation', function() {
   describe('Login validation', function() {
+    var payload;
+    beforeEach(function() {
+      payload = {
+        username: 'wicki',
+        password: 'hunter2'
+      };
+    });
+
     it('should not validate if payload is not defined', sinon.test(function() {
       expect(form.validateLogin().success).to.be.false;
     }));
 
     it('should not validate if username is empty', sinon.test(function() {
-      var validationResult = form.validateLogin({
-        username: '',
-        password: 'hunter2'
-      });
+      payload.username = '';
+      var validationResult = form.validateLogin(payload);
       expect(validationResult.success).to.be.false;
     }));
 
     it('should not validate if password is empty', sinon.test(function() {
-      var validationResult = form.validateLogin({
-        username: 'wicki',
-        password: ''
-      });
+      payload.password = '';
+      var validationResult = form.validateLogin(payload);
       expect(validationResult.success).to.be.false;
     }));
 
     it('should validate if username and password are non-empty', sinon.test(function() {
-      var validationResult = form.validateLogin({
-        username: 'wicki',
-        password: 'hunter2'
-      });
+      var validationResult = form.validateLogin(payload);
       expect(validationResult.success).to.be.true;
     }));
   });
 
   describe('User signup validation', function() {
+    var payload;
+    beforeEach(function() {
+      payload = {
+        username: 'wicki',
+        password: 'hunter2',
+        zipcode: '38130'
+      };
+    });
+
     it('should not validate if payload is not defined', sinon.test(function() {
       expect(form.validateUserSignup().success).to.be.false;
     }));
 
     it('should not validate if username is empty', sinon.test(function() {
-      var validationResult = form.validateUserSignup({
-        username: '',
-        password: 'hunter2',
-        zipcode: '12922'
-      });
+      payload.username = '';
+      var validationResult = form.validateUserSignup(payload);
       expect(validationResult.success).to.be.false;
     }));
 
     it('should not validate if password is empty', sinon.test(function() {
-      var validationResult = form.validateUserSignup({
-        username: 'wicki',
-        password: '',
-        zipcode: '12922'
-      });
+      payload.password = '';
+      var validationResult = form.validateUserSignup(payload);
       expect(validationResult.success).to.be.false;
     }));
 
     it('should not validate if zipcode is empty', sinon.test(function() {
-      var validationResult = form.validateUserSignup({
-        username: 'wicki',
-        password: 'hunter',
-        zipcode: ''
-      });
+      payload.zipcode = '';
+      var validationResult = form.validateUserSignup(payload);
       expect(validationResult.success).to.be.false;
     }));
 
     it('should validate if username and password are non-empty', sinon.test(function() {
-      var validationResult = form.validateUserSignup({
-        username: 'wicki',
-        password: 'hunter2',
-        zipcode: '12922'
-      });
+      var validationResult = form.validateUserSignup(payload);
       expect(validationResult.success).to.be.true;
     }));
   });
