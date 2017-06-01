@@ -1,0 +1,24 @@
+form {
+  text-align: center;
+  border: 1px rgb(0, 188, 212) solid;
+  margin: 0 100px;	
+}
+
+form h1 {
+  color: rgb(0, 188, 212);
+}
+
+.textarea-field label {
+  left: 0px;
+}
+
+.radio-button-group {
+  width: 100px;
+  text-align: center;  
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.error {
+  color: red;
+}

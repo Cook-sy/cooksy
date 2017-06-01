@@ -1,100 +1,32 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
-import uuid from 'uuid';
-
-// Import injectTapEvent to get rid of Unknown props onTouchTap error
-import injectTapEventPlugin from 'react-tap-event-plugin';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { createMeal } from '../actions';
-import RaisedButton from 'material-ui/RaisedButton';
+import {
+  renderTextAreaField,
+  renderTimeField,
+  renderTextField,
+  renderDateField
+} from '../utils/FormHelper';
 import './NewMealForm.css';
 
-injectTapEventPlugin();
-
-const renderTextField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => (
-  <TextField
-    hintText={label}
-    floatingLabelText={label}
-    errorText={touched && error}
-    {...input}
-    {...custom}
-    id={uuid.v4()}
-  />
-);
-
-const renderTextAreaField = ({
-  input,
-  label,
-  meta: { touched, error },
-  ...custom
-}) => <TextField
-    hintText={label} 
-    id={uuid.v4()} 
-    floatingLabelText={label} 
-    errorText={touched && error} 
-    {...input} 
-  />;
-
-const renderDateField = ({
-  input,
-  label,
-  value,
-  meta: { touched, error },
-  ...custom
-}) => {
-  return (
-    <DatePicker
-      {...input}
-      {...custom}
-      errorText={touched && error}
-      value={input.value !== "" ? new Date(input.value) : null}
-      onChange={(event, value) => input.onChange(value)}
-      id={uuid.v4()}
-    />
-  );
-};
-
-const renderTimeField = ({
-  input,
-  label,
-  value,
-  meta: { touched, error },
-  ...custom
-}) => {
-  return (
-    <TimePicker
-      {...input}
-      {...custom}
-      errorText={touched && error}
-      value={input.value !== "" ? new Date(input.value) : null}
-      onChange={(event, value) => input.onChange(value)}
-      id={uuid.v4()}
-    />
-  );
-};
-
 export class NewMealForm extends Component {
+  constructor(props) {
+    super(props);
+    this.submitForm = this.submitForm.bind(this);
+  }
+
   submitForm(values) {
-    createMeal(values, this.props.history.push("/"));
+    createMeal(values, this.props.history.push('/'));
   }
 
   render() {
     const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div>
-        <form
-          className="new-meal-form"
-          onSubmit={handleSubmit(this.submitForm.bind(this))}
-        >
+        <form onSubmit={handleSubmit(this.submitForm)}>
           <h1>Submit a New Meal</h1>
           <div>
             <Field
@@ -209,14 +141,14 @@ export class NewMealForm extends Component {
 }
 
 export const validate = values => {
-  const errors = {}
+  const errors = {};
   if (!values.mealName) {
     errors.mealName = 'Required';
-  } 
+  }
 
   if (!values.deliveryDate) {
     errors.deliveryDate = 'Required';
-  } 
+  }
 
   if (!values.deliveryTime) {
     errors.deliveryTime = 'Required';
@@ -234,10 +166,10 @@ export const validate = values => {
     errors.servings = 'Required';
   }
 
-  return errors
-}
+  return errors;
+};
 
 export default reduxForm({
   validate,
-  form: "NewMealForm"
+  form: 'NewMealForm'
 })(connect(null, { createMeal })(NewMealForm));

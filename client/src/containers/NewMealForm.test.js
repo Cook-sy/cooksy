@@ -29,7 +29,7 @@ describe('NewMealForm', () => {
     const component = renderer.create(
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <Provider 
-      	store={store}>
+      	  store={store}>
           <Decorated />
         </Provider>
       </MuiThemeProvider>
