@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import TextField from "material-ui/TextField";
 import DatePicker from "material-ui/DatePicker";
 import TimePicker from "material-ui/TimePicker";
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import { RadioButtonGroup } from 'material-ui/RadioButton';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from "react-tap-event-plugin";
