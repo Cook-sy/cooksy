@@ -1,9 +1,13 @@
 exports.validateLogin = function(payload) {
   var errors = {};
   var isFormValid = true;
+  var username;
+  var password;
 
-  var username = payload.username;
-  var password = payload.password;
+  if (payload) {
+    username = payload.username;
+    password = payload.password;
+  }
 
   if (
     !payload ||
