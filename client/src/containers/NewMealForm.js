@@ -101,8 +101,8 @@ export class NewMealForm extends Component {
             <Field
               name="price"
               component={renderTextField}
-              label="$12"
-              floatingLabelText="Price"
+              label="12"
+              floatingLabelText="Price ($)"
             />
             <Field
               name="servings"
