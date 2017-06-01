@@ -1,21 +1,38 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import { RadioButton } from 'material-ui/RadioButton';
 
-import { signup } from '../actions';
+import { signUpUser, signUpChef } from '../actions';
 import {
   renderTextAreaField,
   renderTimeField,
   renderTextField,
-  renderDateField
+  renderDateField,
+  renderRadioGroup
 } from '../utils/FormHelper';
 import './SignUpForm.css';
 import './NewMealForm.css';
 
 export class SignUpForm extends Component {
+  constructor(props) {
+    super(props);
+    this.successfulAuth = this.successfulAuth.bind(this);
+  }
+
+  successfulAuth(token) {
+    sessionStorage.setItem('cooksy', token);
+    this.props.history.push('/');
+  }
+
   submitForm(values) {
-    signup(values, this.props.history.push('/'));
+    if(values.role === 'chef') {
+      this.props.signUpChef(values, this.successfulAuth);
+    } else {
+      this.props.signUpUser(values, this.successfulAuth);
+    }
   }
 
   render() {
@@ -24,17 +41,11 @@ export class SignUpForm extends Component {
     return (
       <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
         <h1>Signup Form</h1>
-        <div>
-          <label>
-            <Field name="account" component="input" type="radio" value="user" />
-            {' '}
-            User
-          </label>
-          <label>
-            <Field name="account" component="input" type="radio" value="chef" />
-            {' '}
-            Chief
-          </label>
+        <div className="radio-button-group">
+          <Field name="role" component={renderRadioGroup}>
+            <RadioButton value="user" label="user"/>
+            <RadioButton value="chef" label="chef" />
+          </Field>
         </div>
         <div>
           <Field name="username" label="Username" component={renderTextField} />
@@ -44,6 +55,13 @@ export class SignUpForm extends Component {
             name="password"
             label="Password"
             type="password"
+            component={renderTextField}
+          />
+        </div>
+        <div>
+          <Field
+            name="image"
+            label="Image"
             component={renderTextField}
           />
         </div>
@@ -87,22 +105,30 @@ export const validate = values => {
     errors.zipcode = 'Required';
   }
 
-  if (!values.address && values.account === 'chef') {
+  if (!values.role) {
+    errors.role = 'Required';
+  }
+
+  if (!values.address && values.role === 'chef') {
     errors.address = 'Required';
   }
 
-  if (!values.city && values.account === 'chef') {
+  if (!values.city && values.role === 'chef') {
     errors.city = 'Required';
   }
 
-  if (!values.state && values.account === 'chef') {
+  if (!values.state && values.role === 'chef') {
     errors.state = 'Required';
   }
 
   return errors;
 };
 
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ signUpUser, signUpChef }, dispatch);
+}
+
 export default reduxForm({
   validate,
   form: 'SignUpForm'
-})(connect(null, { signup })(SignUpForm));
+})(connect(null, mapDispatchToProps)(SignUpForm));
