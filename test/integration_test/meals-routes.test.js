@@ -83,8 +83,9 @@ describe('/api/meals', function() {
       .end(done);
   });
 
-  it('should send an object when requesting /api/meals/:id', function(done) {
-    request(app)
+  describe('/api/meals/:id', function() {
+    it('should send a specific meal if it exists', function(done) {
+      request(app)
       .get('/api/meals/4')
       .expect(200)
       .expect('Content-Type', /json/)
@@ -93,5 +94,18 @@ describe('/api/meals', function() {
         expect(res.body.meal).to.be.jsonSchema(mealObjSchema);
       })
       .end(done);
+    });
+
+    it('should not send a meal if it does not exist', function(done) {
+      request(app)
+      .get('/api/meals/19123')
+      .expect(404)
+      .expect('Content-Type', /json/)
+      .expect(function(res) {
+        expect(res.body.success).to.be.false;
+        expect(res.body.meal).to.be.undefined;
+      })
+      .end(done);
+    });
   });
 });
