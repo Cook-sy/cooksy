@@ -59,6 +59,14 @@ describe('/api/chefs', function() {
       });
     });
 
+    afterEach(function(done) {
+      db.Meal.destroy({
+        where: { name: 'rubber' }
+      }).then(function() {
+        done();
+      });
+    });
+
     after(function(done) {
       var chefRemove = db.Chef.destroy({
         where: { username: 'oicki' }
@@ -96,6 +104,22 @@ describe('/api/chefs', function() {
         .send(mealObj)
         .expect(201)
         .end(done);
+    });
+
+    it('should create a meal in the database', function(done) {
+      request(app)
+        .post('/api/chefs/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(mealObj)
+        .expect(201)
+        .then(function() {
+          db.Meal.findOne({
+            where: { name: 'rubber' }
+          }).then(function(meal) {
+            expect(meal).to.not.be.undefined;
+            done();
+          });
+        });
     });
   });
 });
