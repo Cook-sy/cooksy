@@ -2,9 +2,11 @@ var express = require('express');
 var passport = require('passport');
 var validateLogin = require('../utils/form-validation').validateLogin;
 var validateChefSignup = require('../utils/form-validation').validateChefSignup;
+var isChef = require('../middleware/is-authenticated').isChef;
+var chefCtrl = require('../controllers/chef-ctrl');
 var router = express.Router();
 
-// /api/chefs/login
+// POST /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {
   var validation = validateLogin(req.body);
@@ -38,7 +40,7 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
-// /api/chefs/signup
+// POST /api/chefs/signup
 // Signup for chefs
 router.post('/signup', function(req, res, next) {
   var validation = validateChefSignup(req.body);
@@ -73,6 +75,25 @@ router.post('/signup', function(req, res, next) {
       token: token
     });
   })(req, res, next);
+});
+
+// POST /api/chefs/meals
+// Create a new meal for a specific chef
+router.post('/meals', isChef, function(req, res) {
+  return chefCtrl.createMeal(req.userId, req.body)
+    .then(function(meal) {
+      return res.status(201).json({
+        success: true,
+        meal: meal
+      });
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
+    });
 });
 
 module.exports = router;

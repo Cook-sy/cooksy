@@ -44,6 +44,7 @@ function isAuthenticated(model, role) {
               });
             }
 
+            req.userId = userId;
             return next();
           })
           .catch(function() {

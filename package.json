@@ -19,7 +19,7 @@
     "test:client": "cd client && npm test",
     "test:server": "NODE_ENV=test nyc mocha test/*",
     "test:html": "nyc --reporter=html mocha test/*",
-    "precommit": "npm run lint && lint-staged"
+    "precommit": "npm run lint"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
