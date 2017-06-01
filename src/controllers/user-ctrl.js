@@ -1,5 +1,5 @@
 var db = require('../models');
 
 exports.findUser = function(userId) {
-  return db.Chef.findById(userId);
+  return db.User.findById(userId);
 };
