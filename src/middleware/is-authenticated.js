@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken');
 var chefCtrl = require('../controllers/chef-ctrl');
 var userCtrl = require('../controllers/user-ctrl');
 
-function isAuthenticated(ctrl, role) {
+function isAuthenticated(ctrlFind, role) {
   return function(req, res, next) {
     if (!req.header('x-access-token')) {
       return res.status(401).send({
@@ -35,7 +35,7 @@ function isAuthenticated(ctrl, role) {
           });
         }
 
-        return ctrl.findUser(userId)
+        return ctrlFind(userId)
           .then(function(user) {
             if (!user) {
               return res.status(401).send({
@@ -57,6 +57,6 @@ function isAuthenticated(ctrl, role) {
   };
 }
 
-exports.isChef = isAuthenticated(chefCtrl, 'chef');
+exports.isChef = isAuthenticated(chefCtrl.findChef, 'chef');
 
-exports.isUser = isAuthenticated(userCtrl, 'user');
+exports.isUser = isAuthenticated(userCtrl.findUser, 'user');

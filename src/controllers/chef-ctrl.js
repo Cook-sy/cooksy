@@ -12,7 +12,7 @@ exports.createChef = function(body, username, password) {
   });
 };
 
-exports.findUser = function(userId) {
+exports.findChef = function(userId) {
   return db.Chef.findById(userId);
 };
 
