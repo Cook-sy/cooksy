@@ -11,10 +11,29 @@ exports.getNonExpiredMeals = function() {
       deliveryDateTime: {
         $gt: new Date()
       }
-    }
+    },
+    include: [
+      {
+        model: db.Chef,
+        as: 'chef',
+        attributes: {
+          exclude: ['address', 'password']
+        }
+      }
+    ]
   });
 };
 
 exports.getMeal = function(id) {
-  return db.Meal.findById(id);
+  return db.Meal.findById(id, {
+    include: [
+      {
+        model: db.Chef,
+        as: 'chef',
+        attributes: {
+          exclude: ['address', 'password']
+        }
+      }
+    ]
+  });
 };
