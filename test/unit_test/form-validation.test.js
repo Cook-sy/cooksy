@@ -81,4 +81,63 @@ describe('Form validation', function() {
       expect(validationResult.success).to.be.true;
     }));
   });
+
+  describe('Chef signup validation', function() {
+    var payload;
+    beforeEach(function() {
+      payload = {
+        username: 'wicki',
+        password: 'hunter2',
+        address: '123 Main St.',
+        city: 'Springfield',
+        state: 'IL',
+        zipcode: '38130'
+      };
+    });
+
+    it('should not validate if payload is not defined', sinon.test(function() {
+      expect(form.validateChefSignup().success).to.be.false;
+    }));
+
+    it('should not validate if username is empty', sinon.test(function() {
+      payload.username = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if password is empty', sinon.test(function() {
+      payload.password = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if address is empty', sinon.test(function() {
+      payload.address = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if city is empty', sinon.test(function() {
+      payload.city = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if state is empty', sinon.test(function() {
+      payload.state = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should not validate if zipcode is empty', sinon.test(function() {
+      payload.zipcode = '';
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.false;
+    }));
+
+    it('should validate if all required fields are non-empty', sinon.test(function() {
+      var validationResult = form.validateChefSignup(payload);
+      expect(validationResult.success).to.be.true;
+    }));
+  });
 });
