@@ -23,7 +23,7 @@ export class SignUpForm extends Component {
 
   successfulAuth(token) {
     sessionStorage.setItem('cooksy', token);
-    this.props.history.push('/');
+    this.props.history.push('/meals');
   }
 
   submitForm(values) {
