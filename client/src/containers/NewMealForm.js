@@ -26,7 +26,7 @@ export class NewMealForm extends Component {
     const { handleSubmit, pristine, submitting } = this.props;
     return (
       <div>
-        <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
+        <form onSubmit={handleSubmit(this.submitForm)}>
           <h1>Submit a New Meal</h1>
           <div>
             <Field
