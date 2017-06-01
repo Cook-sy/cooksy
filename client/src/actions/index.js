@@ -36,7 +36,7 @@ export function fetchMealDetail(id) {
 export function signUpUser(values, cb) {
   const request = axios
     .post('/api/users/signup', values)
-    .then(({ token }) => cb(token));
+    .then(({ data: { token } }) => cb(token));
 
   return {
     type: SIGN_UP_USER,
@@ -48,7 +48,7 @@ export function signUpChef(values, cb) {
   values.image = !values.image ? '' : values.image;
   const request = axios
     .post('/api/chefs/signup', values)
-    .then(({ token }) => cb(token));
+    .then(({ data: { token } }) => cb(token));
 
   return {
     type: SIGN_UP_CHEF,
