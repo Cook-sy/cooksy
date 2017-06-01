@@ -70,7 +70,7 @@ export const renderTimeField = ({
     {...input}
     {...custom}
     errorText={touched && error}
-    value={input.value !== '' ? new Date(input.value) : null}
+    value={input.value}
     onChange={(event, value) => input.onChange(value)}
     id={uuid.v4()}
   />;
