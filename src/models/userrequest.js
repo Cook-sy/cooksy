@@ -10,10 +10,12 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         UserRequest.belongsTo(models.User, {
-          foreignKey: 'userId'
+          foreignKey: 'userId',
+          as: 'user'
         });
         UserRequest.belongsTo(models.Request, {
-          foreignKey: 'requestId'
+          foreignKey: 'requestId',
+          as: 'request'
         });
       }
     }

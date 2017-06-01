@@ -18,10 +18,12 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Purchase.belongsTo(models.User, {
-          foreignKey: 'userId'
+          foreignKey: 'userId',
+          as: 'user'
         });
         Purchase.belongsTo(models.Meal, {
-          foreignKey: 'mealId'
+          foreignKey: 'mealId',
+          as: 'meal'
         });
       }
     }
