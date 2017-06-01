@@ -13,6 +13,11 @@ import {
 import './NewMealForm.css';
 
 export class NewMealForm extends Component {
+  constructor(props) {
+    super(props);
+    this.submitForm = this.submitForm.bind(this);
+  }
+
   submitForm(values) {
     createMeal(values, this.props.history.push('/'));
   }

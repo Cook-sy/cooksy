@@ -8,9 +8,7 @@ import { RadioButton } from 'material-ui/RadioButton';
 import { signUpUser, signUpChef } from '../actions';
 import {
   renderTextAreaField,
-  renderTimeField,
   renderTextField,
-  renderDateField,
   renderRadioGroup
 } from '../utils/FormHelper';
 import './SignUpForm.css';
@@ -20,6 +18,7 @@ export class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.successfulAuth = this.successfulAuth.bind(this);
+    this.submitForm = this.submitForm.bind(this);
   }
 
   successfulAuth(token) {
@@ -28,7 +27,7 @@ export class SignUpForm extends Component {
   }
 
   submitForm(values) {
-    if(values.role === 'chef') {
+    if (values.role === 'chef') {
       this.props.signUpChef(values, this.successfulAuth);
     } else {
       this.props.signUpUser(values, this.successfulAuth);
@@ -39,11 +38,11 @@ export class SignUpForm extends Component {
     const { handleSubmit, pristine, submitting } = this.props;
 
     return (
-      <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
+      <form onSubmit={handleSubmit(this.submitForm)}>
         <h1>Signup Form</h1>
         <div className="radio-button-group">
           <Field name="role" component={renderRadioGroup}>
-            <RadioButton value="user" label="user"/>
+            <RadioButton value="user" label="user" />
             <RadioButton value="chef" label="chef" />
           </Field>
         </div>
@@ -67,13 +66,6 @@ export class SignUpForm extends Component {
           />
         </div>
         <div>
-          <Field name="city" label="City" component={renderTextField} />
-          <Field name="state" label="State" component={renderTextField} />
-        </div>
-        <div>
-          <Field name="zipcode" label="Zipcode" component={renderTextField} />
-        </div>
-        <div>
           <Field
             name="address"
             label="Address"
@@ -81,6 +73,13 @@ export class SignUpForm extends Component {
             multiLine={true}
             rows={2}
           />
+        </div>
+        <div>
+          <Field name="city" label="City" component={renderTextField} />
+          <Field name="state" label="State" component={renderTextField} />
+        </div>
+        <div>
+          <Field name="zipcode" label="Zipcode" component={renderTextField} />
         </div>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
