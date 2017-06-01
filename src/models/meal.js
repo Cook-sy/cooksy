@@ -44,7 +44,8 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         Meal.belongsTo(models.Chef, {
-          foreignKey: 'chefId'
+          foreignKey: 'chefId',
+          as: 'chef'
         });
         Meal.hasMany(models.MealReview, {
           foreignKey: 'mealId',
