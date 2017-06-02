@@ -2,6 +2,7 @@ form {
   text-align: center;
   border: 1px rgb(0, 188, 212) solid;
   margin: 0 100px;	
+  padding: 10px;
 }
 
 form h1 {
