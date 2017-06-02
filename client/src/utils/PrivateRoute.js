@@ -4,13 +4,13 @@ import { Route, Redirect } from 'react-router-dom';
 import { decodeToken } from './IsAuthenticated';
 export default class PrivateRoute extends Component {
   render() {
-    const { component: Component, ...rest } = this.props;
+    const { component: Component, role, ...rest } = this.props;
     const auth = decodeToken();
     return (
       <Route
         {...rest}
         render={props =>
-          auth && auth.role === 'chef'
+          auth && auth.role === role
             ? <Component {...props} />
             : <Redirect
                 to={{
