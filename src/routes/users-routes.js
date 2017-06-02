@@ -4,6 +4,7 @@ var validateLogin = require('../utils/form-validation').validateLogin;
 var validateUserSignup = require('../utils/form-validation').validateUserSignup;
 var purchaseCtrl = require('../controllers/purchase-ctrl');
 var isUser = require('../middleware/is-authenticated').isUser;
+var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var router = express.Router();
 
 // /api/users/login
@@ -100,6 +101,29 @@ router.get('/purchases', isUser, function(req, res, next) {
         success: false,
         message: 'Please try again later',
         error: err.message
+      });
+    });
+});
+
+// POST /api/users/meals/reviews
+// Create a review for a specific meal
+router.post('/meals/reviews', isUser, function(req, res) {
+  var payload = {
+    rating: req.body.rating,
+    review: req.body.review
+  };
+
+  return mealReviewCtrl(req.body.mealId, req.userId, payload)
+    .then(function(review) {
+      return res.status(201).json({
+        success: true,
+        review: review
+      });
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message
       });
     });
 });
