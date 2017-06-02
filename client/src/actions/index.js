@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { attachTokenToTheHeader } from '../utils/RequestHelper';
 
 export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
@@ -7,12 +8,8 @@ export const SIGN_UP_CHEF = 'SIGN_UP_CHEF';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
 
 export function createMeal(values, cb) {
-  const token = localStorage.getItem('cooksy');
-  const headers = {'x-access-token': `Bearer ${token}`};
+  const headers = attachTokenToTheHeader();
   const request = axios.post('/api/chefs/meals', values, { headers: headers })
-    .then((res) => {
-      cb
-    });
 
   return {
     type: CREATE_MEAL,
