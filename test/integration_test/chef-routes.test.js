@@ -166,7 +166,13 @@ describe('/api/chefs', function() {
         .delete('/api/chefs/meals/' + 0)
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(403)
-        .end(done);
+        .then(function() {
+          db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal).to.not.be.null;
+              done();
+            });
+        });
     });
 
     it('should not delete if meal does not exist', function(done) {
@@ -182,7 +188,13 @@ describe('/api/chefs', function() {
         .delete('/api/chefs/meals/' + mealId)
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(200)
-        .end(done);
+        .then(function() {
+          db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal).to.be.null;
+              done();
+            });
+        });
     });
   });
 
