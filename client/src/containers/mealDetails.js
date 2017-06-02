@@ -20,7 +20,7 @@ class MealDetails extends Component {
       <div>
         <Link to="/meals">Back to meals</Link>
         <h3>{this.props.meal.name}</h3>
-        <img src={this.props.meal.images} width="300" height="200" />
+        <img src={this.props.meal.images} alt="mealdetails" width="300" height="200" />
         <h5> Description </h5>
         <div>{this.props.meal.description}</div>
         <h5>Pick Up Info</h5>
