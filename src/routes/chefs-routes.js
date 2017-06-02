@@ -6,6 +6,28 @@ var isChef = require('../middleware/is-authenticated').isChef;
 var mealCtrl = require('../controllers/meal-ctrl');
 var router = express.Router();
 
+// Check if a meal is owned by a chef
+var checkMealOwnership = function(mealId, chefId, req, res, callback) {
+  return mealCtrl.getMeal(mealId)
+    .then(function(meal) {
+      if (!meal) {
+        return res.status(404).json({
+          success: false,
+          message: 'Meal not found'
+        });
+      }
+
+      if (meal.chefId === chefId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The meal is not owned by you'
+      });
+    });
+};
+
 // POST /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {
@@ -100,30 +122,29 @@ router.post('/meals', isChef, function(req, res) {
 // Delete a meal that is owned by a chef
 router.delete('/meals/:id', isChef, function(req, res) {
   // Check if meal is owned by chef
-  return mealCtrl.getMeal(req.params.id)
-    .then(function(meal) {
-      if (!meal) {
-        return res.status(404).json({
-          success: false,
-          message: 'Meal not found'
+  return checkMealOwnership(req.params.id, req.userId, req, res, function() {
+    return mealCtrl.deleteMeal(req.params.id)
+      .then(function(deletedMeal) {
+        return res.status(200).json({
+          success: true,
+          meal: deletedMeal
         });
-      }
-
-      if (meal.chefId === req.userId) {
-        return mealCtrl.deleteMeal(req.params.id)
-          .then(function(deletedMeal) {
-            return res.status(200).json({
-              success: true,
-              meal: deletedMeal
-            });
-          });
-      }
-
-      return res.status(403).json({
-        success: false,
-        message: 'The meal is not owned by you'
       });
-    });
+  });
+});
+
+// PUT /api/chefs/meals/:id
+// Update a meal that is owned by a chef
+router.put('/meals/:id', isChef, function(req, res) {
+  return checkMealOwnership(req.params.id, req.userId, req, res, function() {
+    return mealCtrl.updateMeal(req.params.id, req.body)
+      .then(function(updatedMeal) {
+        return res.status(200).json({
+          success: true,
+          meal: updatedMeal
+        });
+      });
+  });
 });
 
 // GET /api/chefs/meals

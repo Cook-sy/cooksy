@@ -28,30 +28,30 @@ describe('/api/chefs', function() {
 
   before(function(done) {
     var chefSignup = request(app)
-    .post('/api/chefs/signup')
-    .send({
-      username: 'oicki',
-      password: 'hunter2',
-      image: '',
-      address: '123 Main St.',
-      city: 'Springfield',
-      state: 'IL',
-      zipcode: '00000'
-    })
-    .then(function(res) {
-      chefToken = res.body.token;
-    });
+      .post('/api/chefs/signup')
+      .send({
+        username: 'oicki',
+        password: 'hunter2',
+        image: '',
+        address: '123 Main St.',
+        city: 'Springfield',
+        state: 'IL',
+        zipcode: '00000'
+      })
+      .then(function(res) {
+        chefToken = res.body.token;
+      });
 
     var userSignup = request(app)
-    .post('/api/users/signup')
-    .send({
-      username: 'oicki',
-      password: 'hunter2',
-      zipcode: '00000'
-    })
-    .then(function(res) {
-      userToken = res.body.token;
-    });
+      .post('/api/users/signup')
+      .send({
+        username: 'oicki',
+        password: 'hunter2',
+        zipcode: '00000'
+      })
+      .then(function(res) {
+        userToken = res.body.token;
+      });
 
     Promise.all([chefSignup, userSignup]).then(function() {
       done();
@@ -276,7 +276,13 @@ describe('/api/chefs', function() {
         .delete('/api/chefs/meals/' + 0)
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(403)
-        .end(done);
+        .then(function() {
+          db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal).to.not.be.null;
+              done();
+            });
+        });
     });
 
     it('should not delete if meal does not exist', function(done) {
@@ -292,6 +298,111 @@ describe('/api/chefs', function() {
         .delete('/api/chefs/meals/' + mealId)
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(200)
+        .then(function() {
+          db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal).to.be.null;
+              done();
+            });
+        });
+    });
+  });
+
+  describe('Update a meal', function() {
+    var mealId;
+    var updateObj = {
+      name: 'pizza',
+      description: 'delicious',
+      pickupInfo: 'ring please',
+      price: '0.99',
+      servings: 10
+    };
+
+    beforeEach(function(done) {
+      request(app)
+        .post('/api/chefs/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(mealObj)
+        .expect(201)
+        .expect(function(res) {
+          mealId = res.body.meal.id;
+        })
+        .end(done);
+    });
+
+    afterEach(function(done) {
+      db.Meal.destroy({
+        where: { name: 'rubber' }
+      }).then(function() {
+        done();
+      });
+    });
+
+    it('should not allow access if no auth token is sent', function(done) {
+      request(app)
+        .put('/api/chefs/meals/' + mealId)
+        .send(updateObj)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not allow access if user is not a chef', function(done) {
+      request(app)
+        .put('/api/chefs/meals/' + mealId)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .send(updateObj)
+        .expect(403)
+        .end(done);
+    });
+
+    it('should not update if chef does not own meal', function(done) {
+      request(app)
+        .put('/api/chefs/meals/' + 0)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(updateObj)
+        .expect(403)
+        .then(function() {
+          return db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal.name).to.not.equal(updateObj.name);
+              expect(meal.price).to.not.equal(updateObj.price);
+              expect(meal.zipcode).to.not.equal(updateObj.zipcode);
+              done();
+            });
+        });
+    });
+
+    it('should not update if meal does not exist', function(done) {
+      request(app)
+        .put('/api/chefs/meals/' + mealId + 1)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(updateObj)
+        .expect(404)
+        .end(done);
+    });
+
+    it('should update if chef owns meal', function(done) {
+      request(app)
+        .put('/api/chefs/meals/' + mealId)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(updateObj)
+        .expect(200)
+        .expect(function(res) {
+          expect(res.body.meal.name).to.equal(updateObj.name);
+          expect(res.body.meal.description).to.equal(updateObj.description);
+          expect(res.body.meal.pickupInfo).to.equal(updateObj.pickupInfo);
+          expect(res.body.meal.price).to.equal(updateObj.price);
+          expect(res.body.meal.servings).to.equal(updateObj.servings);
+          expect(res.body.meal.address).to.equal(mealObj.address);
+          expect(res.body.meal.zipcode).to.equal(mealObj.zipcode);
+
+          db.Meal.findById(mealId)
+            .then(function(meal) {
+              expect(meal.name).to.equal(updateObj.name);
+              expect(meal.price).to.equal(updateObj.price);
+              expect(meal.zipcode).to.equal(mealObj.zipcode);
+            });
+        })
         .end(done);
     });
   });
