@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchMealDetail } from '../actions/index';
 import { Link } from 'react-router-dom';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 class MealDetails extends Component {
   componentDidMount() {
@@ -18,13 +20,30 @@ class MealDetails extends Component {
 
     return (
       <div>
-        <Link to="/meals">Back to meals</Link>
-        <h3>{this.props.meal.name}</h3>
-        <img src={this.props.meal.images} alt="mealdetails" width="300" height="200" />
-        <h5> Description </h5>
-        <div>{this.props.meal.description}</div>
-        <h5>Pick Up Info</h5>
-        <div>{this.props.meal.pickupInfo}</div>
+      <Card>
+        <CardHeader
+          title="JORV"
+          subtitle="Chef"
+          avatar="http://www.ssrfanatic.com/forum/attachments/f6/68324d1235842541-funniest-avatar-troll-baby.jpg"
+        />
+        <CardMedia
+          overlay={<CardTitle title={this.props.meal.name} subtitle="by JORV" />}
+        >
+          <img src={this.props.meal.images} width="500" height="500"/>
+        </CardMedia>
+        <CardTitle title="Meal Details" subtitle="Description"/>
+        <CardText>
+          {this.props.meal.description}
+        </CardText>
+        <CardTitle subtitle="Pickup Information"/>
+        <CardText>
+          {this.props.meal.pickupInfo}
+        </CardText>
+        <CardActions>
+          <FlatButton label="Purchase" />
+          <FlatButton label="Back to Meals" />
+        </CardActions>
+      </Card>
       </div>
     );
   }
