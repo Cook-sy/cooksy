@@ -4,7 +4,6 @@ export function decodeToken() {
   if (token) {
     const payload = token.split('.')[1];
     const decodedToken = window.atob(payload);
-    return  JSON.parse(decodedToken);
-  } 
-
+    return JSON.parse(decodedToken);
+  }
 }
