@@ -13,6 +13,7 @@ import reducers from './reducers';
 import App from './components/App';
 import NewMealForm from './containers/NewMealForm';
 import SignUpForm from './containers/SignUpForm';
+import PrivateRoute from './utils/PrivateRoute'
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -27,7 +28,7 @@ ReactDOM.render(
             <Route exact path="/meals" component={MealList} />
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/sign-up-form" component={SignUpForm} />
-            <Route exact path="/post-new-meal" component={NewMealForm} />
+            <PrivateRoute exact path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/" component={App} />
           </Switch>
         </div>
