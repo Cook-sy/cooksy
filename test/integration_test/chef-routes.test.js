@@ -123,6 +123,33 @@ describe('/api/chefs', function() {
     });
   });
 
+  describe('Get chef\'s meals', function() {
+    var mealId;
+
+    beforeEach(function(done) {
+      request(app)
+        .post('/api/chefs/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send(mealObj)
+        .expect(201)
+        .expect(function(res) {
+          mealId = res.body.meal.id;
+        })
+        .end(done);
+    });
+
+    it('should send back an array', function(done) {
+      request(app)
+        .get('/api/chefs/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(200)
+        .expect(function(res) {
+          expect(res.body).to.be.an('array');
+        })
+        .end(done);
+    });
+  });
+
   describe('Delete a meal', function() {
     var mealId;
 
