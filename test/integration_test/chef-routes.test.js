@@ -214,6 +214,21 @@ describe('/api/chefs', function() {
         })
         .end(done);
     });
+
+    it('should not allow access if no auth token is sent', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId)
+        .expect(401)
+        .end(done);
+    });
+
+    it('should not allow access if user is not a chef', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .expect(403)
+        .end(done);
+    });
   });
 
   describe('Delete a meal', function() {
