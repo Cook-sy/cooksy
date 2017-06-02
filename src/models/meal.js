@@ -32,6 +32,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.DECIMAL,
       defaultValue: 0
     },
+    reviewCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
     numOrdered: {
       type: DataTypes.INTEGER,
       defaultValue: 0
