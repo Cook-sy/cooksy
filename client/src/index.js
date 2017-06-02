@@ -28,7 +28,7 @@ ReactDOM.render(
             <Route exact path="/meals" component={MealList} />
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/sign-up-form" component={SignUpForm} />
-            <PrivateRoute exact role='chef' path="/post-new-meal" component={NewMealForm} />
+            <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/" component={App} />
           </Switch>
         </div>
