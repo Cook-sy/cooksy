@@ -22,7 +22,7 @@ export class NewMealForm extends Component {
     //values.images = `${values.photo_1},${values.photo_2},${values.photo_3},${values.photo_4}`;
     values.images = values.photo_1 || values.photo_2 || values.photo_3 || values.photo_4;
     values.deliveryDateTime = `${values.deliveryDate.toDateString()} ${values.deliveryTime}`;
-    createMeal(values, this.props.history.push('/meals'));
+    this.props.createMeal(values, this.props.history.push('/meals'));
   }
 
   render() {
