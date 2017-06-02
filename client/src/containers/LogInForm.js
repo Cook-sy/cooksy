@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton } from 'material-ui/RadioButton';
 
 import { logInUser, logInChef } from '../actions';
+import { successfulAuth } from '../utils/IsAuthenticated'
 import {
   renderTextField,
   renderRadioGroup
@@ -15,13 +16,8 @@ import './NewMealForm.css';
 export class LogInForm extends Component {
   constructor(props) {
     super(props);
-    this.successfulAuth = this.successfulAuth.bind(this);
+    this.successfulAuth = successfulAuth.bind(this);
     this.submitForm = this.submitForm.bind(this);
-  }
-
-  successfulAuth(token) {
-    localStorage.setItem('cooksy', token);
-    this.props.history.push('/meals');
   }
 
   submitForm(values) {

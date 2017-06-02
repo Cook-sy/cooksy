@@ -7,3 +7,8 @@ export function decodeToken() {
     return JSON.parse(decodedToken);
   }
 }
+
+export function successfulAuth(token) {
+  localStorage.setItem('cooksy', token);
+  this.props.history.push('/meals');
+}
