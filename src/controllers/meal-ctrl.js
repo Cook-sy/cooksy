@@ -15,6 +15,26 @@ exports.deleteMeal = function(id) {
     });
 };
 
+exports.updateMeal = function(id, newValues) {
+  return db.Meal.update(newValues, {
+    where: { id: id },
+    returning: true,
+    plain: true
+  }).then(function(result) {
+    return db.Meal.findById(id, {
+      include: [
+        {
+          model: db.Chef,
+          as: 'chef',
+          attributes: {
+            exclude: ['address', 'password']
+          }
+        }
+      ]
+    });
+  });
+};
+
 exports.getNonExpiredMeals = function() {
   return db.Meal.findAll({
     where: {
@@ -46,4 +66,14 @@ exports.getMeal = function(id) {
       }
     ]
   });
+};
+
+exports.findOwnedBy = function(id) {
+  return db.Meal.findById(id)
+    .then(function(meal) {
+      if (!meal) {
+        return undefined;
+      }
+      return meal.chefId;
+    });
 };
