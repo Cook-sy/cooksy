@@ -67,13 +67,3 @@ exports.getMeal = function(id) {
     ]
   });
 };
-
-exports.findOwnedBy = function(id) {
-  return db.Meal.findById(id)
-    .then(function(meal) {
-      if (!meal) {
-        return undefined;
-      }
-      return meal.chefId;
-    });
-};
