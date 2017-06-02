@@ -47,3 +47,20 @@ exports.getMeal = function(id) {
     ]
   });
 };
+
+exports.getChefsMeals = function(id) {
+  return db.Meal.findAll({
+    where: {
+      chefId: id
+    },
+    include: [
+      {
+        model: db.Chef,
+        as: 'chef',
+        attributes: {
+          exclude: ['address', 'password']
+        }
+      }
+    ]
+  });
+};

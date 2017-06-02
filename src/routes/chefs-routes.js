@@ -4,7 +4,6 @@ var validateLogin = require('../utils/form-validation').validateLogin;
 var validateChefSignup = require('../utils/form-validation').validateChefSignup;
 var isChef = require('../middleware/is-authenticated').isChef;
 var mealCtrl = require('../controllers/meal-ctrl');
-var chefCtrl = require('../controllers/chef-ctrl');
 var router = express.Router();
 
 // POST /api/chefs/login
@@ -130,14 +129,9 @@ router.delete('/meals/:id', isChef, function(req, res) {
 // GET /api/chefs/meals
 // Get all meals created by a specific chef
 router.get('/meals', isChef, function(req, res) {
-  console.log('REQ.BODY!!!!!!!', req);
-  return chefCtrl.findChef(req.userId)
-    .then(function(chef) {
-
-      // return res.status(200).json({
-      //   success: true,
-      //   meals: meals
-      // });
+  return mealCtrl.getChefsMeals(req.userId)
+    .then(function(meals) {
+      return res.status(200).json(meals);
     })
     .catch(function(err) {
       return res.status(500).json({
