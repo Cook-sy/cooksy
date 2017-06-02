@@ -80,7 +80,7 @@ router.post('/signup', function(req, res, next) {
 // /api/users/purchases
 // Get all meals the user has purchased
 router.post('/purchases', isUser, function(req, res, next) {
-  return purchaseCtrl.buyMeal(req.body)
+  return purchaseCtrl.createPurchase(req.body)
     .then(function(meal) {
       return res.status(200).json(meal);
     })

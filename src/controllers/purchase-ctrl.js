@@ -1,5 +1,5 @@
 var db = require('../models');
 
-exports.buyMeal = function(id) {
-  return db.Meal.findById(id);
+exports.createPurchase = function(body) {
+  return db.Purchase.create(body);
 };
