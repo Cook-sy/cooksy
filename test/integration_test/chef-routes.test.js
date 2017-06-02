@@ -125,6 +125,59 @@ describe('/api/chefs', function() {
 
   describe('Get chef\'s meals', function() {
     var mealId;
+    var regExDate = '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{3})?Z$';
+    var mealObjSchema = {
+      type: 'object',
+      required: [
+        'id',
+        'name',
+        'description',
+        'deliveryDateTime',
+        'pickupInfo',
+        'price',
+        'servings',
+        'images',
+        'address',
+        'city',
+        'state',
+        'zipcode',
+        'rating',
+        'numOrdered',
+        'totalOrdered',
+        'createdAt',
+        'updatedAt',
+        'chefId'
+      ],
+      properties: {
+        id: { type: 'integer' },
+        name: { type: 'string' },
+        description: { type: 'string' },
+        deliveryDateTime: {
+          type: 'string',
+          pattern: regExDate
+        },
+        pickupInfo: { type: 'string' },
+        price: { type: 'string' },
+        servings: { type: 'integer' },
+        images: { type: 'string' },
+        address: { type: 'string' },
+        city: { type: 'string' },
+        state: { type: 'string' },
+        zipcode: { type: 'string' },
+        rating: { type: 'string' },
+        numOrdered: { type: 'integer' },
+        totalOrdered: { type: 'integer' },
+        createdAt: {
+          type: 'string',
+          pattern: regExDate
+        },
+        updatedAt: {
+          type: 'string',
+          pattern: regExDate
+        },
+        chefId: { type: 'integer' }
+      }
+    };
 
     beforeEach(function(done) {
       request(app)
@@ -134,6 +187,7 @@ describe('/api/chefs', function() {
         .expect(201)
         .expect(function(res) {
           mealId = res.body.meal.id;
+          console.log(mealId);
         })
         .end(done);
     });
@@ -145,6 +199,18 @@ describe('/api/chefs', function() {
         .expect(200)
         .expect(function(res) {
           expect(res.body).to.be.an('array');
+        })
+        .end(done);
+    });
+
+    it('should send back an array of meal objects', function(done) {
+      request(app)
+        .get('/api/meals')
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .expect(function(res) {
+          expect(res.body[0]).to.be.jsonSchema(mealObjSchema);
         })
         .end(done);
     });
