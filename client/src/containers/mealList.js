@@ -17,7 +17,7 @@ class MealList extends Component {
             {meal.name}
           </Link>
           <div>
-            <img src={meal.images} width="200" height="200" />
+            <img src={meal.images} alt="meallist" width="200" height="200" />
           </div>
           <div>
             {meal.description}
