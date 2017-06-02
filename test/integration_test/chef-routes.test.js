@@ -125,6 +125,7 @@ describe('/api/chefs', function() {
 
   describe('Get chef\'s meals', function() {
     var mealId;
+    var chefId;
     var regExDate = '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(.[0-9]{3})?Z$';
     var mealObjSchema = {
       type: 'object',
@@ -187,7 +188,7 @@ describe('/api/chefs', function() {
         .expect(201)
         .expect(function(res) {
           mealId = res.body.meal.id;
-          console.log(mealId);
+          chefId = res.body.meal.chefId;
         })
         .end(done);
     });
@@ -203,28 +204,29 @@ describe('/api/chefs', function() {
         .end(done);
     });
 
-    it('should send back an array of meal objects', function(done) {
+    it('should send back an array of meal objects owned by the chef', function(done) {
       request(app)
-        .get('/api/meals')
+        .get('/api/chefs/meals')
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(200)
         .expect('Content-Type', /json/)
         .expect(function(res) {
           expect(res.body[0]).to.be.jsonSchema(mealObjSchema);
+          expect(res.body[0].chefId).to.equal(chefId);
         })
         .end(done);
     });
 
     it('should not allow access if no auth token is sent', function(done) {
       request(app)
-        .delete('/api/chefs/meals/' + mealId)
+        .get('/api/chefs/meals')
         .expect(401)
         .end(done);
     });
 
     it('should not allow access if user is not a chef', function(done) {
       request(app)
-        .delete('/api/chefs/meals/' + mealId)
+        .get('/api/chefs/meals')
         .set('x-access-token', 'Bearer ' + userToken)
         .expect(403)
         .end(done);
