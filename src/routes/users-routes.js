@@ -18,7 +18,7 @@ router.post('/login', function(req, res, next) {
     });
   }
 
-  return passport.authenticate('local-login-user', function(err, token, userId) {
+  return passport.authenticate('local-login-user', function(err, token) {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
         return res.status(400).json({
