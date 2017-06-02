@@ -41,7 +41,7 @@ class MealDetails extends Component {
         </CardText>
         <CardActions>
           <FlatButton label="Purchase" />
-          <FlatButton label="Back to Meals" />
+          <FlatButton label={<Link to={"/meals"}>Back To Meals</Link>} />
         </CardActions>
       </Card>
       </div>
