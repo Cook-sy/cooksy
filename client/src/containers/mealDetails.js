@@ -29,7 +29,7 @@ class MealDetails extends Component {
         <CardMedia
           overlay={<CardTitle title={this.props.meal.name} subtitle="by JORV" />}
         >
-          <img src={this.props.meal.images} width="500" height="500"/>
+          <img src={this.props.meal.images} alt="meal" width="500" height="500"/>
         </CardMedia>
         <CardTitle title="Meal Details" subtitle="Description"/>
         <CardText>

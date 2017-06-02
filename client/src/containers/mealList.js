@@ -36,12 +36,12 @@ class MealList extends Component {
           <Subheader>List of Meals</Subheader>
           {_.map(this.props.meals, (meal) => (
             <GridTile
-              key={meal.images}
+              key={meal.name}
               title={<Link to={`/meals/${meal.id}`}>{meal.name}</Link>}
               subtitle={<span>by <b>JORV</b></span>}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-              <img src={meal.images} />
+              <img src={meal.images} alt="meal list"/>
             </GridTile>
           ))}
         </GridList>
