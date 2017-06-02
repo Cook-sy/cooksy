@@ -28,30 +28,30 @@ describe('/api/chefs', function() {
 
   before(function(done) {
     var chefSignup = request(app)
-    .post('/api/chefs/signup')
-    .send({
-      username: 'oicki',
-      password: 'hunter2',
-      image: '',
-      address: '123 Main St.',
-      city: 'Springfield',
-      state: 'IL',
-      zipcode: '00000'
-    })
-    .then(function(res) {
-      chefToken = res.body.token;
-    });
+      .post('/api/chefs/signup')
+      .send({
+        username: 'oicki',
+        password: 'hunter2',
+        image: '',
+        address: '123 Main St.',
+        city: 'Springfield',
+        state: 'IL',
+        zipcode: '00000'
+      })
+      .then(function(res) {
+        chefToken = res.body.token;
+      });
 
     var userSignup = request(app)
-    .post('/api/users/signup')
-    .send({
-      username: 'oicki',
-      password: 'hunter2',
-      zipcode: '00000'
-    })
-    .then(function(res) {
-      userToken = res.body.token;
-    });
+      .post('/api/users/signup')
+      .send({
+        username: 'oicki',
+        password: 'hunter2',
+        zipcode: '00000'
+      })
+      .then(function(res) {
+        userToken = res.body.token;
+      });
 
     Promise.all([chefSignup, userSignup]).then(function() {
       done();
