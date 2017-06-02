@@ -18,7 +18,7 @@ router.post('/login', function(req, res, next) {
     });
   }
 
-  return passport.authenticate('local-login-user', function(err, token) {
+  return passport.authenticate('local-login-user', function(err, token, userId) {
     if (err) {
       if (err.name === 'IncorrectCredentialsError') {
         return res.status(400).json({
@@ -80,7 +80,8 @@ router.post('/signup', function(req, res, next) {
 // /api/users/purchases
 // Get all meals the user has purchased
 router.post('/purchases', isUser, function(req, res, next) {
-  return purchaseCtrl.createPurchase(req.body)
+  console.log('REQQQQ!!!!!', req);
+  return purchaseCtrl.createPurchase(req.body, req.userId)
     .then(function(meal) {
       return res.status(200).json(meal);
     })
