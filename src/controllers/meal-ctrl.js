@@ -8,7 +8,9 @@ exports.createMeal = function(chefId, body) {
 exports.deleteMeal = function(id) {
   return db.Meal.findById(id)
     .then(function(meal) {
-      meal.destroy();
+      if (meal) {
+        meal.destroy();
+      }
       return meal;
     });
 };

@@ -104,27 +104,24 @@ router.delete('/meals/:id', isChef, function(req, res) {
     .then(function(meal) {
       if (!meal) {
         return res.status(404).json({
-          sucess: false,
+          success: false,
           message: 'Meal not found'
         });
       }
 
-      return meal.chefId === req.userId;
-    })
-    .then(function(isOwned) {
-      if (!isOwned) {
-        return res.status(403).json({
-          success: false,
-          message: 'The meal is not owned by you'
-        });
+      if (meal.chefId === req.userId) {
+        return mealCtrl.deleteMeal(req.params.id)
+          .then(function(deletedMeal) {
+            return res.status(200).json({
+              success: true,
+              meal: deletedMeal
+            });
+          });
       }
 
-      return mealCtrl.deleteMeal(req.params.id);
-    })
-    .then(function(meal) {
-      return res.status(200).json({
-        success: true,
-        meal: meal
+      return res.status(403).json({
+        success: false,
+        message: 'The meal is not owned by you'
       });
     });
 });

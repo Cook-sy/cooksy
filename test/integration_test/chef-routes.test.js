@@ -132,8 +132,8 @@ describe('/api/chefs', function() {
         .set('x-access-token', 'Bearer ' + chefToken)
         .send(mealObj)
         .expect(201)
-        .expect(function(meal) {
-          mealId = meal.id;
+        .expect(function(res) {
+          mealId = res.body.meal.id;
         })
         .end(done);
     });
@@ -156,14 +156,32 @@ describe('/api/chefs', function() {
     it('should not allow access if user is not a chef', function(done) {
       request(app)
         .delete('/api/chefs/meals/' + mealId)
-        .expect(401)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .expect(403)
         .end(done);
     });
 
     it('should not delete if chef does not own meal', function(done) {
       request(app)
-        .delete('/api/chefs/meals/' + 8)
-        .expect(401)
+        .delete('/api/chefs/meals/' + 0)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(403)
+        .end(done);
+    });
+
+    it('should not delete if meal does not exist', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId + 1)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(404)
+        .end(done);
+    });
+
+    it('should delete if chef owns meal', function(done) {
+      request(app)
+        .delete('/api/chefs/meals/' + mealId)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(200)
         .end(done);
     });
   });
