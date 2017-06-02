@@ -2,6 +2,8 @@ var express = require('express');
 var passport = require('passport');
 var validateLogin = require('../utils/form-validation').validateLogin;
 var validateUserSignup = require('../utils/form-validation').validateUserSignup;
+var purchaseCtrl = require('../controllers/purchase-ctrl');
+var isUser = require('../middleware/is-authenticated').isUser;
 var router = express.Router();
 
 // /api/users/login
@@ -73,6 +75,22 @@ router.post('/signup', function(req, res, next) {
       token: token
     });
   })(req, res, next);
+});
+
+// /api/users/purchases
+// Get all meals the user has purchased
+router.post('/purchases', isUser, function(req, res, next) {
+  return purchaseCtrl.buyMeal(req.body)
+    .then(function(meal) {
+      return res.status(200).json(meal);
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
+    });
 });
 
 module.exports = router;

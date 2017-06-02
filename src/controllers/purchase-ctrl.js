@@ -1,9 +1,5 @@
 var db = require('../models');
 
-exports.buyMeal = function(mealId) {
-  db.findOne({
-    where: {
-      mealId: mealId
-    }
-  });
+exports.buyMeal = function(id) {
+  return db.Meal.findById(id);
 };
