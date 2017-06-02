@@ -26,25 +26,6 @@ class MealList extends Component {
     this.props.fetchMeals();
   }
 
-  // renderMeals() {
-  //   return _.map(this.props.meals, meal => {
-  //     return (
-  //       <li key={meal.id}>
-  //         <Link to={`/meals/${meal.id}`}>
-  //           {meal.name}
-  //         </Link>
-  //         <div>
-  //           <img src={meal.images} alt="meallist" width="200" height="200" />
-  //         </div>
-  //         <div>
-  //           {meal.description}
-  //         </div>
-  //       </li>
-  //     );
-  //   });
-  // }
-
-
   render() {
     return (
       <div style={styles.root}>
@@ -52,12 +33,12 @@ class MealList extends Component {
           cellHeight={180}
           style={styles.gridList}
         >
-          <Subheader>December</Subheader>
+          <Subheader>List of Meals</Subheader>
           {_.map(this.props.meals, (meal) => (
             <GridTile
               key={meal.images}
-              title={meal.name}
-              subtitle={<span>by <b>YOOOOO</b></span>}
+              title={<Link to={`/meals/${meal.id}`}>{meal.name}</Link>}
+              subtitle={<span>by <b>JORV</b></span>}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
               <img src={meal.images} />
