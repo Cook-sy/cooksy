@@ -7,7 +7,6 @@ import { RadioButton } from 'material-ui/RadioButton';
 
 import { logInUser, logInChef } from '../actions';
 import {
-  renderTextAreaField,
   renderTextField,
   renderRadioGroup
 } from '../utils/FormHelper';
