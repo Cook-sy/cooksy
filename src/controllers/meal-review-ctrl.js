@@ -43,3 +43,27 @@ exports.getUserReviews = function(userId) {
     ]
   });
 };
+
+exports.updateReview = function(reviewId, payload) {
+  return db.MealReview.findById(reviewId)
+    .then(function(review) {
+      return review.update(payload);
+    })
+    .then(function(updatedReview) {
+      return db.MealReview.findById(updatedReview.id, {
+        include: [
+          {
+            model: db.User,
+            as: 'user',
+            attributes: {
+              exclude: ['password']
+            }
+          },
+          {
+            model: db.Meal,
+            as: 'meal'
+          }
+        ]
+      });
+    });
+};
