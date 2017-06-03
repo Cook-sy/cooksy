@@ -27,7 +27,7 @@ class MealDetails extends Component {
           avatar="http://www.ssrfanatic.com/forum/attachments/f6/68324d1235842541-funniest-avatar-troll-baby.jpg"
         />
         <CardMedia
-          overlay={<CardTitle title={this.props.meal.name} subtitle="by JORV" />}
+          overlay={<CardTitle title={this.props.meal.name} subtitle="JORV" />}
         >
           <img src={this.props.meal.images} alt="meal" width="500" height="500"/>
         </CardMedia>
@@ -41,7 +41,7 @@ class MealDetails extends Component {
         </CardText>
         <CardActions>
           <FlatButton label="Purchase" />
-          <FlatButton label={<Link to={"/meals"}>Back To Meals</Link>} />
+          <FlatButton label={<Link to={"/meals"} style={{color: "black", textDecoration: "none"}}>Back To Meals</Link>} />
         </CardActions>
       </Card>
       </div>
