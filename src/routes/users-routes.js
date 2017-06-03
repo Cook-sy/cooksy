@@ -8,6 +8,28 @@ var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var router = express.Router();
 
+// Check if a review is owned by a user
+var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
+  return mealReviewCtrl.getReview(reviewId)
+    .then(function(review) {
+      if (!review) {
+        return res.status(404).json({
+          success: false,
+          message: 'Review not found'
+        });
+      }
+
+      if (review.userId === userId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The review is not owned by you'
+      });
+    });
+};
+
 // /api/users/login
 // Login for users
 router.post('/login', function(req, res, next) {
@@ -156,6 +178,19 @@ router.post('/chefs/reviews', isUser, function(req, res) {
         message: err.message
       });
     });
+
+// PUT /api/users/meals/reviews/:id
+// Update a meal review
+router.post('/meals/reviews/:id', isUser, function(req, res) {
+  return checkReviewOwnership(req.params.id, req.userId, req, res, function() {
+    return mealReviewCtrl.updateMeal(req.params.id, req.payload)
+      .then(function(updatedMeal) {
+        return res.status(200).json({
+          success: true,
+          meal: updatedMeal
+        });
+      });
+  });
 });
 
 module.exports = router;
