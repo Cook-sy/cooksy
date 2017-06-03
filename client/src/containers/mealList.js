@@ -37,7 +37,7 @@ class MealList extends Component {
           {_.map(this.props.meals, (meal) => (
             <GridTile
               key={meal.name}
-              title={<Link to={`/meals/${meal.id}`}>{meal.name}</Link>}
+              title={<Link to={`/meals/${meal.id}`} style={{color:"white", textDecoration: "none"}}>{meal.name}</Link>}
               subtitle={<span>by <b>JORV</b></span>}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
