@@ -121,4 +121,42 @@ describe('/api/users', function() {
         });
     });
   });
+
+  describe('Get all meal reviews from a user', function() {
+    var reviewObjSchema = {
+      type: 'object',
+      required: [
+        'id',
+        'rating',
+        'review',
+        'mealId',
+        'userId'
+      ],
+      properties: {
+        id: { type: 'integer' },
+        rating: { type: 'integer' },
+        review: { type: 'string' },
+        mealId: { type: 'integer' },
+        userId: { type: 'integer' }
+      }
+    };
+
+    it('should return all meal reviews from a user', function(done) {
+      request(app)
+        .get('/api/users/1/meals/reviews')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then(function(res) {
+          expect(res.body).to.be.an('array');
+          expect(res.body[0]).to.be.jsonSchema(reviewObjSchema);
+
+          db.MealReview.findAll({
+            where: { userId: 1 }
+          }).then(function(reviews) {
+            expect(reviews.length).to.equal(res.body.length);
+            done();
+          });
+        });
+    });
+  });
 });
