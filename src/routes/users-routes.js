@@ -131,7 +131,7 @@ router.post('/meals/reviews', isUser, function(req, res) {
     });
 });
 
-// POST /api/users/meals/reviews
+// POST /api/users/chefs/reviews
 // Create a review for a specific chef
 router.post('/chefs/reviews', isUser, function(req, res) {
   return chefReviewCtrl.createReview(req.body.chefId, req.userId, req.body.rating)

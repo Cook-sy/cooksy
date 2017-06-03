@@ -14,13 +14,6 @@ exports.createReview = function(chefId, userId, rating) {
           attributes: {
             exclude: ['password']
           }
-        },
-        {
-          model: db.Chef,
-          as: 'Chef',
-          attributes: {
-            exclude: ['password']
-          }
         }
       ]
     });
