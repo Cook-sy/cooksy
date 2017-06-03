@@ -23,8 +23,8 @@ var i;
 var users = [];
 for (i = 0; i < numUsers; i++) {
   users.push({
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
+    username: i === 0 ? 'user' : faker.internet.userName(),
+    password: i === 0 ? 'user' : faker.internet.password(),
     zipcode: faker.address.zipCode()
   });
 }
@@ -32,8 +32,8 @@ for (i = 0; i < numUsers; i++) {
 var chefs = [];
 for (i = 0; i < numChefs; i++) {
   chefs.push({
-    username: faker.internet.userName(),
-    password: faker.internet.password(),
+    username: i === 0 ? 'chef' : faker.internet.userName(),
+    password: i === 0 ? 'chef' : faker.internet.password(),
     image: faker.image.avatar(),
     address: faker.address.streetAddress(),
     city: faker.address.city(),
@@ -74,8 +74,6 @@ for (i = 0; i < numMealReviews; i++) {
   mealReviews.push({
     rating: (faker.random.number() % 5) + 1,
     review: faker.lorem.paragraphs(),
-    createdAt: faker.date.past(),
-    updatedAt: faker.date.recent(),
     mealId: (faker.random.number() % numMeals) + 1,
     userId: (i % numUsers) + 1
   });

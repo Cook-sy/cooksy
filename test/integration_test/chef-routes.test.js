@@ -60,7 +60,8 @@ describe('/api/chefs', function() {
 
   afterEach(function(done) {
     db.Meal.destroy({
-      where: { name: 'rubber' }
+      where: { name: 'rubber' },
+      individualHooks: true
     }).then(function() {
       done();
     });
@@ -68,10 +69,12 @@ describe('/api/chefs', function() {
 
   after(function(done) {
     var chefRemove = db.Chef.destroy({
-      where: { username: 'oicki' }
+      where: { username: 'oicki' },
+      individualHooks: true
     });
     var userRemove = db.User.destroy({
-      where: { username: 'oicki' }
+      where: { username: 'oicki' },
+      individualHooks: true
     });
 
     Promise.all([chefRemove, userRemove]).then(function() {
@@ -80,6 +83,20 @@ describe('/api/chefs', function() {
   });
 
   describe('Create a new meal', function() {
+    afterEach(function(done) {
+      db.Meal.findOne({
+        where: {
+          name: 'rubber',
+          description: 'tastee'
+        }
+      }).then(function(meal) {
+        if (meal) {
+          meal.destroy();
+        }
+        done();
+      });
+    });
+
     it('should not allow access if no auth token is sent', function(done) {
       request(app)
         .post('/api/chefs/meals')
@@ -250,7 +267,8 @@ describe('/api/chefs', function() {
 
     afterEach(function(done) {
       db.Meal.destroy({
-        where: { name: 'rubber' }
+        where: { name: 'rubber' },
+        individualHooks: true
       }).then(function() {
         done();
       });
@@ -299,12 +317,12 @@ describe('/api/chefs', function() {
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(200)
         .then(function() {
-          db.Meal.findById(mealId)
+          return db.Meal.findById(mealId)
             .then(function(meal) {
               expect(meal).to.be.null;
-              done();
             });
-        });
+        })
+        .then(done, done);
     });
   });
 
@@ -332,7 +350,12 @@ describe('/api/chefs', function() {
 
     afterEach(function(done) {
       db.Meal.destroy({
-        where: { name: 'rubber' }
+        where: {
+          name: 'pizza',
+          description: 'delicious',
+          pickupInfo: 'ring please'
+        },
+        individualHooks: true
       }).then(function() {
         done();
       });

@@ -8,6 +8,28 @@ var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var router = express.Router();
 
+// Check if a review is owned by a user
+var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
+  return mealReviewCtrl.getReview(reviewId)
+    .then(function(review) {
+      if (!review) {
+        return res.status(404).json({
+          success: false,
+          message: 'Review not found'
+        });
+      }
+
+      if (review.userId === userId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The review is not owned by you'
+      });
+    });
+};
+
 // /api/users/login
 // Login for users
 router.post('/login', function(req, res, next) {
@@ -108,6 +130,15 @@ router.get('/purchases', isUser, function(req, res, next) {
     });
 });
 
+// GET /api/users/:id/meals/reviews
+// Get all meal reviews by a specific user
+router.get('/:id/meals/reviews', function(req, res) {
+  return mealReviewCtrl.getUserReviews(req.params.id)
+    .then(function(reviews) {
+      return res.json(reviews);
+    });
+});
+
 // POST /api/users/meals/reviews
 // Create a review for a specific meal
 router.post('/meals/reviews', isUser, function(req, res) {
@@ -116,7 +147,7 @@ router.post('/meals/reviews', isUser, function(req, res) {
     review: req.body.review
   };
 
-  return mealReviewCtrl(req.body.mealId, req.userId, payload)
+  return mealReviewCtrl.createReview(req.body.mealId, req.userId, payload)
     .then(function(review) {
       return res.status(201).json({
         success: true,
@@ -147,6 +178,20 @@ router.post('/chefs/reviews', isUser, function(req, res) {
         message: err.message
       });
     });
+});
+
+// PUT /api/users/meals/reviews/:id
+// Update a meal review
+router.put('/meals/reviews/:id', isUser, function(req, res) {
+  return checkReviewOwnership(req.params.id, req.userId, req, res, function() {
+    return mealReviewCtrl.updateReview(req.params.id, req.body)
+      .then(function(updatedReview) {
+        return res.status(200).json({
+          success: true,
+          review: updatedReview
+        });
+      });
+  });
 });
 
 module.exports = router;
