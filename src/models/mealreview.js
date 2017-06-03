@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     review: {
       type: DataTypes.TEXT,
       allowNull: false
