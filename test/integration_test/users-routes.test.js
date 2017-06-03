@@ -71,13 +71,6 @@ describe('/api/users', function() {
 
         review.destroy();
         return done();
-
-        // return db.MealReview.destroy({
-        //   where: { review: reviewText },
-        //   individualHooks: true
-        // }).then(function() {
-        //   done();
-        // });
       });
     });
 
@@ -106,7 +99,7 @@ describe('/api/users', function() {
         });
     });
 
-    xit('should update the review count and rating of the corresponding meal', function(done) {
+    it('should update the review count and rating of the corresponding meal', function(done) {
       var prevReviewCount;
       var prevRating;
 
@@ -173,7 +166,7 @@ describe('/api/users', function() {
     });
   });
 
-  xdescribe('Update a meal review', function() {
+  describe('Update a meal review', function() {
     var mealId = 1;
     var updateText = 'SO GOOOOD!!!!!!!!';
     var updateRating = 5;
@@ -196,7 +189,6 @@ describe('/api/users', function() {
     afterEach(function(done) {
       db.MealReview.findById(reviewId)
         .then(function(review) {
-          console.log(reviewId);
           review.destroy();
           done();
         });
@@ -226,22 +218,22 @@ describe('/api/users', function() {
     });
 
     it('should update the rating of the corresponding meal', function(done) {
-      db.MealReview.findAll({
-        where: { mealId: mealId },
-        attributes: [
-          [db.sequelize.fn('AVG', db.sequelize.col('rating')), 'average']
-        ],
-        group: ['mealId']
-      }).then(function(result) {
-        return request(app)
-          .put('/api/users/meals/reviews/' + reviewId)
-          .set('x-access-token', 'Bearer ' + userToken)
-          .send({ rating: updateRating, review: updateText })
-          .then(function(res) {
-            expect(res.body.review.meal.rating).to.equal(result[0].get('average'));
+      request(app)
+        .put('/api/users/meals/reviews/' + reviewId)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .send({ rating: updateRating, review: updateText })
+        .then(function(res) {
+          db.MealReview.findAll({
+            where: { mealId: mealId },
+            attributes: [
+              [db.sequelize.fn('AVG', db.sequelize.col('rating')), 'average']
+            ],
+            group: ['mealId']
+          }).then(function(result) {
+            expect(+res.body.review.meal.rating).to.equal(+result[0].get('average'));
             done();
           });
-      });
+        });
     });
   });
 });
