@@ -181,9 +181,9 @@ router.post('/chefs/reviews', isUser, function(req, res) {
 
 // PUT /api/users/meals/reviews/:id
 // Update a meal review
-router.post('/meals/reviews/:id', isUser, function(req, res) {
+router.put('/meals/reviews/:id', isUser, function(req, res) {
   return checkReviewOwnership(req.params.id, req.userId, req, res, function() {
-    return mealReviewCtrl.updateMeal(req.params.id, req.payload)
+    return mealReviewCtrl.updateReview(req.params.id, req.body)
       .then(function(updatedMeal) {
         return res.status(200).json({
           success: true,
