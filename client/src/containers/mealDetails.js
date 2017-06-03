@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchMealDetail } from '../actions/index';
 import { Link } from 'react-router-dom';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 class MealDetails extends Component {
@@ -18,7 +18,6 @@ class MealDetails extends Component {
     }
 
     return (
-      <div>
       <Card>
         <CardHeader
           title={meal.chef.username}
@@ -43,7 +42,6 @@ class MealDetails extends Component {
           <FlatButton label={<Link to={"/meals"} style={{color: "black", textDecoration: "none"}}>Back To Meals</Link>} />
         </CardActions>
       </Card>
-      </div>
     );
   }
 }
