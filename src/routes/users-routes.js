@@ -229,6 +229,7 @@ router.delete('/chefs/reviews/:id', isUser, function(req, res) {
         message: err.message
       });
     });
+});
 
 // DELETE /api/users/meals/reviews/:id
 router.delete('/meals/reviews/:id', isUser, function(req, res) {
@@ -241,7 +242,6 @@ router.delete('/meals/reviews/:id', isUser, function(req, res) {
         });
       });
   });
-
 });
 
 module.exports = router;
