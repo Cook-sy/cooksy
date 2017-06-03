@@ -163,8 +163,20 @@ export const validate = values => {
     errors.price = 'Required';
   }
 
+  if (isNaN(values.price)) {
+    errors.price = 'Price should be a number';
+  }
+
   if (!values.servings) {
     errors.servings = 'Required';
+  }
+
+  if (isNaN(values.servings)) {
+    errors.servings = 'Servings should be a number';
+  }
+
+  if (isNaN(values.zipcode)) {
+    errors.zipcode = 'Zipcode should be a number';
   }
 
   return errors;
