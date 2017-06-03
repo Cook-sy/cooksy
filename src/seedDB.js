@@ -73,7 +73,7 @@ var mealReviews = [];
 for (i = 0; i < numMealReviews; i++) {
   mealReviews.push({
     rating: (faker.random.number() % 5) + 1,
-    title: faker.lorem.sentence,
+    title: faker.lorem.sentence(),
     review: faker.lorem.paragraphs(),
     mealId: (faker.random.number() % numMeals) + 1,
     userId: (i % numUsers) + 1
