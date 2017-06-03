@@ -12,19 +12,6 @@ exports.deleteMeal = function(id) {
         meal.destroy();
       }
       return meal;
-    })
-    .then(function(result) {
-      return db.Meal.findById(id, {
-        include: [
-          {
-            model: db.Chef,
-            as: 'chef',
-            attributes: {
-              exclude: ['address', 'password']
-            }
-          }
-        ]
-      });
     });
 };
 
