@@ -90,13 +90,13 @@ describe('/api/users', function() {
         .send(mealReviewObj)
         .expect(201)
         .then(function() {
-          db.MealReview.findOne({
+          return db.MealReview.findOne({
             where: { review: reviewText }
           }).then(function(review) {
             expect(review).to.not.be.null;
-            done();
           });
-        });
+        })
+        .then(done, done);
     });
 
     it('should update the review count and rating of the corresponding meal', function(done) {
@@ -223,7 +223,7 @@ describe('/api/users', function() {
         .set('x-access-token', 'Bearer ' + userToken)
         .send({ rating: updateRating, review: updateText })
         .then(function(res) {
-          db.MealReview.findAll({
+          return db.MealReview.findAll({
             where: { mealId: mealId },
             attributes: [
               [db.sequelize.fn('AVG', db.sequelize.col('rating')), 'average']
@@ -231,9 +231,63 @@ describe('/api/users', function() {
             group: ['mealId']
           }).then(function(result) {
             expect(+res.body.review.meal.rating).to.equal(+result[0].get('average'));
-            done();
           });
+        })
+        .then(done, done);
+    });
+  });
+
+  describe('Delete a meal review', function() {
+    var mealId = 1;
+    var reviewId;
+
+    beforeEach(function(done) {
+      var mealReviewObj = {
+        rating: 3,
+        review: 'delete this review please',
+        mealId: mealId,
+        userId: 1
+      };
+      db.MealReview.create(mealReviewObj)
+        .then(function(review) {
+          reviewId = review.id;
+          done();
         });
+    });
+
+    afterEach(function(done) {
+      db.MealReview.findById(reviewId)
+        .then(function(review) {
+          if (review) {
+            review.destroy();
+          }
+          done();
+        });
+    });
+
+    it('should not allow access if not a user', function(done) {
+      request(app)
+        .delete('/api/users/meals/reviews/' + reviewId)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .expect(403)
+        .end(done);
+    });
+
+    xit('should delete a meal review', function(done) {
+      request(app)
+        .delete('/api/users/meals/reviews/' + reviewId)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then(function(res) {
+          expect(res.body.review.id).to.equal(reviewId);
+
+          return db.MealReview.findById(reviewId)
+            .then(function(review) {
+              expect(review).to.be.null;
+            });
+        })
+        .then(done, done);
     });
   });
 });

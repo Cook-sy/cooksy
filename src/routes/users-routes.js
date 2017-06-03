@@ -228,6 +228,19 @@ router.delete('/chefs/reviews/:id', isUser, function(req, res) {
         message: err.message
       });
     });
+
+// DELETE /api/users/meals/reviews/:id
+router.delete('/meals/reviews/:id', isUser, function(req, res) {
+  return checkReviewOwnership(req.params.id, req.userId, req, res, function() {
+    return mealReviewCtrl.deleteReview(req.params.id, req.body)
+      .then(function(deletedReview) {
+        return res.status(200).json({
+          success: true,
+          review: deletedReview
+        });
+      });
+  });
+
 });
 
 module.exports = router;
