@@ -1,0 +1,11 @@
+.root {
+  display: 'flex';
+  flex-wrap: 'wrap';
+  justify-content: 'space-around';
+}
+
+.grid-list {
+  width: 500px;
+  height: 450px;
+  overflow-y: 'auto';
+}
