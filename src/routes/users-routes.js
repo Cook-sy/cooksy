@@ -116,7 +116,7 @@ router.post('/meals/reviews', isUser, function(req, res) {
     review: req.body.review
   };
 
-  return mealReviewCtrl(req.body.mealId, req.userId, payload)
+  return mealReviewCtrl.createReview(req.body.mealId, req.userId, payload)
     .then(function(review) {
       return res.status(201).json({
         success: true,
