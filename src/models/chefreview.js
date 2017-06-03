@@ -20,5 +20,41 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  ChefReview.afterCreate(function(review, options) {
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        return chef.increment('reviewCount');
+      })
+      .then(function(chef) {
+        var rating = (chef.rating * (chef.reviewCount - 1)) + review.rating;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
+      });
+  });
+
+  ChefReview.beforeDestroy(function(review, options) {
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        return chef.decrement('reviewCount');
+      })
+      .then(function(chef) {
+        var rating = (chef.rating * (chef.reviewCount + 1)) - review.rating;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
+      });
+  });
+
+  ChefReview.afterUpdate(function(review, options) {
+    var delta = review.rating - review._previousDataValues.rating;
+
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        var rating = (chef.rating * chef.reviewCount) + delta;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
+      });
+  });
+
   return ChefReview;
 };

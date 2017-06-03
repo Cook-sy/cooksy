@@ -273,7 +273,7 @@ describe('/api/chefs', function() {
 
     it('should not delete if chef does not own meal', function(done) {
       request(app)
-        .delete('/api/chefs/meals/' + 0)
+        .delete('/api/chefs/meals/' + 1)
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(403)
         .then(function() {
@@ -357,7 +357,7 @@ describe('/api/chefs', function() {
 
     it('should not update if chef does not own meal', function(done) {
       request(app)
-        .put('/api/chefs/meals/' + 0)
+        .put('/api/chefs/meals/' + 1)
         .set('x-access-token', 'Bearer ' + chefToken)
         .send(updateObj)
         .expect(403)

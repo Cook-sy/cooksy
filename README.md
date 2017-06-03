@@ -20,15 +20,15 @@ To develop on the frontend, navigate to the `client` directory in a separate ter
 The tests will be run in an interactive/watch mode.
 
 ### Seeding database
-If you want to seed the database, run the command
+If you want to seed the database, run the command from the root directory
 ```
-$ sequelize db:seed:all
+$ node src/seedDB.js
 ```
 from the root directory. Replace `sequelize` with `node_modules/.bin/sequelize` if `sequelize-cli` is not installed globally.
 
 For testing, you'll have to seed your test database. Run the command
 ```
-$ NODE_ENV=test sequelize db:seed:all
+$ NODE_ENV=test node src/seedDB.js
 ```
 
 ### Tests on the server side
