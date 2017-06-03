@@ -20,5 +20,20 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  ChefReview.afterCreate(function(review, options) {
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        return chef.increment('reviewCount');
+      });
+  });
+
+  ChefReview.afterDestroy(function(review, options) {
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        return chef.decrement('reviewCount');
+      });
+  });
+
   return ChefReview;
 };
