@@ -20,6 +20,16 @@ exports.createReview = function(chefId, userId, rating) {
   });
 };
 
+exports.deleteReview = function(ratingId) {
+  return db.ChefReview.findById(ratingId)
+    .then(function(rating) {
+      if (rating) {
+        rating.destroy();
+      }
+      return rating;
+    });
+};
+
 exports.updateReview = function(ratingId, rating) {
   return db.ChefReview.update({ rating: rating }, {
     where: { id: ratingId }
