@@ -149,4 +149,22 @@ router.post('/chefs/reviews', isUser, function(req, res) {
     });
 });
 
+// PUT /api/users/chefs/reviews/:reviewid
+// Update a review for a specific chef
+router.put('/chefs/reviews/:id', isUser, function(req, res) {
+  return chefReviewCtrl.updateReview(req.body.chefId, req.userId, req.body.rating)
+    .then(function(review) {
+      return res.status(201).json({
+        success: true,
+        review: review
+      });
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message
+      });
+    });
+});
+
 module.exports = router;
