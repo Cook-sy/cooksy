@@ -45,5 +45,16 @@ module.exports = function(sequelize, DataTypes) {
       });
   });
 
+  ChefReview.afterUpdate(function(review, options) {
+    var delta = review.rating - review._previousDataValues.rating;
+
+    return sequelize.models.Chef.findById(review.chefId)
+      .then(function(chef) {
+        var rating = (chef.rating * chef.reviewCount) + delta;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
+      });
+  });
+
   return ChefReview;
 };
