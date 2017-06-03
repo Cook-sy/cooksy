@@ -50,7 +50,7 @@ for (i = 0; i < numMeals; i++) {
     deliveryDateTime: faker.date.future(),
     pickupInfo: faker.lorem.sentence(),
     price: +faker.commerce.price(),
-    servings: faker.random.number(),
+    servings: ((faker.random.number() % 6) * 5) + 10,
     images: faker.image.food(),
     address: faker.address.streetAddress(),
     city: faker.address.city(),
