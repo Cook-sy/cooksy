@@ -19,3 +19,21 @@ exports.createReview = function(chefId, userId, rating) {
     });
   });
 };
+
+exports.updateReview = function(rating, ratingId) {
+  return db.chefReview.update({ rating: rating }, {
+    where: { id: ratingId }
+  }).then(function(result) {
+    return db.chefReview.findById(ratingId, {
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: {
+            exclude: ['password']
+          }
+        }
+      ]
+    });
+  });
+};
