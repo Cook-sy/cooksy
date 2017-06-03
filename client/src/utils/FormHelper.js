@@ -11,6 +11,10 @@ import '../containers/Containers.css';
 
 injectTapEventPlugin();
 
+export function isZipcode(value) {
+  return /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(value);
+}
+
 export const renderTextField = ({
   input,
   label,
