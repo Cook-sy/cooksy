@@ -1,4 +1,4 @@
-import { SIGN_UP_USER, SIGN_UP_CHEF } from '../actions';
+import { SIGN_UP_USER, SIGN_UP_CHEF, LOG_IN_USER, LOG_IN_CHEF } from '../actions';
 
 let initialState = {
   auth: {
@@ -17,6 +17,20 @@ export default function reducer(state = initialState, action) {
         }
       };
     case SIGN_UP_CHEF:
+      return {
+        auth: {
+          isLoggedIn: true,
+          role: 'chef'
+        }
+      };
+    case LOG_IN_USER:
+      return {
+        auth: {
+          isLoggedIn: true,
+          role: 'user'
+        }
+      };
+    case LOG_IN_CHEF:
       return {
         auth: {
           isLoggedIn: true,

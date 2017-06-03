@@ -6,10 +6,12 @@ export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const SIGN_UP_CHEF = 'SIGN_UP_CHEF';
 export const SIGN_UP_USER = 'SIGN_UP_USER';
+export const LOG_IN_CHEF = 'LOG_IN_CHEF';
+export const LOG_IN_USER = 'LOG_IN_USER';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
-  const request = axios.post('/api/chefs/meals', values, { headers: headers })
+  const request = axios.post('/api/chefs/meals', values, { headers: headers });
 
   return {
     type: CREATE_MEAL,
@@ -55,5 +57,27 @@ export function signUpChef(values, cb) {
   return {
     type: SIGN_UP_CHEF,
     payload: request
+  };
+}
+
+export function logInChef(values, cb) {
+  const request = axios
+    .post('/api/chefs/login', values)
+    .then(({ data: { token } }) => cb(token));
+
+  return {
+    type: LOG_IN_CHEF,
+    payload: Request
+  };
+}
+
+export function logInUser(values, cb) {
+  const request = axios
+    .post('/api/users/login', values)
+    .then(({ data: { token } }) => cb(token));
+
+  return {
+    type: LOG_IN_USER,
+    payload: Request
   };
 }
