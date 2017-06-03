@@ -10,7 +10,8 @@ import { successfulAuth } from '../utils/IsAuthenticated'
 import {
   renderTextAreaField,
   renderTextField,
-  renderRadioGroup
+  renderRadioGroup,
+  isZipcode
 } from '../utils/FormHelper';
 import './SignUpForm.css';
 import './NewMealForm.css';
@@ -77,7 +78,7 @@ export class SignUpForm extends Component {
         <div>
           <Field name="zipcode" label="Zipcode" component={renderTextField} />
         </div>
-        <p className='error'>{this.props.error}</p>
+        <p className="error">{this.props.error}</p>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
             Submit
@@ -102,8 +103,8 @@ export const validate = values => {
     errors.zipcode = 'Required';
   }
 
-  if (isNaN(values.zipcode)) {
-    errors.zipcode = 'Zipcode should be a number';
+  if (!isZipcode(values.zipcode)) {
+    errors.zipcode = 'Add a valid zipcode';
   }
   
   if (!values.role) {

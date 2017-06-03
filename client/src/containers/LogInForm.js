@@ -51,7 +51,7 @@ export class LogInForm extends Component {
             component={renderTextField}
           />
         </div>
-        <p className='error'>{this.props.error}</p>
+        <p className="error">{this.props.error}</p>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
             Submit
