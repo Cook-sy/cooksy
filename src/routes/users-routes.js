@@ -5,6 +5,7 @@ var validateUserSignup = require('../utils/form-validation').validateUserSignup;
 var purchaseCtrl = require('../controllers/purchase-ctrl');
 var isUser = require('../middleware/is-authenticated').isUser;
 var mealReviewCtrl = require('../controllers/meal-review-ctrl');
+var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var router = express.Router();
 
 // /api/users/login
@@ -91,6 +92,8 @@ router.post('/purchases', isUser, function(req, res, next) {
     });
 });
 
+// /api/users/purchases
+// Allow user to purchase a meal
 router.get('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.getPurchases(req.userId)
     .then(function(meals) {
@@ -114,6 +117,24 @@ router.post('/meals/reviews', isUser, function(req, res) {
   };
 
   return mealReviewCtrl(req.body.mealId, req.userId, payload)
+    .then(function(review) {
+      return res.status(201).json({
+        success: true,
+        review: review
+      });
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: err.message
+      });
+    });
+});
+
+// POST /api/users/meals/reviews
+// Create a review for a specific chef
+router.post('/chefs/reviews', isUser, function(req, res) {
+  return chefReviewCtrl.createReview(req.body.chefId, req.userId, req.body.rating)
     .then(function(review) {
       return res.status(201).json({
         success: true,
