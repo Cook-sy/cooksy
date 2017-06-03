@@ -85,3 +85,13 @@ exports.updateReview = function(reviewId, payload) {
       });
     });
 };
+
+exports.deleteReview = function(reviewId) {
+  return db.MealReview.findById(reviewId)
+    .then(function(review) {
+      if (review) {
+        review.destroy();
+      }
+      return review;
+    });
+};
