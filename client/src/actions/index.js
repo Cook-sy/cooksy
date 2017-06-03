@@ -4,10 +4,7 @@ import { attachTokenToTheHeader } from '../utils/RequestHelper';
 export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
-export const SIGN_UP_CHEF = 'SIGN_UP_CHEF';
-export const SIGN_UP_USER = 'SIGN_UP_USER';
-export const LOG_IN_CHEF = 'LOG_IN_CHEF';
-export const LOG_IN_USER = 'LOG_IN_USER';
+export const AUTHENTICATE = 'AUTHENTICATE';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -43,7 +40,7 @@ export function signUpUser(values, cb) {
     .then(({ data: { token } }) => cb(token));
 
   return {
-    type: SIGN_UP_USER,
+    type: AUTHENTICATE,
     payload: request
   };
 }
@@ -55,7 +52,7 @@ export function signUpChef(values, cb) {
     .then(({ data: { token } }) => cb(token));
 
   return {
-    type: SIGN_UP_CHEF,
+    type: AUTHENTICATE,
     payload: request
   };
 }
@@ -66,8 +63,8 @@ export function logInChef(values, cb) {
     .then(({ data: { token } }) => cb(token));
 
   return {
-    type: LOG_IN_CHEF,
-    payload: Request
+    type: AUTHENTICATE,
+    payload: request
   };
 }
 
@@ -77,7 +74,7 @@ export function logInUser(values, cb) {
     .then(({ data: { token } }) => cb(token));
 
   return {
-    type: LOG_IN_USER,
-    payload: Request
+    type: AUTHENTICATE,
+    payload: request
   };
 }

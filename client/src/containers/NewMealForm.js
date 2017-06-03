@@ -8,7 +8,8 @@ import {
   renderTextAreaField,
   renderTimeField,
   renderTextField,
-  renderDateField
+  renderDateField,
+  isZipcode
 } from '../utils/FormHelper';
 import './NewMealForm.css';
 
@@ -163,8 +164,20 @@ export const validate = values => {
     errors.price = 'Required';
   }
 
+  if (isNaN(values.price)) {
+    errors.price = 'Price should be a number';
+  }
+
   if (!values.servings) {
     errors.servings = 'Required';
+  }
+
+  if (isNaN(values.servings)) {
+    errors.servings = 'Servings should be a number';
+  }
+
+  if (!isZipcode(values.zipcode)) {
+    errors.zipcode = 'Add a valid zipcode';
   }
 
   return errors;

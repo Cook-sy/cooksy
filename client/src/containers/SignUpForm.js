@@ -6,10 +6,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton } from 'material-ui/RadioButton';
 
 import { signUpUser, signUpChef } from '../actions';
+import { successfulAuth } from '../utils/IsAuthenticated'
 import {
   renderTextAreaField,
   renderTextField,
-  renderRadioGroup
+  renderRadioGroup,
+  isZipcode
 } from '../utils/FormHelper';
 import './SignUpForm.css';
 import './NewMealForm.css';
@@ -17,13 +19,8 @@ import './NewMealForm.css';
 export class SignUpForm extends Component {
   constructor(props) {
     super(props);
-    this.successfulAuth = this.successfulAuth.bind(this);
+    this.successfulAuth = successfulAuth.bind(this);
     this.submitForm = this.submitForm.bind(this);
-  }
-
-  successfulAuth(token) {
-    localStorage.setItem('cooksy', token);
-    this.props.history.push('/meals');
   }
 
   submitForm(values) {
@@ -81,6 +78,7 @@ export class SignUpForm extends Component {
         <div>
           <Field name="zipcode" label="Zipcode" component={renderTextField} />
         </div>
+        <p className="error">{this.props.error}</p>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
             Submit
@@ -105,6 +103,10 @@ export const validate = values => {
     errors.zipcode = 'Required';
   }
 
+  if (!isZipcode(values.zipcode)) {
+    errors.zipcode = 'Add a valid zipcode';
+  }
+  
   if (!values.role) {
     errors.role = 'Required';
   }
@@ -124,6 +126,10 @@ export const validate = values => {
   return errors;
 };
 
+function mapStateToProps({auth}) {
+  return auth
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ signUpUser, signUpChef }, dispatch);
 }
@@ -131,4 +137,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
   validate,
   form: 'SignUpForm'
-})(connect(null, mapDispatchToProps)(SignUpForm));
+})(connect(mapStateToProps, mapDispatchToProps)(SignUpForm));
