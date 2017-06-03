@@ -159,4 +159,60 @@ describe('/api/users', function() {
         });
     });
   });
+
+  describe('Update a meal review', function() {
+    var mealId = 1;
+    var updateText = 'SO GOOOOD!!!!!!!!';
+    var updateRating = 5;
+    var reviewId;
+
+    beforeEach(function(done) {
+      var mealReviewObj = {
+        rating: 3,
+        review: 'AMAZING!!!!!!!!!!',
+        mealId: mealId,
+        userId: 1
+      };
+      db.MealReview.create(mealReviewObj)
+        .then(function(review) {
+          reviewId = review.id;
+          done();
+        });
+    });
+
+    afterEach(function(done) {
+      db.MealReview.findById(reviewId)
+        .then(function(review) {
+          review.destroy();
+          done();
+        });
+    });
+
+    it('should not allow access if not a user', function(done) {
+      request(app)
+        .put('/api/users/meals/reviews/' + reviewId)
+        .set('x-access-token', 'Bearer ' + chefToken)
+        .send({ rating: updateRating, review: updateText })
+        .expect(403)
+        .end(done);
+    });
+
+    it('should update a meal review', function(done) {
+      request(app)
+        .put('/api/users/meals/reviews/' + reviewId)
+        .set('x-access-token', 'Bearer ' + userToken)
+        .send({ rating: updateRating, review: updateText })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .then(function(res) {
+          expect(res.body.review.review).to.equal(updateText);
+          expect(res.body.review.rating).to.equal(updateRating);
+          done();
+        });
+    });
+
+    xit('should update the rating of the corresponding meal', function(done) {
+
+    });
+  });
 });

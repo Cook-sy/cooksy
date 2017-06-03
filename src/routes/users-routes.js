@@ -184,10 +184,10 @@ router.post('/chefs/reviews', isUser, function(req, res) {
 router.put('/meals/reviews/:id', isUser, function(req, res) {
   return checkReviewOwnership(req.params.id, req.userId, req, res, function() {
     return mealReviewCtrl.updateReview(req.params.id, req.body)
-      .then(function(updatedMeal) {
+      .then(function(updatedReview) {
         return res.status(200).json({
           success: true,
-          meal: updatedMeal
+          review: updatedReview
         });
       });
   });
