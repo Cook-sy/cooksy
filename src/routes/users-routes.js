@@ -90,4 +90,18 @@ router.post('/purchases', isUser, function(req, res, next) {
     });
 });
 
+router.get('/purchases', isUser, function(req, res, next) {
+  return purchaseCtrl.getPurchases(req.userId)
+    .then(function(meals) {
+      return res.json(meals);
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
+    });
+});
+
 module.exports = router;
