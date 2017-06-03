@@ -77,6 +77,7 @@ export class SignUpForm extends Component {
         <div>
           <Field name="zipcode" label="Zipcode" component={renderTextField} />
         </div>
+        <p className='error'>{this.props.error}</p>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
             Submit
@@ -101,6 +102,10 @@ export const validate = values => {
     errors.zipcode = 'Required';
   }
 
+  if (isNaN(values.zipcode)) {
+    errors.zipcode = 'Zipcode should be a number';
+  }
+  
   if (!values.role) {
     errors.role = 'Required';
   }
@@ -120,6 +125,10 @@ export const validate = values => {
   return errors;
 };
 
+function mapStateToProps({auth}) {
+  return auth
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ signUpUser, signUpChef }, dispatch);
 }
@@ -127,4 +136,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
   validate,
   form: 'SignUpForm'
-})(connect(null, mapDispatchToProps)(SignUpForm));
+})(connect(mapStateToProps, mapDispatchToProps)(SignUpForm));
