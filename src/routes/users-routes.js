@@ -108,6 +108,15 @@ router.get('/purchases', isUser, function(req, res, next) {
     });
 });
 
+// GET /api/users/:id/meals/reviews
+// Get all meal reviews by a specific user
+router.get('/:id/meals/reviews', function(req, res) {
+  return mealReviewCtrl.getUserReviews(req.params.id)
+    .then(function(reviews) {
+      return res.json(reviews);
+    });
+});
+
 // POST /api/users/meals/reviews
 // Create a review for a specific meal
 router.post('/meals/reviews', isUser, function(req, res) {
@@ -116,7 +125,7 @@ router.post('/meals/reviews', isUser, function(req, res) {
     review: req.body.review
   };
 
-  return mealReviewCtrl(req.body.mealId, req.userId, payload)
+  return mealReviewCtrl.createReview(req.body.mealId, req.userId, payload)
     .then(function(review) {
       return res.status(201).json({
         success: true,

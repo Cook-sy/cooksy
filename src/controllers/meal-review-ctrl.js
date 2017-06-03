@@ -24,3 +24,22 @@ exports.createReview = function(mealId, userId, payload) {
     });
   });
 };
+
+exports.getUserReviews = function(userId) {
+  return db.MealReview.findAll({
+    where: { userId: userId },
+    include: [
+      {
+        model: db.User,
+        as: 'user',
+        attributes: {
+          exclude: ['password']
+        }
+      },
+      {
+        model: db.Meal,
+        as: 'meal'
+      }
+    ]
+  });
+};
