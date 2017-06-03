@@ -74,8 +74,6 @@ for (i = 0; i < numMealReviews; i++) {
   mealReviews.push({
     rating: (faker.random.number() % 5) + 1,
     review: faker.lorem.paragraphs(),
-    createdAt: faker.date.past(),
-    updatedAt: faker.date.recent(),
     mealId: (faker.random.number() % numMeals) + 1,
     userId: (i % numUsers) + 1
   });
