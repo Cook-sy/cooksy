@@ -144,6 +144,7 @@ router.get('/:id/meals/reviews', function(req, res) {
 router.post('/meals/reviews', isUser, function(req, res) {
   var payload = {
     rating: req.body.rating,
+    title: req.body.title,
     review: req.body.review
   };
 
