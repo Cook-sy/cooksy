@@ -46,19 +46,22 @@ describe('/api/users', function() {
 
   describe('Create a meal review', function() {
     var mealReviewObj;
+    var reviewText = 'AMAZING!!!!!!!!!!';
+    var mealId = 1;
+    var mealRating = 3;
 
     beforeEach(function(done) {
       mealReviewObj = {
-        rating: 3,
-        review: 'This is really good!!!',
-        mealId: 1
+        rating: mealRating,
+        review: reviewText,
+        mealId: mealId
       };
       done();
     });
 
     afterEach(function(done) {
       db.MealReview.destroy({
-        where: { review: 'This is really good!!!' }
+        where: { review: reviewText }
       }).then(function() {
         done();
       });
@@ -79,7 +82,43 @@ describe('/api/users', function() {
         .set('x-access-token', 'Bearer ' + userToken)
         .send(mealReviewObj)
         .expect(201)
-        .end(done);
+        .then(function() {
+          db.MealReview.findOne({
+            where: { review: reviewText }
+          }).then(function(review) {
+            expect(review).to.not.be.null;
+            done();
+          });
+        });
+    });
+
+    it('should update the review count and rating of the corresponding meal', function(done) {
+      var prevReviewCount;
+      var prevRating;
+
+      db.Meal.findById(mealId)
+        .then(function(meal) {
+          prevReviewCount = meal.reviewCount;
+          prevRating = meal.rating;
+          return meal;
+        })
+        .then(function() {
+          return request(app)
+            .post('/api/users/meals/reviews')
+            .set('x-access-token', 'Bearer ' + userToken)
+            .send(mealReviewObj);
+        })
+        .then(function() {
+          return db.Meal.findById(mealId)
+            .then(function(meal) {
+              var newRating = (prevRating * prevReviewCount) + mealRating;
+              newRating *= 1 / (prevReviewCount + 1);
+
+              expect(meal.reviewCount).to.equal(prevReviewCount + 1);
+              expect(+meal.rating).to.equal(newRating);
+              done();
+            });
+        });
     });
   });
 });
