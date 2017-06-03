@@ -317,12 +317,12 @@ describe('/api/chefs', function() {
         .set('x-access-token', 'Bearer ' + chefToken)
         .expect(200)
         .then(function() {
-          db.Meal.findById(mealId)
+          return db.Meal.findById(mealId)
             .then(function(meal) {
               expect(meal).to.be.null;
-              done();
             });
-        });
+        })
+        .then(done, done);
     });
   });
 

@@ -122,9 +122,9 @@ describe('/api/users', function() {
               newRating *= 1 / (prevReviewCount + 1);
               expect(meal.reviewCount).to.equal(prevReviewCount + 1);
               expect(+meal.rating).to.equal(newRating);
-              done();
             });
-        });
+        })
+        .then(done, done);
     });
   });
 
@@ -156,13 +156,13 @@ describe('/api/users', function() {
           expect(res.body).to.be.an('array');
           expect(res.body[0]).to.be.jsonSchema(reviewObjSchema);
 
-          db.MealReview.findAll({
+          return db.MealReview.findAll({
             where: { userId: 1 }
           }).then(function(reviews) {
             expect(reviews.length).to.equal(res.body.length);
-            done();
           });
-        });
+        })
+        .then(done, done);
     });
   });
 
