@@ -93,5 +93,22 @@ exports.deleteReview = function(reviewId) {
         review.destroy();
       }
       return review;
+    })
+    .then(function() {
+      return db.MealReview.findById(reviewId, {
+        include: [
+          {
+            model: db.User,
+            as: 'user',
+            attributes: {
+              exclude: ['password']
+            }
+          },
+          {
+            model: db.Meal,
+            as: 'meal'
+          }
+        ]
+      });
     });
 };
