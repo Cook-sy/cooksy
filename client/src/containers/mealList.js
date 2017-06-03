@@ -34,16 +34,17 @@ class MealList extends Component {
           style={styles.gridList}
         >
           <Subheader>List of Meals</Subheader>
-          {_.map(this.props.meals, (meal) => (
+          {_.map(this.props.meals, (meal) => {
+            return (
             <GridTile
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:"white", textDecoration: "none"}}>{meal.name}</Link>}
-              subtitle={<span>by <b>JORV</b></span>}
+              subtitle={<span>by <b>{meal.chef.username}</b></span>}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
               <img src={meal.images} alt="meal list"/>
             </GridTile>
-          ))}
+          )})}
         </GridList>
       </div>
     );

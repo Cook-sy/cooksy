@@ -13,7 +13,6 @@ class MealDetails extends Component {
 
   render() {
     const { meal } = this.props;
-
     if (!meal) {
       return <div>Loading...</div>;
     }
@@ -22,12 +21,12 @@ class MealDetails extends Component {
       <div>
       <Card>
         <CardHeader
-          title="JORV"
+          title={meal.chef.username}
           subtitle="Chef"
-          avatar="http://www.ssrfanatic.com/forum/attachments/f6/68324d1235842541-funniest-avatar-troll-baby.jpg"
+          avatar={meal.chef.image}
         />
         <CardMedia
-          overlay={<CardTitle title={this.props.meal.name} subtitle="JORV" />}
+          overlay={<CardTitle title={this.props.meal.name} subtitle={meal.chef.username} />}
         >
           <img src={this.props.meal.images} alt="meal" width="500" height="500"/>
         </CardMedia>
