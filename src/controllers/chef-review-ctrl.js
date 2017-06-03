@@ -20,11 +20,11 @@ exports.createReview = function(chefId, userId, rating) {
   });
 };
 
-exports.updateReview = function(rating, ratingId) {
-  return db.chefReview.update({ rating: rating }, {
+exports.updateReview = function(ratingId, rating) {
+  return db.ChefReview.update({ rating: rating }, {
     where: { id: ratingId }
   }).then(function(result) {
-    return db.chefReview.findById(ratingId, {
+    return db.ChefReview.findById(ratingId, {
       include: [
         {
           model: db.User,
