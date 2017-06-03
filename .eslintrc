@@ -6,6 +6,7 @@
   "rules": {
     "func-names": ["error", "never"],
     "no-console": "off",
+    "no-underscore-dangle": "off",
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "no-shadow": "warn",
