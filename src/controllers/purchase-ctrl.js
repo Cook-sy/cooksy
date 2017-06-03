@@ -6,5 +6,9 @@ exports.createPurchase = function(body, id) {
 };
 
 exports.getPurchases = function(id) {
-
+  return db.Purchase.findAll({
+    where: {
+      userId: id
+    }
+  });
 };
