@@ -215,7 +215,7 @@ router.put('/chefs/reviews/:id', isUser, function(req, res) {
 // DELETE /api/users/chefs/reviews/:reviewid
 // Delete a review for a specific chef
 router.delete('/chefs/reviews/:id', isUser, function(req, res) {
-  return chefReviewCtrl.deleteReview(req.params.id, req.body.rating)
+  return chefReviewCtrl.deleteReview(req.params.id)
     .then(function(review) {
       return res.status(201).json({
         success: true,
