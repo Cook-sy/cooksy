@@ -51,6 +51,7 @@ export class LogInForm extends Component {
             component={renderTextField}
           />
         </div>
+        <p className='error'>{this.props.error}</p>
         <div>
           <RaisedButton type="submit" disabled={pristine || submitting}>
             Submit
@@ -74,6 +75,10 @@ export const validate = values => {
   return errors;
 };
 
+function mapStateToProps({auth}) {
+  return auth
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ logInUser, logInChef }, dispatch);
 }
@@ -81,4 +86,4 @@ function mapDispatchToProps(dispatch) {
 export default reduxForm({
   validate,
   form: 'LogInForm'
-})(connect(null, mapDispatchToProps)(LogInForm));
+})(connect(mapStateToProps, mapDispatchToProps)(LogInForm));
