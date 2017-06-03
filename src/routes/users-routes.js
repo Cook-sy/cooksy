@@ -57,10 +57,7 @@ router.post('/signup', function(req, res, next) {
       if (err.name === 'SequelizeUniqueConstraintError') {
         return res.status(400).json({
           success: false,
-          message: 'There was an error processing the form',
-          errors: {
-            username: 'Username has already been taken'
-          }
+          message: 'Username has already been taken'
         });
       }
 
