@@ -178,6 +178,7 @@ router.post('/chefs/reviews', isUser, function(req, res) {
         message: err.message
       });
     });
+});
 
 // PUT /api/users/meals/reviews/:id
 // Update a meal review
