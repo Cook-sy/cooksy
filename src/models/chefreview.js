@@ -25,13 +25,23 @@ module.exports = function(sequelize, DataTypes) {
     return sequelize.models.Chef.findById(review.chefId)
       .then(function(chef) {
         return chef.increment('reviewCount');
+      })
+      .then(function(chef) {
+        var rating = (chef.rating * (chef.reviewCount - 1)) + review.rating;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
       });
   });
 
-  ChefReview.afterDestroy(function(review, options) {
+  ChefReview.beforeDestroy(function(review, options) {
     return sequelize.models.Chef.findById(review.chefId)
       .then(function(chef) {
         return chef.decrement('reviewCount');
+      })
+      .then(function(chef) {
+        var rating = (chef.rating * (chef.reviewCount + 1)) - review.rating;
+        chef.rating = rating / chef.reviewCount;
+        return chef.save();
       });
   });
 
