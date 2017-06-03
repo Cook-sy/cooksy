@@ -44,7 +44,12 @@ module.exports = function(sequelize, DataTypes) {
       })
       .then(function(meal) {
         var rating = (meal.rating * (meal.reviewCount + 1)) - review.rating;
-        meal.rating = rating / meal.reviewCount;
+        // If last review, then review count will be zero. Rating will be 0.
+        if (meal.reviewCount === 0) {
+          meal.rating = 0;
+        } else {
+          meal.rating = rating / meal.reviewCount;
+        }
         return meal.save();
       });
   });

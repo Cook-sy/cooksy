@@ -33,10 +33,12 @@ describe('/api/users', function() {
 
   after(function(done) {
     var chefRemove = db.Chef.destroy({
-      where: { username: 'oicki' }
+      where: { username: 'oicki' },
+      individualHooks: true
     });
     var userRemove = db.User.destroy({
-      where: { username: 'oicki' }
+      where: { username: 'oicki' },
+      individualHooks: true
     });
 
     Promise.all([chefRemove, userRemove]).then(function() {
@@ -60,10 +62,22 @@ describe('/api/users', function() {
     });
 
     afterEach(function(done) {
-      db.MealReview.destroy({
+      db.MealReview.findOne({
         where: { review: reviewText }
-      }).then(function() {
-        done();
+      }).then(function(review) {
+        if (!review) {
+          return done();
+        }
+
+        review.destroy();
+        return done();
+
+        // return db.MealReview.destroy({
+        //   where: { review: reviewText },
+        //   individualHooks: true
+        // }).then(function() {
+        //   done();
+        // });
       });
     });
 
@@ -92,7 +106,7 @@ describe('/api/users', function() {
         });
     });
 
-    it('should update the review count and rating of the corresponding meal', function(done) {
+    xit('should update the review count and rating of the corresponding meal', function(done) {
       var prevReviewCount;
       var prevRating;
 
@@ -113,7 +127,6 @@ describe('/api/users', function() {
             .then(function(meal) {
               var newRating = (prevRating * prevReviewCount) + mealRating;
               newRating *= 1 / (prevReviewCount + 1);
-
               expect(meal.reviewCount).to.equal(prevReviewCount + 1);
               expect(+meal.rating).to.equal(newRating);
               done();
@@ -160,7 +173,7 @@ describe('/api/users', function() {
     });
   });
 
-  describe('Update a meal review', function() {
+  xdescribe('Update a meal review', function() {
     var mealId = 1;
     var updateText = 'SO GOOOOD!!!!!!!!';
     var updateRating = 5;
@@ -169,7 +182,7 @@ describe('/api/users', function() {
     beforeEach(function(done) {
       var mealReviewObj = {
         rating: 3,
-        review: 'AMAZING!!!!!!!!!!',
+        review: 'GOOD!!!!!!!!!!',
         mealId: mealId,
         userId: 1
       };
@@ -183,6 +196,7 @@ describe('/api/users', function() {
     afterEach(function(done) {
       db.MealReview.findById(reviewId)
         .then(function(review) {
+          console.log(reviewId);
           review.destroy();
           done();
         });
@@ -211,8 +225,23 @@ describe('/api/users', function() {
         });
     });
 
-    xit('should update the rating of the corresponding meal', function(done) {
-
+    it('should update the rating of the corresponding meal', function(done) {
+      db.MealReview.findAll({
+        where: { mealId: mealId },
+        attributes: [
+          [db.sequelize.fn('AVG', db.sequelize.col('rating')), 'average']
+        ],
+        group: ['mealId']
+      }).then(function(result) {
+        return request(app)
+          .put('/api/users/meals/reviews/' + reviewId)
+          .set('x-access-token', 'Bearer ' + userToken)
+          .send({ rating: updateRating, review: updateText })
+          .then(function(res) {
+            expect(res.body.review.meal.rating).to.equal(result[0].get('average'));
+            done();
+          });
+      });
     });
   });
 });
