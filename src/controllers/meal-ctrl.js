@@ -49,6 +49,10 @@ exports.getNonExpiredMeals = function() {
         attributes: {
           exclude: ['address', 'password']
         }
+      },
+      {
+        model: db.MealReview,
+        as: 'mealReviews'
       }
     ]
   });
@@ -63,6 +67,10 @@ exports.getMeal = function(id) {
         attributes: {
           exclude: ['address', 'password']
         }
+      },
+      {
+        model: db.MealReview,
+        as: 'mealReviews'
       }
     ]
   });
