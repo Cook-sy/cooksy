@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
-import MealReducer from './mealsReducer';
 import { reducer as ReduxFormReducer } from 'redux-form';
+
+import MealReducer from './mealsReducer';
 import AuthenticationReducer from './authentication_reducer';
 
 const rootReducer = combineReducers({
