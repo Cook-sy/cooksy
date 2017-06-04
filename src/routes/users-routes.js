@@ -118,7 +118,7 @@ router.post('/signup', function(req, res, next) {
 });
 
 // /api/users/purchases
-// Get all meals the user has purchased
+// GET all meals the user has purchased
 router.post('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.createPurchase(req.body, req.userId)
     .then(function(meal) {
