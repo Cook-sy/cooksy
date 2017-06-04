@@ -1,4 +1,4 @@
-import { FETCH_MEALS, FETCH_MEALDETAIL, CREATE_MEAL } from '../actions/index';
+import { FETCH_MEALS, FETCH_MEALDETAIL, CREATE_MEAL, REVIEW_MEAL } from '../actions/index';
 import _ from 'lodash';
 
 export default function(state = {}, action) {
@@ -9,6 +9,11 @@ export default function(state = {}, action) {
       return _.mapKeys(action.payload.data, 'id');
     case CREATE_MEAL:
       return { ...state, [action.payload.data.meal.id]: action.payload.data.meal };
+    case REVIEW_MEAL:
+      const id = Object.keys(state)[0];
+      const newState = { ...state };
+      newState[id].mealReviews = [...state[id].mealReviews, action.payload.data.review];
+      return newState;
     default:
       return state;
   }
