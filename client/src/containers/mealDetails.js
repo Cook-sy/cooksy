@@ -27,19 +27,19 @@ class MealDetails extends Component {
         <CardMedia
           overlay={<CardTitle title={this.props.meal.name} subtitle={meal.chef.username} />}
         >
-          <img src={this.props.meal.images} alt="meal" width="500" height="500"/>
+          <img src={this.props.meal.images} alt="meal" width="500" height="500" />
         </CardMedia>
-        <CardTitle title="Meal Details" subtitle="Description"/>
+        <CardTitle title="Meal Details" subtitle="Description" />
         <CardText>
           {this.props.meal.description}
         </CardText>
-        <CardTitle subtitle="Pickup Information"/>
+        <CardTitle subtitle="Pickup Information" />
         <CardText>
           {this.props.meal.pickupInfo}
         </CardText>
         <CardActions>
           <FlatButton label="Purchase" />
-          <FlatButton label={<Link to={"/meals"} style={{color: "black", textDecoration: "none"}}>Back To Meals</Link>} />
+          <FlatButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
         </CardActions>
       </Card>
     );
