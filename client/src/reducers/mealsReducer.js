@@ -4,7 +4,7 @@ import _ from 'lodash';
 export default function(state = {}, action) {
   switch (action.type) {
     case FETCH_MEALDETAIL:
-      return { ...state, [action.payload.data.id]: action.payload.data };
+      return { ...state, [action.payload.data.meal.id]: action.payload.data.meal };
     case FETCH_MEALS:
       return _.mapKeys(action.payload.data, 'id');
     case CREATE_MEAL:
@@ -13,3 +13,4 @@ export default function(state = {}, action) {
       return state;
   }
 }
+
