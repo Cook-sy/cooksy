@@ -5,6 +5,7 @@ export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const REVIEW_MEAL = 'REVIEW_MEAL';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -30,6 +31,17 @@ export function fetchMealDetail(id) {
 
   return {
     type: FETCH_MEALDETAIL,
+    payload: request
+  };
+}
+
+export function reviewMeal(values) {
+  const headers = attachTokenToTheHeader();
+  const request = axios
+    .post('/api/users/meals/reviews', values, { headers: headers });
+
+  return {
+    type: REVIEW_MEAL,
     payload: request
   };
 }
