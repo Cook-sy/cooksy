@@ -50,7 +50,7 @@ for (i = 0; i < numMeals; i++) {
     deliveryDateTime: faker.date.future(),
     pickupInfo: faker.lorem.sentence(),
     price: +faker.commerce.price(),
-    servings: faker.random.number(),
+    servings: ((faker.random.number() % 6) * 5) + 10,
     images: faker.image.food(),
     address: faker.address.streetAddress(),
     city: faker.address.city(),
@@ -73,6 +73,7 @@ var mealReviews = [];
 for (i = 0; i < numMealReviews; i++) {
   mealReviews.push({
     rating: (faker.random.number() % 5) + 1,
+    title: faker.lorem.sentence(),
     review: faker.lorem.paragraphs(),
     mealId: (faker.random.number() % numMeals) + 1,
     userId: (i % numUsers) + 1

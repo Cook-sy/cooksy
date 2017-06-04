@@ -49,12 +49,14 @@ describe('/api/users', function() {
   describe('Create a meal review', function() {
     var mealReviewObj;
     var reviewText = 'AMAZING!!!!!!!!!!';
+    var reviewTitle = 'Good stuff';
     var mealId = 1;
     var mealRating = 3;
 
     beforeEach(function(done) {
       mealReviewObj = {
         rating: mealRating,
+        title: reviewTitle,
         review: reviewText,
         mealId: mealId
       };
@@ -134,6 +136,7 @@ describe('/api/users', function() {
       required: [
         'id',
         'rating',
+        'title',
         'review',
         'mealId',
         'userId'
@@ -141,6 +144,7 @@ describe('/api/users', function() {
       properties: {
         id: { type: 'integer' },
         rating: { type: 'integer' },
+        title: { type: 'string' },
         review: { type: 'string' },
         mealId: { type: 'integer' },
         userId: { type: 'integer' }
@@ -175,6 +179,7 @@ describe('/api/users', function() {
     beforeEach(function(done) {
       var mealReviewObj = {
         rating: 3,
+        title: 'update please',
         review: 'GOOD!!!!!!!!!!',
         mealId: mealId,
         userId: 1
@@ -244,6 +249,7 @@ describe('/api/users', function() {
     beforeEach(function(done) {
       var mealReviewObj = {
         rating: 3,
+        title: 'delete please',
         review: 'delete this review please',
         mealId: mealId,
         userId: 1

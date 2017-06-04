@@ -52,7 +52,13 @@ exports.getNonExpiredMeals = function() {
       },
       {
         model: db.MealReview,
-        as: 'mealReviews'
+        as: 'mealReviews',
+        include: [
+          {
+            model: db.User,
+            as: 'user'
+          }
+        ]
       }
     ]
   });
@@ -70,7 +76,13 @@ exports.getMeal = function(id) {
       },
       {
         model: db.MealReview,
-        as: 'mealReviews'
+        as: 'mealReviews',
+        include: [
+          {
+            model: db.User,
+            as: 'user'
+          }
+        ]
       }
     ]
   });

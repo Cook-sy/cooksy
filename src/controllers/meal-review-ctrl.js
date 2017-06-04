@@ -21,6 +21,7 @@ exports.getReview = function(id) {
 exports.createReview = function(mealId, userId, payload) {
   return db.MealReview.create({
     rating: payload.rating,
+    title: payload.title,
     review: payload.review,
     mealId: mealId,
     userId: userId

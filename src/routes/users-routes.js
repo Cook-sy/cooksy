@@ -144,6 +144,7 @@ router.get('/:id/meals/reviews', function(req, res) {
 router.post('/meals/reviews', isUser, function(req, res) {
   var payload = {
     rating: req.body.rating,
+    title: req.body.title,
     review: req.body.review
   };
 
@@ -228,6 +229,7 @@ router.delete('/chefs/reviews/:id', isUser, function(req, res) {
         message: err.message
       });
     });
+});
 
 // DELETE /api/users/meals/reviews/:id
 router.delete('/meals/reviews/:id', isUser, function(req, res) {
@@ -240,7 +242,6 @@ router.delete('/meals/reviews/:id', isUser, function(req, res) {
         });
       });
   });
-
 });
 
 module.exports = router;
