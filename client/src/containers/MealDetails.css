@@ -1,0 +1,22 @@
+.reviews {
+	border-top: 1px blue solid;
+	margin-top: 10px;
+}
+
+.review {
+	padding: 20px;
+	border-bottom: gray 1px solid;
+}
+
+.review-title {
+	padding-left: 20px;
+}
+
+.review-text {
+	padding-left: 20px;
+	color: #666;
+}
+
+.reviewer {
+	padding-left: 20px;
+}
