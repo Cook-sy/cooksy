@@ -40,36 +40,90 @@ class MealDetails extends Component {
     }
 
     return (
-      <Card>
-        <CardHeader
-          title={meal.chef.username}
-          subtitle="Chef"
-          avatar={meal.chef.image}
-        />
-        <CardMedia
-          overlay={<CardTitle title={this.props.meal.name} subtitle={meal.chef.username} />}
-        >
-          <img src={this.props.meal.images} alt="meal" width="500" height="500" />
-        </CardMedia>
-        <CardTitle title="Meal Details" subtitle="Description" />
-        <CardText>
-          {this.props.meal.description}
-        </CardText>
-        <CardTitle subtitle="Pickup Information" />
-        <CardText>
-          {this.props.meal.pickupInfo}
-        </CardText>
-        <CardActions>
-          <FlatButton label="Purchase" />
-          <FlatButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
-        </CardActions>
-      </Card>
+      <div>
+        <Card>
+          <CardHeader
+            title={meal.chef.username}
+            subtitle="Chef"
+            avatar={meal.chef.image}
+          />
+          <CardMedia
+            overlay={<CardTitle title={this.props.meal.name} subtitle={meal.chef.username} />}
+          >
+            <img src={this.props.meal.images} alt="meal" width="500" height="500" />
+          </CardMedia>
+          <CardTitle title="Meal Details" subtitle="Description" />
+          <CardText>
+            {this.props.meal.description}
+          </CardText>
+          <CardTitle subtitle="Pickup Information" />
+          <CardText>
+            {this.props.meal.pickupInfo}
+          </CardText>
+          <CardActions>
+            <FlatButton label="Purchase" />
+            <FlatButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
+          </CardActions>
+        </Card>
+        <div className='reviews'>
+          {  meal.mealReviews.map((review) => (
+            <div className='review'>
+              <div>
+                <Rating
+                  value={review.rating}
+                  max={5}
+                  readOnly={true}
+                />
+              </div>
+              <p className='review-title'>{review.title}</p>
+              <p className='review-text'>{review.review}</p>
+              <p className='reviewer'>{review.user.username}</p>
+            </div>
+          )
+        )}
+        </div>
+        <form className="review-block" onSubmit={handleSubmit(this.submitForm)}>
+          <Field
+            name="rating"
+            component={renderTextField}
+            label="5"
+            floatingLabelText="Rating"
+          />
+          <div>
+            <Field
+              name="title"
+              component={renderTextField}
+              label="Title"
+            />
+          </div>
+          <div>
+            <Field
+              name="review"
+              component={renderTextAreaField}
+              label="Review"
+              multiLine={true}
+              rows={2}
+            />
+          </div>
+          <div>
+            <RaisedButton type="submit" disabled={pristine || submitting}>
+              Submit
+            </RaisedButton>
+          </div>
+        </form>
+      </div>
     );
   }
 }
 
 function mapStateToProps({ meals }, ownProps) {
-  return { meal: meals[ownProps.match.params.id] };
+  return {
+    meals: meals,
+    meal: meals[ownProps.match.params.id]
+  };
 }
 
-export default connect(mapStateToProps, { fetchMealDetail })(MealDetails);
+//export default connect(mapStateToProps, { fetchMealDetail })(MealDetails);
+export default reduxForm({
+  form: 'ReviewsForm'
+})(connect(mapStateToProps, { fetchMealDetail, reviewMeal })(MealDetails));
