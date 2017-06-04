@@ -4,7 +4,6 @@ import { fetchMealDetail, reviewMeal } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 
@@ -61,27 +60,11 @@ class MealDetails extends Component {
             {this.props.meal.pickupInfo}
           </CardText>
           <CardActions>
-            <FlatButton label="Purchase" />
-            <FlatButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
+            <RaisedButton label="Purchase" />
+            <RaisedButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
+            <RaisedButton label="Add a review" />
           </CardActions>
         </Card>
-        <div className='reviews'>
-          {  meal.mealReviews.map((review) => (
-            <div className='review'>
-              <div>
-                <Rating
-                  value={review.rating}
-                  max={5}
-                  readOnly={true}
-                />
-              </div>
-              <p className='review-title'>{review.title}</p>
-              <p className='review-text'>{review.review}</p>
-              <p className='reviewer'>{review.user.username}</p>
-            </div>
-          )
-        )}
-        </div>
         <form className="review-block" onSubmit={handleSubmit(this.submitForm)}>
           <Field
             name="rating"
@@ -111,6 +94,23 @@ class MealDetails extends Component {
             </RaisedButton>
           </div>
         </form>
+        <div className='reviews'>
+          {  meal.mealReviews.map((review) => (
+            <div className='review'>
+              <div>
+                <Rating
+                  value={review.rating}
+                  max={5}
+                  readOnly={true}
+                />
+              </div>
+              <p className='review-title'>{review.title}</p>
+              <p className='review-text'>{review.review}</p>
+              <p className='reviewer'>{review.user.username}</p>
+            </div>
+          )
+        )}
+        </div>
       </div>
     );
   }
