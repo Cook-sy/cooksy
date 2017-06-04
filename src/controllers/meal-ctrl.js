@@ -56,7 +56,10 @@ exports.getNonExpiredMeals = function() {
         include: [
           {
             model: db.User,
-            as: 'user'
+            as: 'user',
+            attributes: {
+              exclude: ['password']
+            }
           }
         ]
       }
@@ -80,7 +83,10 @@ exports.getMeal = function(id) {
         include: [
           {
             model: db.User,
-            as: 'user'
+            as: 'user',
+            attributes: {
+              exclude: ['password']
+            }
           }
         ]
       }
