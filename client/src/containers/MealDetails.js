@@ -76,23 +76,32 @@ class MealDetails extends Component {
           </CardText>
           <CardActions>
             <RaisedButton label="Purchase" />
-            <RaisedButton label={<Link to={'/meals'} style={{color: 'black', textDecoration: 'none'}}>Back To Meals</Link>} />
+            <RaisedButton
+              label={
+                <Link
+                  to={'/meals'}
+                  style={{ color: 'black', textDecoration: 'none' }}
+                >
+                  Back To Meals
+                </Link>
+              }
+            />
             <RaisedButton label="Add a review" />
           </CardActions>
         </Card>
         <form className="review-block" onSubmit={handleSubmit(this.submitForm)}>
-          <Field
-            name="rating"
-            component={renderTextField}
-            label="5"
-            floatingLabelText="Rating"
-          />
           <div>
             <Field
-              name="title"
-              component={renderTextField}
-              label="Title"
+              name="rating"
+              label="Rating"
+              max={5}
+              value={5}
+              onChange={this.props.rateMeal}
+              component={renderRatingField}
             />
+          </div>
+          <div>
+            <Field name="title" component={renderTextField} label="Title" />
           </div>
           <div>
             <Field
