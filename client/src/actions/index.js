@@ -1,11 +1,12 @@
 import axios from 'axios';
 import { attachTokenToTheHeader } from '../utils/RequestHelper';
-
+import { change } from 'redux-form';
 export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const REVIEW_MEAL = 'REVIEW_MEAL';
+export const RATE_MEAL = 'RATE_MEAL';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -89,4 +90,12 @@ export function logInUser(values, cb) {
     type: AUTHENTICATE,
     payload: request
   };
+}
+
+export function rateMeal() {
+  const x= rate => change( "ReviewsForm", "rating", rate );
+
+  return {
+    type: RATE_MEAL
+  }
 }
