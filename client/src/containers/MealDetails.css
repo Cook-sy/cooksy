@@ -20,3 +20,11 @@
 .reviewer {
 	padding-left: 20px;
 }
+
+.show {
+	display: block;
+}
+
+.hidden {
+	display: none;
+}
