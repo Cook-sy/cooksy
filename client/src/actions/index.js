@@ -7,6 +7,7 @@ export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const REVIEW_MEAL = 'REVIEW_MEAL';
 export const RATE_MEAL = 'RATE_MEAL';
+export const TOGGLE_REVIEW = 'TOGGLE_REVIEW';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -93,9 +94,16 @@ export function logInUser(values, cb) {
 }
 
 export function rateMeal() {
-  const x= rate => change( "ReviewsForm", "rating", rate );
+  rate => change( "ReviewsForm", "rating", rate );
 
   return {
     type: RATE_MEAL
+  }
+}
+
+export function toggleReview() {
+  console.log("HERE")
+  return {
+    type: TOGGLE_REVIEW,
   }
 }
