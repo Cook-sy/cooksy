@@ -18,6 +18,7 @@ class ReviewForm extends Component {
 
   submitForm(values) {
     values.mealId = this.props.meal.id;
+    values.rating = values.rating || 5;  
     this.props.reviewMeal(values);
   }
 
