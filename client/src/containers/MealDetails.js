@@ -142,7 +142,12 @@ function mapStateToProps({ meals }, ownProps) {
   };
 }
 
-//export default connect(mapStateToProps, { fetchMealDetail })(MealDetails);
 export default reduxForm({
   form: 'ReviewsForm'
-})(connect(mapStateToProps, { fetchMealDetail, reviewMeal })(MealDetails));
+})(
+  connect(mapStateToProps, {
+    fetchMealDetail,
+    reviewMeal,
+    rateMeal
+  })(MealDetails)
+);
