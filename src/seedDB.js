@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 var dotenv = require('dotenv').load();
 var faker = require('faker');
+var createZipcodes = require('./createZipcodes');
 // database
 var db = require('./models');
 // set seed for consistent results
@@ -17,6 +18,8 @@ var numPurchases = 11;
 var numRequests = 7;
 var numUserRequests = 11;
 
+var zipcodes = [94304, 94507, 94522, 94530];
+
 var options = { individualHooks: true };
 var i;
 
@@ -25,7 +28,7 @@ for (i = 0; i < numUsers; i++) {
   users.push({
     username: i === 0 ? 'user' : faker.internet.userName(),
     password: i === 0 ? 'user' : faker.internet.password(),
-    zipcode: faker.address.zipCode()
+    zipcode: zipcodes[faker.random.number() % zipcodes.length]
   });
 }
 
@@ -38,7 +41,7 @@ for (i = 0; i < numChefs; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: faker.address.zipCode()
+    zipcode: zipcodes[faker.random.number() % zipcodes.length]
   });
 }
 
@@ -55,7 +58,7 @@ for (i = 0; i < numMeals; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: faker.address.zipCode(),
+    zipcode: zipcodes[faker.random.number() % zipcodes.length],
     chefId: (faker.random.number() % numChefs) + 1
   });
 }
@@ -102,6 +105,9 @@ var mealIds;
 var mealPrices;
 
 db.sequelize.sync({ force: true })
+  .then(function() {
+    return createZipcodes();
+  })
   .then(function() {
     return db.User.bulkCreate(users, options);
   })

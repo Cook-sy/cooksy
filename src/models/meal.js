@@ -43,6 +43,13 @@ module.exports = function(sequelize, DataTypes) {
     totalOrdered: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+    point: {
+      type: DataTypes.GEOMETRY('POINT'),
+      defaultValue: {
+        type: 'POINT',
+        coordinates: [39.807222, -76.984722]
+      }
     }
   }, {
     classMethods: {
