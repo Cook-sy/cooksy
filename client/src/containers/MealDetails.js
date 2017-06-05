@@ -88,7 +88,7 @@ class MealDetails extends Component {
         </Card>
         <ReviewForm id={this.props.match.params.id} />
         <div className="reviews">
-          {meal.mealReviews.map(review =>
+          {meal.mealReviews.reverse().map(review =>
             <div className="review" key={review.id}>
               <div>
                 <Rating value={review.rating} max={5} readOnly={true} />
