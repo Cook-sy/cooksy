@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMealDetail, reviewMeal } from '../actions';
+import { fetchMealDetail, reviewMeal, rateMeal } from '../actions';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 
 import {
   renderTextAreaField,
-  renderTimeField,
   renderTextField,
-  renderDateField,
-  isZipcode
+  renderRatingField
 } from '../utils/FormHelper';
 import './MealDetails.css';
 
@@ -47,9 +52,19 @@ class MealDetails extends Component {
             avatar={meal.chef.image}
           />
           <CardMedia
-            overlay={<CardTitle title={this.props.meal.name} subtitle={meal.chef.username} />}
+            overlay={
+              <CardTitle
+                title={this.props.meal.name}
+                subtitle={meal.chef.username}
+              />
+            }
           >
-            <img src={this.props.meal.images} alt="meal" width="500" height="500" />
+            <img
+              src={this.props.meal.images}
+              alt="meal"
+              width="500"
+              height="500"
+            />
           </CardMedia>
           <CardTitle title="Meal Details" subtitle="Description" />
           <CardText>
