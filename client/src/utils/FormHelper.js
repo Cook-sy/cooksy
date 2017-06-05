@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
+import { Rating } from 'material-ui-rating';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -90,7 +91,16 @@ export const renderRadioGroup = ({
       {...input}
       {...custom}
       valueSelected={input.value}
-      onChange={(event, value) => input.onChange(value)}
     />
     {touched && error && <span className="error">{error}</span>}
   </div>;
+
+export const renderRatingField = ({ input: { onChange, value }, ...custom }) => {
+ return ( 
+    <Rating
+      value={value || 5}
+      onChange={onChange}
+      {...custom}
+    />
+  );
+}
