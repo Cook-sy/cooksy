@@ -10,7 +10,7 @@ import promise from 'redux-promise';
 import MealList from './containers/MealList';
 import MealDetails from './containers/MealDetails';
 import reducers from './reducers';
-import App from './components/App';
+import Homepage from './containers/Homepage';
 import NewMealForm from './containers/NewMealForm';
 import SignUpForm from './containers/SignUpForm';
 import PrivateRoute from './utils/PrivateRoute'
@@ -33,7 +33,7 @@ ReactDOM.render(
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/log-in-form" component={LogInForm} />
             <Route exact path="/chef-profile" component={ChefProfile}/>
-            <Route exact path="/" component={App} />
+            <Route exact path="/" component={Homepage} />
           </Switch>
         </div>
       </BrowserRouter>
