@@ -10,15 +10,18 @@
 
 .review-title {
 	padding-left: 20px;
+	font-size: 2em;
+	color: rgb(0, 188, 212);
 }
 
 .review-text {
 	padding-left: 20px;
-	color: #666;
+	color: #000;
 }
 
 .reviewer {
 	padding-left: 20px;
+	color: #666;
 }
 
 .show {
