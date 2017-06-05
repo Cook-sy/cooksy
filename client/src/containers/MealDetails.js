@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMealDetail, reviewMeal, rateMeal } from '../actions';
-import { Field, reduxForm } from 'redux-form';
+import {
+  fetchMealDetail,
+  reviewMeal,
+  rateMeal,
+  toggleReview
+} from '../actions';
 import { Link } from 'react-router-dom';
 import {
   Card,
@@ -14,22 +18,13 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 
-import {
-  renderTextAreaField,
-  renderTextField,
-  renderRatingField
-} from '../utils/FormHelper';
+import ReviewForm from './ReviewForm';
 import './MealDetails.css';
 
 class MealDetails extends Component {
   constructor(props) {
     super(props);
-    this.submitForm = this.submitForm.bind(this);
-  }
-
-  submitForm(values) {
-    values.mealId = this.props.meal.id;
-    this.props.reviewMeal(values);
+    this.addReview = this.addReview.bind(this);
   }
 
   componentDidMount() {
@@ -37,12 +32,14 @@ class MealDetails extends Component {
     this.props.fetchMealDetail(id);
   }
 
+  addReview(e) {
+    this.props.toggleReview();
+  }
   render() {
-    const { meal, handleSubmit, pristine, submitting } = this.props;
+    const { meal } = this.props;
     if (!meal) {
       return <div>Loading...</div>;
     }
-
     return (
       <div>
         <Card>
@@ -86,38 +83,10 @@ class MealDetails extends Component {
                 </Link>
               }
             />
-            <RaisedButton label="Add a review" />
+            <RaisedButton label="Add a review" onClick={this.addReview} />
           </CardActions>
         </Card>
-        <form className="review-block" onSubmit={handleSubmit(this.submitForm)}>
-          <div>
-            <Field
-              name="rating"
-              label="Rating"
-              max={5}
-              value={5}
-              onChange={this.props.rateMeal}
-              component={renderRatingField}
-            />
-          </div>
-          <div>
-            <Field name="title" component={renderTextField} label="Title" />
-          </div>
-          <div>
-            <Field
-              name="review"
-              component={renderTextAreaField}
-              label="Review"
-              multiLine={true}
-              rows={2}
-            />
-          </div>
-          <div>
-            <RaisedButton type="submit" disabled={pristine || submitting}>
-              Submit
-            </RaisedButton>
-          </div>
-        </form>
+        <ReviewForm id={this.props.match.params.id} />
         <div className="reviews">
           {meal.mealReviews.map(review =>
             <div className="review" key={review.id}>
@@ -135,19 +104,16 @@ class MealDetails extends Component {
   }
 }
 
-function mapStateToProps({ meals }, ownProps) {
+function mapStateToProps({ meals, review }, ownProps) {
   return {
     meals: meals,
     meal: meals[ownProps.match.params.id]
   };
 }
 
-export default reduxForm({
-  form: 'ReviewsForm'
-})(
-  connect(mapStateToProps, {
-    fetchMealDetail,
-    reviewMeal,
-    rateMeal
-  })(MealDetails)
-);
+export default connect(mapStateToProps, {
+  fetchMealDetail,
+  reviewMeal,
+  rateMeal,
+  toggleReview
+})(MealDetails);
