@@ -69,7 +69,21 @@ function mapStateToProps({ review, meals }, ownProps) {
   };
 }
 
+export const validate = values => {
+  const errors = {};
+  if (!values.title) {
+  	errors.title = 'Title is required';
+  }
+
+  if (!values.review) {
+  	errors.review = 'Review is required';
+  }
+
+  return errors;
+};
+
 export default reduxForm({
+	validate,
   form: 'ReviewsForm'
 })(
   connect(mapStateToProps, {
