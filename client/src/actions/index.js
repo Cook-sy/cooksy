@@ -94,6 +94,7 @@ export function logInUser(values, cb) {
 }
 
 export function rateMeal() {
+  // eslint-disable-next-line
   rate => change( "ReviewsForm", "rating", rate );
 
   return {
@@ -102,7 +103,6 @@ export function rateMeal() {
 }
 
 export function toggleReview() {
-  console.log("HERE")
   return {
     type: TOGGLE_REVIEW,
   }
