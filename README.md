@@ -5,7 +5,19 @@
 ### Installing PostgreSQL and PostGIS
 Install PostgreSQL and PostGIS according to your operating system. If you're on a Mac, see [Postgres.app](https://postgresapp.com/).
 
+If you're on Ubuntu, install PostGIS with
+```
+$ sudo apt-get install postgis postgresql-VERSION_POSTGRES-postgis-VERSION_POSTGIS
+```
+where `VERSION_POSTGRES` and `VERSION_POSTGIS` are dependent on what version you're installing.
+
 Create a user and two databases for development and testing. To add PostGIS support to the databases, run `CREATE EXTENSION postgis;` against each database that you have.
+
+If you're on Ubuntu, you can run
+```
+$ sudo -u postgres psql -c "CREATE EXTENSION postgis;" DATABASE_NAME_HERE
+```
+for each database that you want PostGIS to be enabled.
 
 ### Configuring environment variables
 Create a `.env` file in the root directory and follow the example `.env.example`.
