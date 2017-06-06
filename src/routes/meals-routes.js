@@ -4,17 +4,17 @@ var router = express.Router();
 
 // GET /api/meals
 // Get all non-expired meals
+// GET /api/meals/?zip=ZIPCODE&=radius=NUM
+// Get all nearby meals around a zipcode that is within NUM meters
 router.get('/', function(req, res) {
-  return mealCtrl.getNonExpiredMeals()
-    .then(function(meals) {
-      return res.json(meals);
-    });
-});
+  if (req.query.zip && req.query.radius) {
+    return mealCtrl.getMealsAround(req.query.zip, req.query.radius)
+      .then(function(meals) {
+        return res.json(meals);
+      });
+  }
 
-// GET /api/meals/nearby/:zip
-// Get all nearby meals around a zipcode that is within 16000 meters
-router.get('/nearby/:zip', function(req, res) {
-  return mealCtrl.getMealsAround(req.params.zip, 16000)
+  return mealCtrl.getNonExpiredMeals()
     .then(function(meals) {
       return res.json(meals);
     });
