@@ -1,4 +1,5 @@
 var db = require('../models');
+var radiusQuery = require('../utils/radius-query');
 
 exports.createMeal = function(chefId, body) {
   body.chefId = chefId;
@@ -88,11 +89,7 @@ exports.getMealsAround = function(zipcode, radius) {
         attributes: {
           include: [
             [
-              db.sequelize.fn(
-                'ST_Distance_Sphere',
-                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('Meal.point')
-              ),
+              radiusQuery('Meal.point', zip.lat, zip.lng),
               'distance'
             ]
           ]
@@ -105,11 +102,7 @@ exports.getMealsAround = function(zipcode, radius) {
               }
             },
             db.sequelize.where(
-              db.sequelize.fn(
-                'ST_Distance_Sphere',
-                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('Meal.point')
-              ),
+              radiusQuery('Meal.point', zip.lat, zip.lng),
               '<=',
               parseFloat(radius)
             )

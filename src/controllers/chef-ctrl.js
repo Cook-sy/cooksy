@@ -1,4 +1,5 @@
 var db = require('../models');
+var radiusQuery = require('../utils/radius-query');
 
 exports.createChef = function(body, username, password) {
   return db.Chef.create({
@@ -74,11 +75,7 @@ exports.getChefsAround = function(zipcode, radius) {
         attributes: {
           include: [
             [
-              db.sequelize.fn(
-                'ST_Distance_Sphere',
-                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('Chef.point')
-              ),
+              radiusQuery('Chef.point', zip.lat, zip.lng),
               'distance'
             ]
           ],
@@ -86,11 +83,7 @@ exports.getChefsAround = function(zipcode, radius) {
         },
         where: (
           db.sequelize.where(
-            db.sequelize.fn(
-              'ST_Distance_Sphere',
-              db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-              db.sequelize.col('Chef.point')
-            ),
+            radiusQuery('Chef.point', zip.lat, zip.lng),
             '<=',
             parseFloat(radius)
           )
