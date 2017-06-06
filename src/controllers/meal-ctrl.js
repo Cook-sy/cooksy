@@ -133,14 +133,21 @@ exports.getMealsAround = function(zipcode, radius) {
           ]
         },
         where: (
-          db.sequelize.where(
-            db.sequelize.fn(
-              'ST_Distance_Sphere',
-              db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-              db.sequelize.col('point')
-            ),
-            '<=',
-            parseFloat(radius)
+          db.sequelize.and(
+            {
+              deliveryDateTime: {
+                $gt: new Date()
+              }
+            },
+            db.sequelize.where(
+              db.sequelize.fn(
+                'ST_Distance_Sphere',
+                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
+                db.sequelize.col('point')
+              ),
+              '<=',
+              parseFloat(radius)
+            )
           )
         ),
         include: [
