@@ -1,4 +1,4 @@
-import { TOGGLE_REVIEW, DID_REVIEW, DID_NOT_REVIEW } from '../actions/index';
+import { TOGGLE_REVIEW, DID_REVIEW, DID_NOT_REVIEW, CAN_NOT_REVIEW } from '../actions/index';
 const initialState = {
 	addReview: false,
 	didReview: true
@@ -11,6 +11,8 @@ export default function(state = initialState, action) {
     	return {  ...state, didReview: true };
     case DID_NOT_REVIEW:
     	return { ...state, didReview: false };
+    case CAN_NOT_REVIEW:
+      return { ...state, didReview: true };
     default:
       return state;
   }
