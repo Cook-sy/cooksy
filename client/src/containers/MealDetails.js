@@ -21,6 +21,7 @@ import { Rating } from 'material-ui-rating';
 
 import ReviewForm from './ReviewForm';
 import './MealDetails.css';
+import Map from './GoogleMaps';
 
 class MealDetails extends Component {
   constructor(props) {
@@ -78,6 +79,12 @@ class MealDetails extends Component {
           <CardTitle subtitle="Pickup Information" />
           <CardText>
             {this.props.meal.pickupInfo}
+            <div style={{width:300, height:300}}>
+              <Map
+                containerElement={<div style={{height: `100%`}} />}
+                mapElement={<div style={{height: `100%`}} />}
+              />
+            </div>
           </CardText>
           <CardActions>
             <RaisedButton label="Purchase" />
