@@ -4,14 +4,14 @@ module.exports = function(sequelize, DataTypes) {
   var Zipcode = sequelize.define('Zipcode', {
     zip: {
       type: DataTypes.STRING,
-      allowNull: false
+      primaryKey: true
     },
     lat: {
-      type: DataTypes.STRING,
+      type: DataTypes.DOUBLE,
       allowNull: false
     },
     lng: {
-      type: DataTypes.STRING,
+      type: DataTypes.DOUBLE,
       allowNull: false
     }
   }, {
