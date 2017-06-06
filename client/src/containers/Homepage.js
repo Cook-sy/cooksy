@@ -10,8 +10,29 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import './MealList.css';
 
 class Homepage extends Component {
+
   componentDidMount() {
-    this.props.fetchMeals();
+
+    let todaysMeals = [];
+    const today = new Date();
+    const year = today.getFullYear().toString();
+    let month = (today.getMonth() + 1).toString();
+    if (month.length === 1) {
+      month = '0' + month;
+    }
+    let day = today.getDate().toString();
+    if (day.length === 1) {
+      day = '0' + day;
+    }
+    const date = year + '-' + month + '-' + day;
+    this.props.fetchMeals()
+      .then(function(meals) {
+        _.map(meals.payload.data, (meal) => {
+          if (meal.deliveryDateTime.substr(0, 10) === '2017-08-18') {
+            todaysMeals.push(meal);
+          }
+        })
+      })
   }
 
   render() {
@@ -22,7 +43,8 @@ class Homepage extends Component {
           className="grid-list"
         >
           <Subheader>Cooksy</Subheader>
-          {_.map(this.props.meals, (meal) => (
+
+          {_.map(this.todaysMeals, (meal) => (
             <GridTile
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
