@@ -1,5 +1,15 @@
 var db = require('../models');
 
+var chefReviewInclude = [
+  {
+    model: db.User,
+    as: 'user',
+    attributes: {
+      exclude: ['password']
+    }
+  }
+];
+
 exports.createReview = function(chefId, userId, rating) {
   return db.ChefReview.create({
     rating: rating,
@@ -7,15 +17,7 @@ exports.createReview = function(chefId, userId, rating) {
     userId: userId
   }).then(function(review) {
     return db.ChefReview.findById(review.id, {
-      include: [
-        {
-          model: db.User,
-          as: 'user',
-          attributes: {
-            exclude: ['password']
-          }
-        }
-      ]
+      include: chefReviewInclude
     });
   });
 };
@@ -35,15 +37,7 @@ exports.updateReview = function(ratingId, rating) {
     where: { id: ratingId }
   }).then(function(result) {
     return db.ChefReview.findById(ratingId, {
-      include: [
-        {
-          model: db.User,
-          as: 'user',
-          attributes: {
-            exclude: ['password']
-          }
-        }
-      ]
+      include: chefReviewInclude
     });
   });
 };

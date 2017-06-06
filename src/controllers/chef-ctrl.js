@@ -24,13 +24,25 @@ exports.findChefByUsername = function(username) {
   });
 };
 
-exports.getChefs = function() {
-  return db.Chef.findAll({
-    attributes: { exclude: ['password'] },
+var chefInclude = [
+  {
+    model: db.ChefReview,
+    as: 'chefReviews',
     include: [
       {
-        model: db.ChefReview,
-        as: 'chefReviews',
+        model: db.User,
+        as: 'user',
+        attributes: { exclude: ['password'] }
+      }
+    ]
+  },
+  {
+    model: db.Meal,
+    as: 'meals',
+    include: [
+      {
+        model: db.MealReview,
+        as: 'mealReviews',
         include: [
           {
             model: db.User,
@@ -38,25 +50,15 @@ exports.getChefs = function() {
             attributes: { exclude: ['password'] }
           }
         ]
-      },
-      {
-        model: db.Meal,
-        as: 'meals',
-        include: [
-          {
-            model: db.MealReview,
-            as: 'mealReviews',
-            include: [
-              {
-                model: db.User,
-                as: 'user',
-                attributes: { exclude: ['password'] }
-              }
-            ]
-          }
-        ]
       }
     ]
+  }
+];
+
+exports.getChefs = function() {
+  return db.Chef.findAll({
+    attributes: { exclude: ['password'] },
+    include: chefInclude
   });
 };
 
@@ -93,36 +95,7 @@ exports.getChefsAround = function(zipcode, radius) {
             parseFloat(radius)
           )
         ),
-        include: [
-          {
-            model: db.ChefReview,
-            as: 'chefReviews',
-            include: [
-              {
-                model: db.User,
-                as: 'user',
-                attributes: { exclude: ['password'] }
-              }
-            ]
-          },
-          {
-            model: db.Meal,
-            as: 'meals',
-            include: [
-              {
-                model: db.MealReview,
-                as: 'mealReviews',
-                include: [
-                  {
-                    model: db.User,
-                    as: 'user',
-                    attributes: { exclude: ['password'] }
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+        include: chefInclude
       });
     });
 };

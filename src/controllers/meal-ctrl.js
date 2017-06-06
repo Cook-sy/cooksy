@@ -15,6 +15,29 @@ exports.deleteMeal = function(id) {
     });
 };
 
+var mealInclude = [
+  {
+    model: db.Chef,
+    as: 'chef',
+    attributes: {
+      exclude: ['address', 'password']
+    }
+  },
+  {
+    model: db.MealReview,
+    as: 'mealReviews',
+    include: [
+      {
+        model: db.User,
+        as: 'user',
+        attributes: {
+          exclude: ['password']
+        }
+      }
+    ]
+  }
+];
+
 exports.updateMeal = function(id, newValues) {
   return db.Meal.update(newValues, {
     where: { id: id },
@@ -22,15 +45,7 @@ exports.updateMeal = function(id, newValues) {
     plain: true
   }).then(function(result) {
     return db.Meal.findById(id, {
-      include: [
-        {
-          model: db.Chef,
-          as: 'chef',
-          attributes: {
-            exclude: ['address', 'password']
-          }
-        }
-      ]
+      include: mealInclude
     });
   });
 };
@@ -42,55 +57,13 @@ exports.getNonExpiredMeals = function() {
         $gt: new Date()
       }
     },
-    include: [
-      {
-        model: db.Chef,
-        as: 'chef',
-        attributes: {
-          exclude: ['address', 'password']
-        }
-      },
-      {
-        model: db.MealReview,
-        as: 'mealReviews',
-        include: [
-          {
-            model: db.User,
-            as: 'user',
-            attributes: {
-              exclude: ['password']
-            }
-          }
-        ]
-      }
-    ]
+    include: mealInclude
   });
 };
 
 exports.getMeal = function(id) {
   return db.Meal.findById(id, {
-    include: [
-      {
-        model: db.Chef,
-        as: 'chef',
-        attributes: {
-          exclude: ['address', 'password']
-        }
-      },
-      {
-        model: db.MealReview,
-        as: 'mealReviews',
-        include: [
-          {
-            model: db.User,
-            as: 'user',
-            attributes: {
-              exclude: ['password']
-            }
-          }
-        ]
-      }
-    ]
+    include: mealInclude
   });
 };
 
@@ -99,15 +72,7 @@ exports.getChefsMeals = function(id) {
     where: {
       chefId: id
     },
-    include: [
-      {
-        model: db.Chef,
-        as: 'chef',
-        attributes: {
-          exclude: ['address', 'password']
-        }
-      }
-    ]
+    include: mealInclude
   });
 };
 
@@ -150,28 +115,7 @@ exports.getMealsAround = function(zipcode, radius) {
             )
           )
         ),
-        include: [
-          {
-            model: db.Chef,
-            as: 'chef',
-            attributes: {
-              exclude: ['address', 'password']
-            }
-          },
-          {
-            model: db.MealReview,
-            as: 'mealReviews',
-            include: [
-              {
-                model: db.User,
-                as: 'user',
-                attributes: {
-                  exclude: ['password']
-                }
-              }
-            ]
-          }
-        ]
+        include: mealInclude
       });
     });
 };
