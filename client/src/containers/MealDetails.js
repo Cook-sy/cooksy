@@ -4,7 +4,8 @@ import {
   fetchMealDetail,
   reviewMeal,
   rateMeal,
-  toggleReview
+  toggleReview,
+  didReview
 } from '../actions';
 import { Link } from 'react-router-dom';
 import {
@@ -25,6 +26,7 @@ class MealDetails extends Component {
   constructor(props) {
     super(props);
     this.addReview = this.addReview.bind(this);
+    this.didReview = this.didReview.bind(this);
   }
 
   componentDidMount() {
@@ -35,13 +37,19 @@ class MealDetails extends Component {
   addReview(e) {
     this.props.toggleReview();
   }
+
+  didReview(meal) {
+    this.props.didReview(this.props.meal);
+  }
+
   render() {
-    const { meal } = this.props;
+    const { meal, review } = this.props;
     if (!meal) {
       return <div>Loading...</div>;
     }
+
     return (
-      <div>
+      <div onLoad={this.didReview}>
         <Card>
           <CardHeader
             title={meal.chef.username}
@@ -83,7 +91,7 @@ class MealDetails extends Component {
                 </Link>
               }
             />
-            <RaisedButton label="Add a review" onClick={this.addReview} />
+            {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
           </CardActions>
         </Card>
         <ReviewForm id={this.props.match.params.id} />
@@ -107,7 +115,8 @@ class MealDetails extends Component {
 function mapStateToProps({ meals, review }, ownProps) {
   return {
     meals: meals,
-    meal: meals[ownProps.match.params.id]
+    meal: meals[ownProps.match.params.id],
+    review: review
   };
 }
 
@@ -115,5 +124,6 @@ export default connect(mapStateToProps, {
   fetchMealDetail,
   reviewMeal,
   rateMeal,
-  toggleReview
+  toggleReview,
+  didReview
 })(MealDetails);
