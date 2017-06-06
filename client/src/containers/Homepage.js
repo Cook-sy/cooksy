@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMeals } from '../actions/index';
+import { fetchTodaysMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import _ from 'lodash';
 import { GridList, GridTile } from 'material-ui/GridList';
@@ -12,30 +12,8 @@ import './MealList.css';
 class Homepage extends Component {
 
   componentDidMount() {
-
-    let todaysMeals = [];
-    const today = new Date();
-    const year = today.getFullYear().toString();
-    let month = (today.getMonth() + 1).toString();
-    if (month.length === 1) {
-      month = '0' + month;
-    }
-    let day = today.getDate().toString();
-    if (day.length === 1) {
-      day = '0' + day;
-    }
-    const date = year + '-' + month + '-' + day;
-    this.props.fetchMeals()
-      .then(function(meals) {
-        _.map(meals.payload.data, (meal) => {
-          if (meal.deliveryDateTime.substr(0, 10) === '2017-08-18') {
-            todaysMeals.push(meal);
-          }
-        })
-      })
+    this.props.fetchTodaysMeals();
   }
-
-  fetchAllMeals
 
   render() {
     return (
@@ -65,4 +43,4 @@ function mapStateToProps(state) {
   return { meals: state.meals };
 }
 
-export default connect(mapStateToProps, { fetchMeals: fetchMeals })(Homepage);
+export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals })(Homepage);
