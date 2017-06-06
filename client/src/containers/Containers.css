@@ -9,6 +9,10 @@ form h1 {
   color: rgb(0, 188, 212);
 }
 
+.no-border {
+  border: 0;
+}
+
 .textarea-field label {
   left: 0px;
 }
