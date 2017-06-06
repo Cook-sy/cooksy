@@ -38,6 +38,15 @@ router.get('/', function(req, res) {
     });
 });
 
+// GET /api/chefs/nearby/:zip
+// Get all nearby chefs around a zipcode that is within 16000 meters
+router.get('/nearby/:zip', function(req, res) {
+  return chefCtrl.getChefsAround(req.params.zip, 16000)
+    .then(function(chefs) {
+      return res.json(chefs);
+    });
+});
+
 // POST /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {

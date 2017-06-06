@@ -59,3 +59,70 @@ exports.getChefs = function() {
     ]
   });
 };
+
+// Gets all meals near zipcode in a radius specified by meters
+exports.getChefsAround = function(zipcode, radius) {
+  return db.Zipcode.findById(zipcode)
+    .then(function(zip) {
+      if (!zip) {
+        return [];
+      }
+
+      return db.Chef.findAll({
+        attributes: {
+          include: [
+            [
+              db.sequelize.fn(
+                'ST_Distance_Sphere',
+                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
+                db.sequelize.col('point')
+              ),
+              'distance'
+            ]
+          ],
+          exclude: ['password']
+        },
+        where: (
+          db.sequelize.where(
+            db.sequelize.fn(
+              'ST_Distance_Sphere',
+              db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
+              db.sequelize.col('point')
+            ),
+            '<=',
+            parseFloat(radius)
+          )
+        ),
+        include: [
+          {
+            model: db.ChefReview,
+            as: 'chefReviews'
+            // include: [
+            //   {
+            //     model: db.User,
+            //     as: 'user',
+            //     attributes: { exclude: ['password'] }
+            //   }
+            // ]
+          }
+          // {
+          //   model: db.Meal,
+          //   as: 'meals',
+          //   include: [
+          //     {
+          //       model: db.MealReview,
+          //       as: 'mealReviews',
+          //       include: [
+          //         {
+          //           model: db.User,
+          //           as: 'user',
+          //           attributes: { exclude: ['password'] }
+          //         }
+          //       ]
+          //     }
+          //   ]
+          // }
+        ]
+      });
+    });
+};
