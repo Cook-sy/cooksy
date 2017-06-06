@@ -23,3 +23,39 @@ exports.findChefByUsername = function(username) {
     }
   });
 };
+
+exports.getChefs = function() {
+  return db.Chef.findAll({
+    attributes: { exclude: ['password'] },
+    include: [
+      {
+        model: db.ChefReview,
+        as: 'chefReviews',
+        include: [
+          {
+            model: db.User,
+            as: 'user',
+            attributes: { exclude: ['password'] }
+          }
+        ]
+      },
+      {
+        model: db.Meal,
+        as: 'meals',
+        include: [
+          {
+            model: db.MealReview,
+            as: 'mealReviews',
+            include: [
+              {
+                model: db.User,
+                as: 'user',
+                attributes: { exclude: ['password'] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  });
+};

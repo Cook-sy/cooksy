@@ -50,7 +50,7 @@ module.exports = function(sequelize, DataTypes) {
           });
           Chef.hasMany(models.Meal, {
             foreignKey: 'chefId',
-            as: 'chefMeals'
+            as: 'meals'
           });
         }
       },
