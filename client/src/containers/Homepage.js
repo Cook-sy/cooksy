@@ -35,6 +35,8 @@ class Homepage extends Component {
       })
   }
 
+  fetchAllMeals
+
   render() {
     return (
       <div className="root">
@@ -43,8 +45,7 @@ class Homepage extends Component {
           className="grid-list"
         >
           <Subheader>Cooksy</Subheader>
-
-          {_.map(this.todaysMeals, (meal) => (
+          {_.map(this.props.meals, (meal) => (
             <GridTile
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
