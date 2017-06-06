@@ -19,3 +19,39 @@ exports.findUserByUsername = function(username) {
     }
   });
 };
+
+exports.getUsers = function() {
+  return db.User.findAll({
+    attributes: { exclude: ['password'] },
+    include: [
+      {
+        model: db.ChefReview,
+        as: 'chefReviews',
+        include: [
+          {
+            model: db.Chef,
+            as: 'chef',
+            attributes: { exclude: ['password', 'address'] }
+          }
+        ]
+      },
+      {
+        model: db.MealReview,
+        as: 'mealReviews',
+        include: [
+          {
+            model: db.Meal,
+            as: 'meal',
+            include: [
+              {
+                model: db.Chef,
+                as: 'chef',
+                attributes: { exclude: ['password'] }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  });
+};
