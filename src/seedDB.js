@@ -126,16 +126,17 @@ for (i = 0; i < numUserRequests; i++) {
 var mealIds;
 var mealPrices;
 
-db.sequelize.sync({ force: true })
-  .then(function() {
-    return db.User.bulkCreate(users, options);
-  })
-  .then(function() {
-    return db.Chef.bulkCreate(chefs, options);
-  })
-  .then(function() {
-    return db.Meal.bulkCreate(meals, options);
-  })
+db.User.sync({ force: true })
+  .then(function() { return db.Chef.sync({ force: true }); })
+  .then(function() { return db.Meal.sync({ force: true }); })
+  .then(function() { return db.ChefReview.sync({ force: true }); })
+  .then(function() { return db.MealReview.sync({ force: true }); })
+  .then(function() { return db.Purchase.sync({ force: true }); })
+  .then(function() { return db.Request.sync({ force: true }); })
+  .then(function() { return db.UserRequest.sync({ force: true }); })
+  .then(function() { return db.User.bulkCreate(users, options); })
+  .then(function() { return db.Chef.bulkCreate(chefs, options); })
+  .then(function() { return db.Meal.bulkCreate(meals, options); })
   .then(function(res) {
     mealIds = res.map(function(instance) {
       return instance.id;
@@ -146,9 +147,7 @@ db.sequelize.sync({ force: true })
 
     return db.ChefReview.bulkCreate(chefReviews, options);
   })
-  .then(function() {
-    return db.MealReview.bulkCreate(mealReviews, options);
-  })
+  .then(function() { return db.MealReview.bulkCreate(mealReviews, options); })
   .then(function(res) {
     var purchases = [];
     for (i = 0; i < numPurchases; i++) {
@@ -163,12 +162,8 @@ db.sequelize.sync({ force: true })
 
     return db.Purchase.bulkCreate(purchases, options);
   })
-  .then(function() {
-    return db.Request.bulkCreate(requests, options);
-  })
-  .then(function() {
-    return db.UserRequest.bulkCreate(userRequests, options);
-  })
+  .then(function() { return db.Request.bulkCreate(requests, options); })
+  .then(function() { return db.UserRequest.bulkCreate(userRequests, options); })
   .then(function() {
     db.sequelize.close();
     console.log('Finished seeding db!');

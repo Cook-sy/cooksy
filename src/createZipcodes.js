@@ -14,5 +14,8 @@ fs.createReadStream(path.join(__dirname, 'zipcodes.txt'))
     db.Zipcode.sync({ force: true })
       .then(function() {
         return db.Zipcode.bulkCreate(csvZipcode);
+      })
+      .then(function() {
+        return db.sequelize.close();
       });
   });
