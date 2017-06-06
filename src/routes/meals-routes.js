@@ -2,16 +2,25 @@ var express = require('express');
 var mealCtrl = require('../controllers/meal-ctrl');
 var router = express.Router();
 
-// /api/meals
+// GET /api/meals
 // Get all non-expired meals
 router.get('/', function(req, res) {
   return mealCtrl.getNonExpiredMeals()
     .then(function(meals) {
-      res.json(meals);
+      return res.json(meals);
     });
 });
 
-// /api/meals/:id
+// GET /api/meals/nearby/:zip
+// Get all nearby meals around a zipcode that is within 16000 meters
+router.get('/nearby/:zip', function(req, res) {
+  return mealCtrl.getMealsAround(req.params.zip, 16000)
+    .then(function(meals) {
+      return res.json(meals);
+    });
+});
+
+// GET /api/meals/:id
 // Get a specific meal by id
 router.get('/:id', function(req, res) {
   return mealCtrl.getMeal(req.params.id)
