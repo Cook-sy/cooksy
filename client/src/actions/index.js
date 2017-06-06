@@ -80,7 +80,8 @@ export function fetchTodaysMeals() {
   const date = year + '-' + month + '-' + day;
   let request = axios.get('/api/meals')
     .then(function(meals) {
-      return _.filter(meals.payload.data, (meal) => {
+      console.log(meals);
+      return _.filter(meals.data, (meal) => {
         return meal.deliveryDateTime.substr(0, 10) === '2017-08-18';
       });
     });

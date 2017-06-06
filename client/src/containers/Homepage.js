@@ -10,9 +10,8 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import './MealList.css';
 
 class Homepage extends Component {
-
   componentDidMount() {
-    this.props.fetchTodaysMeals();
+    console.log(this.props.fetchTodaysMeals());
   }
 
   render() {
@@ -23,7 +22,7 @@ class Homepage extends Component {
           className="grid-list"
         >
           <Subheader>Cooksy</Subheader>
-          {_.map(this.props.meals, (meal) => (
+          {_.map(this.props.todaysMeals, (meal) => (
             <GridTile
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
@@ -40,7 +39,7 @@ class Homepage extends Component {
 }
 
 function mapStateToProps(state) {
-  return { meals: state.meals };
+  return { todaysMeals: state.todaysMeals };
 }
 
 export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals })(Homepage);
