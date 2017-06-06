@@ -11,7 +11,7 @@ import './MealList.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    console.log(this.props.fetchTodaysMeals());
+    this.props.fetchTodaysMeals();
   }
 
   render() {
@@ -42,4 +42,4 @@ function mapStateToProps(state) {
   return { todaysMeals: state.todaysMeals };
 }
 
-export default connect(mapStateToProps, { fetchTodaysMeals })(Homepage);
+export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals })(Homepage);

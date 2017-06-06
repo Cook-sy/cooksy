@@ -1,0 +1,11 @@
+.root-homepage {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: nowrap !important;
+  overflow-x: auto;
+}

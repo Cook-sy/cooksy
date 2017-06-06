@@ -27,13 +27,17 @@ ReactDOM.render(
       <BrowserRouter>
         <div>
           <Switch>
+            <Route exact path="/" component={Homepage} />
             <Route exact path="/meals" component={MealList} />
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/sign-up-form" component={SignUpForm} />
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/log-in-form" component={LogInForm} />
+<<<<<<< HEAD
             <Route exact path="/chef-profile" component={ChefProfile}/>
             <Route exact path="/" component={Homepage} />
+=======
+>>>>>>> (fix) Fix todaysMeals reducer
           </Switch>
         </div>
       </BrowserRouter>

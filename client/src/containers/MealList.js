@@ -35,17 +35,17 @@ class MealList extends Component {
     return (
       <div className="root">
         <RaisedButton style={style} label="ALL Meals" onClick={this.props.fetchMeals} />
-        <RaisedButton 
+        <RaisedButton
           style={style}
-          label="Nearby Meals" 
-          title={ 
-            user.user 
-            ? "Look for nearby meals" 
+          label="Nearby Meals"
+          title={
+            user.user
+            ? "Look for nearby meals"
             : "Please Signup/Login to view nearby meals"
-          } onClick={this.showNearbyMeals} 
-          disabled={!user.user} 
+          } onClick={this.showNearbyMeals}
+          disabled={!user.user}
         />
-        
+
         <GridList
           cellHeight={180}
           className="grid-list"
@@ -68,7 +68,7 @@ class MealList extends Component {
 }
 
 function mapStateToProps({ meals, auth: { user } }) {
-  return { 
+  return {
     meals: meals,
     user: user
   };
