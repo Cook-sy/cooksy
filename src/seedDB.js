@@ -18,28 +18,6 @@ var numRequests = 7;
 var numUserRequests = 11;
 
 var zipcodes = ['94304', '94507', '94608', '94530', '93551'];
-var points = [
-  {
-    type: 'POINT',
-    coordinates: [37.374702, -122.181696]
-  },
-  {
-    type: 'POINT',
-    coordinates: [37.850410, -122.021123]
-  },
-  {
-    type: 'POINT',
-    coordinates: [37.836844, -122.289143]
-  },
-  {
-    type: 'POINT',
-    coordinates: [37.921561, -122.298337]
-  },
-  {
-    type: 'POINT',
-    coordinates: [34.604105, -118.239213]
-  }
-];
 
 var options = { individualHooks: true };
 var i;
@@ -79,8 +57,7 @@ for (i = 0; i < numMeals; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: zipcodes[i],
-    point: points[i],
+    zipcode: zipcodes[faker.random.number() % zipcodes.length],
     chefId: (faker.random.number() % numChefs) + 1
   });
 }

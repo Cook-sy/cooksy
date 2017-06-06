@@ -111,51 +111,60 @@ exports.getChefsMeals = function(id) {
   });
 };
 
-// Gets all meals around position (lat, lng) in a radius specified by meters
-exports.getMealsAround = function(lat, lng, radius) {
-  return db.Meal.findAll({
-    attributes: {
-      include: [
-        [
-          db.sequelize.fn(
-            'ST_Distance_Sphere',
-            db.sequelize.fn('ST_MakePoint', parseFloat(lat), parseFloat(lng)),
-            db.sequelize.col('point')
-          ),
-          'distance'
-        ]
-      ]
-    },
-    where: db.sequelize.where(
+// Gets all meals near zipcode in a radius specified by meters
+exports.getMealsAround = function(zipcode, radius) {
+  return db.Zipcode.findById(zipcode)
+    .then(function(zip) {
+      if (!zip) {
+        return [];
+      }
+
+      return db.Meal.findAll({
+        attributes: {
+          include: [
+            [
+              db.sequelize.fn(
+                'ST_Distance_Sphere',
+                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
+                db.sequelize.col('point')
+              ),
+              'distance'
+            ]
+          ]
+        },
+        where: (
+          db.sequelize.where(
             db.sequelize.fn(
               'ST_Distance_Sphere',
-              db.sequelize.fn('ST_MakePoint', parseFloat(lat), parseFloat(lng)),
+              db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
               db.sequelize.col('point')
             ),
             '<=',
             parseFloat(radius)
-          ),
-    include: [
-      {
-        model: db.Chef,
-        as: 'chef',
-        attributes: {
-          exclude: ['address', 'password']
-        }
-      },
-      {
-        model: db.MealReview,
-        as: 'mealReviews',
+          )
+        ),
         include: [
           {
-            model: db.User,
-            as: 'user',
+            model: db.Chef,
+            as: 'chef',
             attributes: {
-              exclude: ['password']
+              exclude: ['address', 'password']
             }
+          },
+          {
+            model: db.MealReview,
+            as: 'mealReviews',
+            include: [
+              {
+                model: db.User,
+                as: 'user',
+                attributes: {
+                  exclude: ['password']
+                }
+              }
+            ]
           }
         ]
-      }
-    ]
-  });
+      });
+    });
 };
