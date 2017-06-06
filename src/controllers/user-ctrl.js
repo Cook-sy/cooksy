@@ -1,4 +1,5 @@
 var db = require('../models');
+var radiusQuery = require('../utils/radius-query');
 
 exports.createUser = function(body, username, password) {
   return db.User.create({
@@ -70,11 +71,7 @@ exports.getUsersAround = function(zipcode, radius) {
         attributes: {
           include: [
             [
-              db.sequelize.fn(
-                'ST_Distance_Sphere',
-                db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('User.point')
-              ),
+              radiusQuery('User.point', zip.lat, zip.lng),
               'distance'
             ]
           ],
@@ -82,11 +79,7 @@ exports.getUsersAround = function(zipcode, radius) {
         },
         where: (
           db.sequelize.where(
-            db.sequelize.fn(
-              'ST_Distance_Sphere',
-              db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-              db.sequelize.col('User.point')
-            ),
+            radiusQuery('User.point', zip.lat, zip.lng),
             '<=',
             parseFloat(radius)
           )
