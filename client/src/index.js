@@ -6,15 +6,16 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import promise from 'redux-promise';
+
 import MealList from './containers/MealList';
 import MealDetails from './containers/MealDetails';
-
 import reducers from './reducers';
 import App from './components/App';
 import NewMealForm from './containers/NewMealForm';
 import SignUpForm from './containers/SignUpForm';
 import PrivateRoute from './utils/PrivateRoute'
 import LogInForm from './containers/LogInForm';
+import ChefProfile from './containers/ChefProfile';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -31,6 +32,7 @@ ReactDOM.render(
             <Route exact path="/sign-up-form" component={SignUpForm} />
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/log-in-form" component={LogInForm} />
+            <Route exact path="/chef-profile" component={ChefProfile}/>
             <Route exact path="/" component={App} />
           </Switch>
         </div>
