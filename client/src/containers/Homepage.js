@@ -42,4 +42,4 @@ function mapStateToProps(state) {
   return { todaysMeals: state.todaysMeals };
 }
 
-export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals })(Homepage);
+export default connect(mapStateToProps, { fetchTodaysMeals })(Homepage);
