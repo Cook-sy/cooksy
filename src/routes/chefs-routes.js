@@ -31,17 +31,17 @@ var checkMealOwnership = function(mealId, chefId, req, res, callback) {
 
 // GET /api/chefs
 // Get a list of all chefs
+// GET /api/chefs/?zip=ZIPCODE&=radius=NUM
+// Get all nearby chefs around a ZIPCODE that is within NUM meters
 router.get('/', function(req, res) {
-  return chefCtrl.getChefs()
-    .then(function(chefs) {
-      return res.json(chefs);
-    });
-});
+  if (req.query.zip && req.query.radius) {
+    return chefCtrl.getChefsAround(req.query.zip, req.query.radius)
+      .then(function(chefs) {
+        return res.json(chefs);
+      });
+  }
 
-// GET /api/chefs/nearby/:zip
-// Get all nearby chefs around a zipcode that is within 16000 meters
-router.get('/nearby/:zip', function(req, res) {
-  return chefCtrl.getChefsAround(req.params.zip, 16000)
+  return chefCtrl.getChefs()
     .then(function(chefs) {
       return res.json(chefs);
     });
