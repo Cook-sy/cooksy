@@ -60,7 +60,7 @@ exports.getChefs = function() {
   });
 };
 
-// Gets all meals near zipcode in a radius specified by meters
+// Gets all chefs near zipcode in a radius specified by meters
 exports.getChefsAround = function(zipcode, radius) {
   return db.Zipcode.findById(zipcode)
     .then(function(zip) {
