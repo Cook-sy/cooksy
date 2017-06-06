@@ -75,7 +75,7 @@ exports.getChefsAround = function(zipcode, radius) {
               db.sequelize.fn(
                 'ST_Distance_Sphere',
                 db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('point')
+                db.sequelize.col('Chef.point')
               ),
               'distance'
             ]
@@ -87,7 +87,7 @@ exports.getChefsAround = function(zipcode, radius) {
             db.sequelize.fn(
               'ST_Distance_Sphere',
               db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-              db.sequelize.col('point')
+              db.sequelize.col('Chef.point')
             ),
             '<=',
             parseFloat(radius)
@@ -96,32 +96,32 @@ exports.getChefsAround = function(zipcode, radius) {
         include: [
           {
             model: db.ChefReview,
-            as: 'chefReviews'
-            // include: [
-            //   {
-            //     model: db.User,
-            //     as: 'user',
-            //     attributes: { exclude: ['password'] }
-            //   }
-            // ]
+            as: 'chefReviews',
+            include: [
+              {
+                model: db.User,
+                as: 'user',
+                attributes: { exclude: ['password'] }
+              }
+            ]
+          },
+          {
+            model: db.Meal,
+            as: 'meals',
+            include: [
+              {
+                model: db.MealReview,
+                as: 'mealReviews',
+                include: [
+                  {
+                    model: db.User,
+                    as: 'user',
+                    attributes: { exclude: ['password'] }
+                  }
+                ]
+              }
+            ]
           }
-          // {
-          //   model: db.Meal,
-          //   as: 'meals',
-          //   include: [
-          //     {
-          //       model: db.MealReview,
-          //       as: 'mealReviews',
-          //       include: [
-          //         {
-          //           model: db.User,
-          //           as: 'user',
-          //           attributes: { exclude: ['password'] }
-          //         }
-          //       ]
-          //     }
-          //   ]
-          // }
         ]
       });
     });

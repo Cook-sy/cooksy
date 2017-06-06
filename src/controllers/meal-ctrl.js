@@ -126,7 +126,7 @@ exports.getMealsAround = function(zipcode, radius) {
               db.sequelize.fn(
                 'ST_Distance_Sphere',
                 db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('point')
+                db.sequelize.col('Meal.point')
               ),
               'distance'
             ]
@@ -143,7 +143,7 @@ exports.getMealsAround = function(zipcode, radius) {
               db.sequelize.fn(
                 'ST_Distance_Sphere',
                 db.sequelize.fn('ST_MakePoint', parseFloat(zip.lat), parseFloat(zip.lng)),
-                db.sequelize.col('point')
+                db.sequelize.col('Meal.point')
               ),
               '<=',
               parseFloat(radius)
