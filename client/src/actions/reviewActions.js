@@ -57,6 +57,7 @@ export function didReview(meal) {
   const mealReviewwedByTheUser = meal.mealReviews.find(
     review => review.user.username === username
   );
+
   if (mealReviewwedByTheUser) {
     return {
       type: DID_REVIEW
