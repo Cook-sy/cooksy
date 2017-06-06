@@ -48,7 +48,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.GEOMETRY('POINT'),
       defaultValue: {
         type: 'POINT',
-        coordinates: [39.807222, -76.984722]
+        coordinates: [37.7749, -122.4194]
       }
     }
   }, {
@@ -73,5 +73,6 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
   return Meal;
 };

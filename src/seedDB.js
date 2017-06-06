@@ -1,7 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 var dotenv = require('dotenv').load();
 var faker = require('faker');
-var createZipcodes = require('./createZipcodes');
 // database
 var db = require('./models');
 // set seed for consistent results
@@ -18,7 +17,29 @@ var numPurchases = 11;
 var numRequests = 7;
 var numUserRequests = 11;
 
-var zipcodes = [94304, 94507, 94522, 94530];
+var zipcodes = ['94304', '94507', '94608', '94530', '93551'];
+var points = [
+  {
+    type: 'POINT',
+    coordinates: [37.374702, -122.181696]
+  },
+  {
+    type: 'POINT',
+    coordinates: [37.850410, -122.021123]
+  },
+  {
+    type: 'POINT',
+    coordinates: [37.836844, -122.289143]
+  },
+  {
+    type: 'POINT',
+    coordinates: [37.921561, -122.298337]
+  },
+  {
+    type: 'POINT',
+    coordinates: [34.604105, -118.239213]
+  }
+];
 
 var options = { individualHooks: true };
 var i;
@@ -58,7 +79,8 @@ for (i = 0; i < numMeals; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: zipcodes[faker.random.number() % zipcodes.length],
+    zipcode: zipcodes[i],
+    point: points[i],
     chefId: (faker.random.number() % numChefs) + 1
   });
 }
@@ -105,9 +127,6 @@ var mealIds;
 var mealPrices;
 
 db.sequelize.sync({ force: true })
-  .then(function() {
-    return createZipcodes();
-  })
   .then(function() {
     return db.User.bulkCreate(users, options);
   })
