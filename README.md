@@ -2,8 +2,20 @@
 
 ## Getting started
 
+### Installing PostgreSQL and PostGIS
+Install PostgreSQL and PostGIS according to your operating system. If you're on a Mac, see [Postgres.app](https://postgresapp.com/).
+
+Create a user and two databases for development and testing. To add PostGIS support to the databases, run `CREATE EXTENSION postgis;` against each database that you have.
+
 ### Configuring environment variables
 Create a `.env` file in the root directory and follow the example `.env.example`.
+
+### Creating table of zipcodes
+From the root directory of the repository, run the command
+```
+$ node src/create-zipcodes.js && NODE_ENV=test node src/create-zipcodes.js
+```
+to create a table of zipcodes in your database and test database.
 
 ### Installing dependencies
 To get started with development, clone the repo and run the following commands:
