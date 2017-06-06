@@ -8,7 +8,7 @@ import {
   renderRatingField
 } from '../utils/FormHelper';
 import RaisedButton from 'material-ui/RaisedButton';
-import { reviewMeal, rateMeal } from '../actions';
+import { reviewMeal, rateMeal, successfullReview } from '../actions';
 
 class ReviewForm extends Component {
   constructor(props) {
@@ -20,13 +20,14 @@ class ReviewForm extends Component {
     values.mealId = this.props.meal.id;
     values.rating = values.rating || 5;  
     this.props.reviewMeal(values);
+    this.props.successfullReview()
   }
 
   render() {
     const { review, handleSubmit, pristine, submitting } = this.props;
     return (
       <form
-        className={`no-border ${review.addReview ? 'show' : 'hidden'}`} 
+        className={`no-border ${review.addReview && !review.didReview ? 'show' : 'hidden'}`} 
         onSubmit={handleSubmit(this.submitForm)}
       >
         <div>
@@ -88,6 +89,7 @@ export default reduxForm({
 })(
   connect(mapStateToProps, {
     reviewMeal,
-    rateMeal
+    rateMeal,
+    successfullReview
   })(ReviewForm)
 );
