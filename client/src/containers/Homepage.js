@@ -17,12 +17,12 @@ class Homepage extends Component {
   render() {
     return (
       <div className="root-homepage">
+        <h2>{new Date().toDateString()}</h2>
         <GridList
           cellHeight={180}
           className="grid"
           cols={4}
         >
-          <h2>{new Date().toDateString()}</h2>
           {_.map(this.props.todaysMeals, (meal) => (
             <GridTile
               key={meal.name}
