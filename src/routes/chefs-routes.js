@@ -267,7 +267,7 @@ router.delete('/requests/:id', isChef, function(req, res) {
       .then(function(deletedRequest) {
         return res.status(200).json({
           success: true,
-          meal: deletedRequest
+          request: deletedRequest
         });
       });
   });

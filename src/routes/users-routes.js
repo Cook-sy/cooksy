@@ -356,7 +356,7 @@ router.delete('/requests/:id', isUser, function(req, res) {
       .then(function(deletedRequest) {
         return res.status(200).json({
           success: true,
-          meal: deletedRequest
+          request: deletedRequest
         });
       });
   });
