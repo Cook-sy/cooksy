@@ -2,8 +2,9 @@ var express = require('express');
 var passport = require('passport');
 var validateLogin = require('../utils/form-validation').validateLogin;
 var validateUserSignup = require('../utils/form-validation').validateUserSignup;
-var purchaseCtrl = require('../controllers/purchase-ctrl');
 var isUser = require('../middleware/is-authenticated').isUser;
+var purchaseCtrl = require('../controllers/purchase-ctrl');
+var userCtrl = require('../controllers/user-ctrl');
 var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var router = express.Router();
@@ -29,6 +30,24 @@ var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
       });
     });
 };
+
+// GET /api/users
+// Get a list of all users
+// GET /api/users/?zip=ZIPCODE&=radius=NUM
+// Get all nearby users around a ZIPCODE that is within NUM meters
+router.get('/', function(req, res) {
+  if (req.query.zip && req.query.radius) {
+    return userCtrl.getUsersAround(req.query.zip, req.query.radius)
+      .then(function(users) {
+        return res.json(users);
+      });
+  }
+
+  return userCtrl.getUsers()
+    .then(function(users) {
+      return res.json(users);
+    });
+});
 
 // /api/users/login
 // Login for users

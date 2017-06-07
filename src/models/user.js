@@ -18,6 +18,13 @@ module.exports = function(sequelize, DataTypes) {
       zipcode: {
         type: DataTypes.STRING,
         allowNull: false
+      },
+      point: {
+        type: DataTypes.GEOMETRY('POINT'),
+        defaultValue: {
+          type: 'POINT',
+          coordinates: [37.7749, -122.4194]
+        }
       }
     },
     {
@@ -51,8 +58,16 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   User.beforeCreate(function(user, options) {
-    return bcrypt
-      .genSalt(10)
+    return sequelize.models.Zipcode.findById(user.zipcode)
+      .then(function(zip) {
+        user.point = {
+          type: 'POINT',
+          coordinates: [zip.lat, zip.lng]
+        };
+      })
+      .then(function() {
+        return bcrypt.genSalt(10);
+      })
       .then(function(salt) {
         return bcrypt.hash(user.password, salt);
       })

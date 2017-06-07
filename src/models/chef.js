@@ -39,6 +39,13 @@ module.exports = function(sequelize, DataTypes) {
       reviewCount: {
         type: DataTypes.INTEGER,
         defaultValue: 0
+      },
+      point: {
+        type: DataTypes.GEOMETRY('POINT'),
+        defaultValue: {
+          type: 'POINT',
+          coordinates: [37.7749, -122.4194]
+        }
       }
     },
     {
@@ -50,7 +57,7 @@ module.exports = function(sequelize, DataTypes) {
           });
           Chef.hasMany(models.Meal, {
             foreignKey: 'chefId',
-            as: 'chefMeals'
+            as: 'meals'
           });
         }
       },
@@ -64,8 +71,16 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   Chef.beforeCreate(function(chef, options) {
-    return bcrypt
-      .genSalt(10)
+    return sequelize.models.Zipcode.findById(chef.zipcode)
+      .then(function(zip) {
+        chef.point = {
+          type: 'POINT',
+          coordinates: [zip.lat, zip.lng]
+        };
+      })
+      .then(function() {
+        return bcrypt.genSalt(10);
+      })
       .then(function(salt) {
         return bcrypt.hash(chef.password, salt);
       })

@@ -43,6 +43,13 @@ module.exports = function(sequelize, DataTypes) {
     totalOrdered: {
       type: DataTypes.INTEGER,
       defaultValue: 0
+    },
+    point: {
+      type: DataTypes.GEOMETRY('POINT'),
+      defaultValue: {
+        type: 'POINT',
+        coordinates: [37.7749, -122.4194]
+      }
     }
   }, {
     classMethods: {
@@ -66,5 +73,16 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  Meal.beforeCreate(function(meal, options) {
+    return sequelize.models.Zipcode.findById(meal.zipcode)
+      .then(function(zip) {
+        meal.point = {
+          type: 'POINT',
+          coordinates: [zip.lat, zip.lng]
+        };
+      });
+  });
+
   return Meal;
 };

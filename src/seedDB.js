@@ -17,6 +17,8 @@ var numPurchases = 11;
 var numRequests = 7;
 var numUserRequests = 11;
 
+var zipcodes = ['94304', '94507', '94608', '94530', '93551'];
+
 var options = { individualHooks: true };
 var i;
 
@@ -25,7 +27,7 @@ for (i = 0; i < numUsers; i++) {
   users.push({
     username: i === 0 ? 'user' : faker.internet.userName(),
     password: i === 0 ? 'user' : faker.internet.password(),
-    zipcode: faker.address.zipCode()
+    zipcode: zipcodes[faker.random.number() % zipcodes.length]
   });
 }
 
@@ -38,7 +40,7 @@ for (i = 0; i < numChefs; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: faker.address.zipCode()
+    zipcode: zipcodes[faker.random.number() % zipcodes.length]
   });
 }
 
@@ -55,7 +57,7 @@ for (i = 0; i < numMeals; i++) {
     address: faker.address.streetAddress(),
     city: faker.address.city(),
     state: faker.address.stateAbbr(),
-    zipcode: faker.address.zipCode(),
+    zipcode: zipcodes[faker.random.number() % zipcodes.length],
     chefId: (faker.random.number() % numChefs) + 1
   });
 }
@@ -101,16 +103,17 @@ for (i = 0; i < numUserRequests; i++) {
 var mealIds;
 var mealPrices;
 
-db.sequelize.sync({ force: true })
-  .then(function() {
-    return db.User.bulkCreate(users, options);
-  })
-  .then(function() {
-    return db.Chef.bulkCreate(chefs, options);
-  })
-  .then(function() {
-    return db.Meal.bulkCreate(meals, options);
-  })
+db.User.sync({ force: true })
+  .then(function() { return db.Chef.sync({ force: true }); })
+  .then(function() { return db.Meal.sync({ force: true }); })
+  .then(function() { return db.ChefReview.sync({ force: true }); })
+  .then(function() { return db.MealReview.sync({ force: true }); })
+  .then(function() { return db.Purchase.sync({ force: true }); })
+  .then(function() { return db.Request.sync({ force: true }); })
+  .then(function() { return db.UserRequest.sync({ force: true }); })
+  .then(function() { return db.User.bulkCreate(users, options); })
+  .then(function() { return db.Chef.bulkCreate(chefs, options); })
+  .then(function() { return db.Meal.bulkCreate(meals, options); })
   .then(function(res) {
     mealIds = res.map(function(instance) {
       return instance.id;
@@ -121,9 +124,7 @@ db.sequelize.sync({ force: true })
 
     return db.ChefReview.bulkCreate(chefReviews, options);
   })
-  .then(function() {
-    return db.MealReview.bulkCreate(mealReviews, options);
-  })
+  .then(function() { return db.MealReview.bulkCreate(mealReviews, options); })
   .then(function(res) {
     var purchases = [];
     for (i = 0; i < numPurchases; i++) {
@@ -138,12 +139,8 @@ db.sequelize.sync({ force: true })
 
     return db.Purchase.bulkCreate(purchases, options);
   })
-  .then(function() {
-    return db.Request.bulkCreate(requests, options);
-  })
-  .then(function() {
-    return db.UserRequest.bulkCreate(userRequests, options);
-  })
+  .then(function() { return db.Request.bulkCreate(requests, options); })
+  .then(function() { return db.UserRequest.bulkCreate(userRequests, options); })
   .then(function() {
     db.sequelize.close();
     console.log('Finished seeding db!');

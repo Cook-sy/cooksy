@@ -3,6 +3,7 @@ var passport = require('passport');
 var validateLogin = require('../utils/form-validation').validateLogin;
 var validateChefSignup = require('../utils/form-validation').validateChefSignup;
 var isChef = require('../middleware/is-authenticated').isChef;
+var chefCtrl = require('../controllers/chef-ctrl');
 var mealCtrl = require('../controllers/meal-ctrl');
 var router = express.Router();
 
@@ -27,6 +28,24 @@ var checkMealOwnership = function(mealId, chefId, req, res, callback) {
       });
     });
 };
+
+// GET /api/chefs
+// Get a list of all chefs
+// GET /api/chefs/?zip=ZIPCODE&=radius=NUM
+// Get all nearby chefs around a ZIPCODE that is within NUM meters
+router.get('/', function(req, res) {
+  if (req.query.zip && req.query.radius) {
+    return chefCtrl.getChefsAround(req.query.zip, req.query.radius)
+      .then(function(chefs) {
+        return res.json(chefs);
+      });
+  }
+
+  return chefCtrl.getChefs()
+    .then(function(chefs) {
+      return res.json(chefs);
+    });
+});
 
 // POST /api/chefs/login
 // Login for chefs
