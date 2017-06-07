@@ -76,13 +76,15 @@ export function fetchTodaysMeals() {
   let today = new Date();
   let year = today.getFullYear().toString();
   let month = (today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1).toString() : (today.getMonth() + 1).toString();
-  let day = (today.getDate() + 1).toString().length === 1 ? '0' + (today.getDate() + 1).toString() : (today.getDate() + 1).toString();
+  let day = today.getDate().toString().length === 1 ? '0' + today.getDate().toString() : today.getDate().toString();
   let date = year + '-' + month + '-' + day;
 
   let request = axios.get('/api/meals')
     .then(function(meals) {
       return _.filter(meals.data, (meal) => {
-        return meal.deliveryDateTime.substr(0, 10) === '2017-08-18';
+        console.log(meal.deliveryDateTime.substr(0, 10));
+        console.log(date);
+        return meal.deliveryDateTime.substr(0, 10) === date;
       });
     });
 
