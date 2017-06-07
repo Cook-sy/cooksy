@@ -6,6 +6,7 @@ import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import RaisedButton from 'material-ui/RaisedButton';
+import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 
 import { fetchMeals, getNearbyMeals, getUserDetails } from '../actions/index';
@@ -51,7 +52,7 @@ class MealList extends Component {
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
               subtitle={<span>by <b>{meal.chef.username}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
               <img src={meal.images} alt="meal list"/>
             </GridTile>
