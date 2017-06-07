@@ -37,3 +37,12 @@ exports.getUserRequests = function(userId) {
     include: userRequestInclude
   });
 };
+
+exports.createRequest = function(request) {
+  return db.UserRequest.create(request)
+    .then(function(req) {
+      return db.UserRequest.findById(req.id, {
+        include: userRequestInclude
+      });
+    });
+};

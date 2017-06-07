@@ -8,6 +8,7 @@ var userCtrl = require('../controllers/user-ctrl');
 var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var userRequestCtrl = require('../controllers/user-request-ctrl');
+var requestCtrl = require('../controllers/request-ctrl');
 var router = express.Router();
 
 // Check if a review is owned by a user
@@ -270,6 +271,33 @@ router.get('/:id/requests', function(req, res) {
   return userRequestCtrl.getUserRequests(req.params.id)
     .then(function(requests) {
       return res.status(200).json(requests);
+    });
+});
+
+// POST /api/users/requests
+// Create a request for a specific meal
+router.post('/requests', isUser, function(req, res) {
+  // Check if a request exists for the meal
+  return requestCtrl.getRequest(req.body.requestId)
+    .then(function(request) {
+      if (!request) {
+        return request;
+      }
+      req.body.userId = req.userId;
+      return userRequestCtrl.createRequest(req.body);
+    })
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Meal requested not found'
+        });
+      }
+
+      return res.status(201).json({
+        success: true,
+        request: request
+      });
     });
 });
 
