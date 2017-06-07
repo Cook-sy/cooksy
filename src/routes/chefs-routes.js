@@ -30,6 +30,27 @@ var checkMealOwnership = function(mealId, chefId, req, res, callback) {
     });
 };
 
+var checkRequestOwnership = function(requestId, chefId, req, res, callback) {
+  return requestCtrl.getRequest(requestId)
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Request not found'
+        });
+      }
+
+      if (request.meal.chefId === chefId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The request is not owned by you'
+      });
+    });
+};
+
 // GET /api/chefs
 // Get a list of all chefs
 // GET /api/chefs/?zip=ZIPCODE&=radius=NUM
@@ -198,13 +219,16 @@ router.get('/:id/requests', function(req, res) {
     });
 });
 
-// POST /api/chefs/:id/requests
+// POST /api/chefs/requests
 // Create a request for a specific chef
-router.post('/:id/requests', isChef, function(req, res) {
+router.post('/requests', isChef, function(req, res) {
   return checkMealOwnership(req.body.mealId, req.userId, req, res, function() {
     return requestCtrl.createRequest(req.body)
       .then(function(request) {
-        return res.status(201).json(request);
+        return res.status(201).json({
+          success: true,
+          request: request
+        });
       });
   });
 });
@@ -214,8 +238,24 @@ router.post('/:id/requests', isChef, function(req, res) {
 router.get('/requests/:id', function(req, res) {
   return requestCtrl.getRequest(req.params.id)
     .then(function(request) {
-      return res.status(200).json(request);
+      return res.status(200).json({
+        success: true,
+        request: request
+      });
     });
+});
+
+// PUT /api/chefs/requests/:id
+router.put('/requests/:id', isChef, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return requestCtrl.updateRequest(req.params.id, req.body)
+      .then(function(updatedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: updatedRequest
+        });
+      });
+  });
 });
 
 module.exports = router;

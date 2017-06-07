@@ -47,3 +47,14 @@ exports.createRequest = function(request) {
       });
     });
 };
+
+exports.updateRequest = function(id, newValues) {
+  return db.Request.update(newValues, {
+    where: { id: id },
+    returning: true
+  }).then(function(result) {
+    return db.Request.findById(id, {
+      include: requestInclude
+    });
+  });
+};
