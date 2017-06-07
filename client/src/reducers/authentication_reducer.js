@@ -1,6 +1,7 @@
-import { AUTHENTICATE } from '../actions';
+import { AUTHENTICATE, USER_DETAILS } from '../actions';
 
 let initialState = {
+  user: {},
   error: ''
 };
 
@@ -9,12 +10,16 @@ export default function reducer(state = initialState, action) {
     case AUTHENTICATE:
       if (action.error) {
         return {
-          error: action.payload.response.data.message
+          ...state, error: action.payload.response.data.message
         };
       } else {
         return {
-          error: ''
+          ...state, error: ''
         };
+      }
+    case USER_DETAILS:
+      return {
+        ...state, user: action.payload
       }
     default:
       return state;
