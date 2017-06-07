@@ -1,4 +1,4 @@
-import { FETCH_MEALS, FETCH_MEALDETAIL, CREATE_MEAL, REVIEW_MEAL, FETCH_MEALS_BY_CHEF } from '../actions/index';
+import { FETCH_MEALS, FETCH_MEALDETAIL, CREATE_MEAL, REVIEW_MEAL, FETCH_MEALS_BY_CHEF, GET_NEAR_BY_MEALS } from '../actions/index';
 import _ from 'lodash';
 
 export default function(state = {}, action) {
@@ -9,6 +9,8 @@ export default function(state = {}, action) {
       return _.mapKeys(action.payload.data, 'id');
     case FETCH_MEALS_BY_CHEF:
       return _.pickBy(action.payload.data, (x)=> x.chefId === 1);
+    case GET_NEAR_BY_MEALS:
+      return _.mapKeys(action.payload.data, 'id'); 
     case CREATE_MEAL:
       return { ...state, [action.payload.data.meal.id]: action.payload.data.meal };
     case REVIEW_MEAL:
