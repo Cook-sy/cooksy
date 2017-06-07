@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchTodaysMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
+import { Rating } from 'material-ui-rating';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import _ from 'lodash';
@@ -20,16 +21,16 @@ class Homepage extends Component {
       <div className="root-homepage">
         <h2>{new Date().toDateString()}</h2>
         <GridList
-          cellHeight={180}
+          cellHeight={200}
           className="grid"
-          cols={4}
+          cols={2.2}
         >
           {_.map(this.props.todaysMeals, (meal) => (
             <GridTile
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
               subtitle={<span>by <b>{meal.chef.username}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
               <img src={meal.images} alt="picture"/>
             </GridTile>
