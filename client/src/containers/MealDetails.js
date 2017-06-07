@@ -78,9 +78,11 @@ class MealDetails extends Component {
           </CardText>
           <CardTitle subtitle="Pickup Information" />
           <CardText>
-            {this.props.meal.pickupInfo}
+            <p>{this.props.meal.pickupInfo}</p>
+            <p>{`${this.props.meal.address}, ${this.props.meal.city}, ${this.props.meal.state} ${this.props.meal.zipcode}`}</p>
             <div style={{width:300, height:300}}>
               <Map
+                address={this.props.meal.address}
                 containerElement={<div style={{height: `100%`}} />}
                 mapElement={<div style={{height: `100%`}} />}
               />
