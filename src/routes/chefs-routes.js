@@ -246,6 +246,7 @@ router.get('/requests/:id', function(req, res) {
 });
 
 // PUT /api/chefs/requests/:id
+// Update a specific request
 router.put('/requests/:id', isChef, function(req, res) {
   return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
     return requestCtrl.updateRequest(req.params.id, req.body)
@@ -253,6 +254,18 @@ router.put('/requests/:id', isChef, function(req, res) {
         return res.status(200).json({
           success: true,
           request: updatedRequest
+        });
+      });
+  });
+});
+
+router.delete('/requests/:id', isChef, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return requestCtrl.deleteRequest(req.params.id)
+      .then(function(deletedRequest) {
+        return res.status(200).json({
+          success: true,
+          meal: deletedRequest
         });
       });
   });

@@ -58,3 +58,14 @@ exports.updateRequest = function(id, newValues) {
     });
   });
 };
+
+exports.deleteRequest = function(id) {
+  return db.Request.findById(id, {
+    include: requestInclude
+  }).then(function(request) {
+    if (request) {
+      request.destroy();
+    }
+    return request;
+  });
+};
