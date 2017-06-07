@@ -13,7 +13,7 @@ import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    console.log(this.props.fetchTodaysMeals());
+    this.props.fetchTodaysMeals();
   }
 
   render() {
