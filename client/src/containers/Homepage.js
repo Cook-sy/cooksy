@@ -16,7 +16,7 @@ class Homepage extends Component {
 
   render() {
     return (
-      <div className="root">
+      <div className="root-homepage">
         <GridList
           cellHeight={180}
           className="grid"
