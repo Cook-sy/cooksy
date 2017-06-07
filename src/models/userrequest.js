@@ -18,7 +18,18 @@ module.exports = function(sequelize, DataTypes) {
           as: 'request'
         });
       }
+    },
+
+    hooks: {
+      beforeSave: function(request) {
+        console.log('user request before save hook being called');
+      }
     }
   });
+
+  // UserRequest.beforeSave(function(request) {
+  //   console.log('user request before save hook being called');
+  // });
+
   return UserRequest;
 };
