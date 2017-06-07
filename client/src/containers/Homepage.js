@@ -77,17 +77,21 @@ class Homepage extends Component {
   render() {
     return (
 
-    <div className="root">
-      <GridList className="grid-list" cols={2.2}>
-        {tilesData.map((tile) => (
-          <GridTile
-            key={tile.img}
-            title={tile.title}
-            actionIcon={<IconButton><StarBorder color="rgb(0, 188, 212)" /></IconButton>}
-            titleStyle={styles.titleStyle}
-            titleBackground="linear-gradient(to top, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-          >
-              <img src={tile.img} />
+      <div className="root">
+        <GridList
+          cellHeight={180}
+          className="grid-list"
+          cols={4}
+        >
+          <Subheader>Cooksy</Subheader>
+          {_.map(this.props.todaysMeals, (meal) => (
+            <GridTile
+              key={meal.name}
+              title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
+              subtitle={<span>by <b>{meal.chef.username}</b></span>}
+              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+            >
+              <img src={meal.images} alt="image"/>
             </GridTile>
           ))}
         </GridList>
