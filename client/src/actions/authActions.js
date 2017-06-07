@@ -1,6 +1,9 @@
 import axios from 'axios';
 
+import { decodeToken as userDetails } from '../utils/IsAuthenticated';
+
 export const AUTHENTICATE = 'AUTHENTICATE';
+export const USER_DETAILS = 'USER_DETAILS';
 
 export function signUpUser(values, cb) {
   const request = axios
@@ -46,3 +49,17 @@ export function logInUser(values, cb) {
     payload: request
   };
 }
+
+export function getUserDetails() {
+  const user = userDetails();
+  if (user) {
+    return {
+      type: USER_DETAILS,
+      payload: user
+    }
+  } else {
+    return {
+      type:'USER_NOT_REGISTERED'
+    }
+  }
+} 
