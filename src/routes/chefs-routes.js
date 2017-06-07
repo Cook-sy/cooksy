@@ -259,6 +259,8 @@ router.put('/requests/:id', isChef, function(req, res) {
   });
 });
 
+// DELETE /api/chefs/requests/:id
+// Delete a specific request
 router.delete('/requests/:id', isChef, function(req, res) {
   return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
     return requestCtrl.deleteRequest(req.params.id)
