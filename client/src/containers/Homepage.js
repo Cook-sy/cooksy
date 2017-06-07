@@ -16,15 +16,15 @@ class Homepage extends Component {
   }
 
   render() {
+    const todaysDate = new Date()
     return (
-
       <div className="root">
         <GridList
           cellHeight={180}
-          className="grid-list"
+          className="grid"
           cols={4}
         >
-          <Subheader>Cooksy</Subheader>
+          <h2>{new Date().toDateString()}</h2>
           {_.map(this.props.todaysMeals, (meal) => (
             <GridTile
               key={meal.name}
@@ -32,7 +32,7 @@ class Homepage extends Component {
               subtitle={<span>by <b>{meal.chef.username}</b></span>}
               actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
             >
-              <img src={meal.images} alt="image"/>
+              <img src={meal.images} alt="picture"/>
             </GridTile>
           ))}
         </GridList>
