@@ -53,7 +53,7 @@ var checkRequestOwnership = function(requestId, chefId, req, res, callback) {
 
 // GET /api/chefs
 // Get a list of all chefs
-// GET /api/chefs/?zip=ZIPCODE&=radius=NUM
+// GET /api/chefs/?zip=ZIPCODE&radius=NUM
 // Get all nearby chefs around a ZIPCODE that is within NUM meters
 router.get('/', function(req, res) {
   if (req.query.zip && req.query.radius) {

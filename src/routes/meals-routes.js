@@ -4,7 +4,7 @@ var router = express.Router();
 
 // GET /api/meals
 // Get all non-expired meals
-// GET /api/meals/?zip=ZIPCODE&=radius=NUM
+// GET /api/meals/?zip=ZIPCODE&radius=NUM
 // Get all nearby meals around a zipcode that is within NUM meters
 router.get('/', function(req, res) {
   if (req.query.zip && req.query.radius) {

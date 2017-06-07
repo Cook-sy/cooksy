@@ -33,7 +33,7 @@ var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
 
 // GET /api/users
 // Get a list of all users
-// GET /api/users/?zip=ZIPCODE&=radius=NUM
+// GET /api/users/?zip=ZIPCODE&radius=NUM
 // Get all nearby users around a ZIPCODE that is within NUM meters
 router.get('/', function(req, res) {
   if (req.query.zip && req.query.radius) {
