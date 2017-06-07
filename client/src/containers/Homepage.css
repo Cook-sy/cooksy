@@ -13,3 +13,21 @@
 .legend {
   size: 200px;
 }
+
+h2 {
+  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+  font-size: 38px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 76px;
+}
+
+h1 {
+  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
+  font-size: 45px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 76px;
+}

@@ -20,7 +20,7 @@ class Homepage extends Component {
   render() {
     return (
       <div className="root-homepage">
-        <Carousel slidesToShow={2} cellAlign="center">
+        <Carousel slidesToShow={2} cellAlign="center" cellSpacing={30}>
           <img src="https://greatist.com/sites/default/files/SlowCooker-Pork-Ramen_0.jpg"/>
           <img src="https://static1.squarespace.com/static/53ffb08fe4b0a9868676061c/53ffb0bbe4b006127c1eae3e/53ffcd46e4b0cd9fe3d11696/1409273160709/pasta.jpg"/>
           <img src="http://del.h-cdn.co/assets/15/51/1450278988-honey-soy-chicken.jpg"/>
@@ -28,7 +28,7 @@ class Homepage extends Component {
           <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
           <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
         </Carousel>
-        <h2>{new Date().toDateString()}</h2>
+        <p><h2>Today's Menu, {new Date().toDateString()}</h2></p>
         <GridList
           cellHeight={200}
           className="grid"
