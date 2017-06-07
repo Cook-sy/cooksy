@@ -1,4 +1,4 @@
-import { FETCH_TODAYS_MEALS } from '../actions/index';
+import { FETCH_TODAYS_MEALS } from '../actions/mealsActions';
 import _ from 'lodash';
 
 export default function(state = {}, action) {

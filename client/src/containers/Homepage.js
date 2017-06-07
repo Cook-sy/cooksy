@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchTodaysMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import _ from 'lodash';
 import './Homepage.css';
 
 
@@ -16,7 +15,6 @@ class Homepage extends Component {
   }
 
   render() {
-    const todaysDate = new Date()
     return (
       <div className="root">
         <GridList
