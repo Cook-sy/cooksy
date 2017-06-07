@@ -30,3 +30,10 @@ exports.getRequest = function(id) {
     include: userRequestInclude
   });
 };
+
+exports.getUserRequests = function(userId) {
+  return db.UserRequest.findAll({
+    where: { id: userId },
+    include: userRequestInclude
+  });
+};

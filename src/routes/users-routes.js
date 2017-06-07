@@ -7,6 +7,7 @@ var purchaseCtrl = require('../controllers/purchase-ctrl');
 var userCtrl = require('../controllers/user-ctrl');
 var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
+var userRequestCtrl = require('../controllers/user-request-ctrl');
 var router = express.Router();
 
 // Check if a review is owned by a user
@@ -261,6 +262,27 @@ router.delete('/meals/reviews/:id', isUser, function(req, res) {
         });
       });
   });
+});
+
+// GET /api/users/:id/requests
+// Get all requests from a user
+router.get('/:id/requests', function(req, res) {
+  return userRequestCtrl.getUserRequests(req.params.id)
+    .then(function(requests) {
+      return res.status(200).json(requests);
+    });
+});
+
+// GET /api/users/requests/:id
+// Get a specific request
+router.get('/requests/:id', function(req, res) {
+  return userRequestCtrl.getRequest(req.params.id)
+    .then(function(request) {
+      return res.status(200).json({
+        success: true,
+        request: request
+      });
+    });
 });
 
 module.exports = router;
