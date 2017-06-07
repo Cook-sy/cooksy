@@ -6,6 +6,7 @@ export const CREATE_MEAL = 'CREATE_MEAL';
 export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
+export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -42,4 +43,13 @@ export function fetchMealDetail(id) {
     type: FETCH_MEALDETAIL,
     payload: request
   };
+}
+
+export function getNearbyMeals(zipcode) {
+  const request = axios.get(`/api/meals/?zip=${zipcode}&radius=36`);
+
+  return {
+    type: GET_NEAR_BY_MEALS,
+    payload: request
+  }
 }
