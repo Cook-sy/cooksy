@@ -24,11 +24,11 @@ class Homepage extends Component {
           <img src="https://greatist.com/sites/default/files/SlowCooker-Pork-Ramen_0.jpg"/>
           <img src="https://static1.squarespace.com/static/53ffb08fe4b0a9868676061c/53ffb0bbe4b006127c1eae3e/53ffcd46e4b0cd9fe3d11696/1409273160709/pasta.jpg"/>
           <img src="http://del.h-cdn.co/assets/15/51/1450278988-honey-soy-chicken.jpg"/>
-          <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"/>
-          <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"/>
-          <img src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"/>
+          <img src="https://i1.wp.com/www.jamesandeverett.com/whatscooking/wp-content/uploads/2012/07/beet-salad-1.jpg?ssl=1"/>
+          <img src="https://halfoff.adspayusa.com/wp-content/uploads/2017/04/sushi_and_sashimi_for_two.0.jpg"/>
+          <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg"/>
         </Carousel>
-        <p><h2>Today's Menu, {new Date().toDateString()}</h2></p>
+        <p><h2>Today's Menu</h2>{new Date().toDateString()}</p>
         <GridList
           cellHeight={200}
           className="grid"
@@ -36,6 +36,8 @@ class Homepage extends Component {
         >
           {_.map(this.props.todaysMeals, (meal) => (
             <GridTile
+              cellHeight={300}
+              className="tile"
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
               subtitle={<span>by <b>{meal.chef.username}</b></span>}

@@ -5,29 +5,37 @@
 }
 
 .grid {
+  width: 1000px;
+  height: 500px;
   display: flex;
   flex-wrap: nowrap !important;
   overflow-x: auto;
+}
+
+.tile {
+  width: 450px;
+  height: 400px;
 }
 
 .legend {
   size: 200px;
 }
 
-h2 {
-  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
-  font-size: 38px;
+p {
+  text-align: center;
+  font-family: "Lucida Bright", Georgia, serif;
+  font-size: 35px;
   font-style: normal;
   font-variant: normal;
   font-weight: bold;
-  line-height: 76px;
+  line-height: 19px;
 }
 
-h1 {
-  font-family: "Goudy Old Style", Garamond, "Big Caslon", "Times New Roman", serif;
-  font-size: 45px;
+h2 {
+  font-family: "Lucida Bright", Georgia, serif;
+  font-size: 48px;
   font-style: normal;
   font-variant: normal;
-  font-weight: bold;
-  line-height: 76px;
+  font-weight: 400;
+  line-height: 19px;
 }
