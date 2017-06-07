@@ -179,4 +179,13 @@ router.get('/meals', isChef, function(req, res) {
     });
 });
 
+// GET /api/chefs/:id/meals
+// Get all meals created by a specific chef
+router.get('/:id/meals', function(req, res) {
+  return mealCtrl.getChefsMeals(req.params.id)
+    .then(function(meals) {
+      return res.status(200).json(meals);
+    });
+});
+
 module.exports = router;
