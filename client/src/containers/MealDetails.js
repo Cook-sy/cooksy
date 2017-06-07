@@ -99,7 +99,7 @@ class MealDetails extends Component {
           {meal.mealReviews.reverse().map(review =>
             <div className="review" key={review.id}>
               <div>
-                <Rating value={review.rating} max={5} readOnly={true} />
+                <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
               </div>
               <p className="review-title">{review.title}</p>
               <p className="review-text">{review.review}</p>
