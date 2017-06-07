@@ -209,4 +209,13 @@ router.post('/:id/requests', isChef, function(req, res) {
   });
 });
 
+// GET /api/chefs/requests/:id
+// Get a specific request
+router.get('/requests/:id', function(req, res) {
+  return requestCtrl.getRequest(req.params.id)
+    .then(function(request) {
+      return res.status(200).json(request);
+    });
+});
+
 module.exports = router;

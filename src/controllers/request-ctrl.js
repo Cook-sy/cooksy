@@ -14,6 +14,12 @@ var requestInclude = [
   }
 ];
 
+exports.getRequest = function(id) {
+  return db.Request.findById(id, {
+    include: requestInclude
+  });
+};
+
 exports.getChefRequests = function(chefId) {
   return db.Request.findAll({
     include: [
@@ -41,10 +47,3 @@ exports.createRequest = function(request) {
       });
     });
 };
-
-exports.getChefRequests(1)
-  .then(function(requests) {
-    requests.forEach(function(inst) {
-      console.log(inst.get({ plain: true }));
-    });
-  });
