@@ -33,6 +33,27 @@ var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
     });
 };
 
+var checkRequestOwnership = function(requestId, userId, req, res, callback) {
+  return userRequestCtrl.getRequest(requestId)
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Request not found'
+        });
+      }
+
+      if (request.userId === userId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The request is not owned by you'
+      });
+    });
+};
+
 // GET /api/users
 // Get a list of all users
 // GET /api/users/?zip=ZIPCODE&radius=NUM
@@ -311,6 +332,34 @@ router.get('/requests/:id', function(req, res) {
         request: request
       });
     });
+});
+
+// PUT /api/chefs/requests/:id
+// Update a specific request
+router.put('/requests/:id', isUser, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return userRequestCtrl.updateRequest(req.params.id, req.body)
+      .then(function(updatedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: updatedRequest
+        });
+      });
+  });
+});
+
+// DELETE /api/chefs/requests/:id
+// Delete a specific request
+router.delete('/requests/:id', isUser, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return userRequestCtrl.deleteRequest(req.params.id)
+      .then(function(deletedRequest) {
+        return res.status(200).json({
+          success: true,
+          meal: deletedRequest
+        });
+      });
+  });
 });
 
 module.exports = router;

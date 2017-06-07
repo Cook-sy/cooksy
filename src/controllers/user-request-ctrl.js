@@ -46,3 +46,25 @@ exports.createRequest = function(request) {
       });
     });
 };
+
+exports.updateRequest = function(id, newValues) {
+  return db.UserRequest.update(newValues, {
+    where: { id: id },
+    returning: true
+  }).then(function(result) {
+    return db.UserRequest.findById(id, {
+      include: userRequestInclude
+    });
+  });
+};
+
+exports.deleteRequest = function(id) {
+  return db.UserRequest.findById(id, {
+    include: userRequestInclude
+  }).then(function(request) {
+    if (request) {
+      request.destroy();
+    }
+    return request;
+  });
+};
