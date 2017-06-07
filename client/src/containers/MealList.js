@@ -1,22 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import RaisedButton from 'material-ui/RaisedButton';
+import _ from 'lodash';
+
+import { fetchMeals, getNearbyMeals, getUserDetails } from '../actions/index';
 import './MealList.css';
 
 class MealList extends Component {
+  constructor(props) {
+    super(props);
+    this.showNearbyMeals = this.showNearbyMeals.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchMeals();
+    this.props.getUserDetails();
+  }
+
+  showNearbyMeals() {
+    this.props.getNearbyMeals(this.props.user.zipcode);
   }
 
   render() {
+    const { user } = this.props;
     return (
       <div className="root">
+        <RaisedButton label="ALL Meals" onClick={this.props.fetchMeals} />
+        <RaisedButton 
+          label="Nearby Meals" 
+          title={ 
+            user.user 
+            ? "Look for nearby meals" 
+            : "Please Signup/Login to view nearby meals"
+          } onClick={this.showNearbyMeals} 
+          disabled={!user.user} 
+        />
+        
         <GridList
           cellHeight={180}
           className="grid-list"
@@ -38,8 +62,11 @@ class MealList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { meals: state.meals };
+function mapStateToProps({ meals, auth: { user } }) {
+  return { 
+    meals: meals,
+    user: user
+  };
 }
 
-export default connect(mapStateToProps, { fetchMeals: fetchMeals })(MealList);
+export default connect(mapStateToProps, { fetchMeals, getNearbyMeals, getUserDetails })(MealList);
