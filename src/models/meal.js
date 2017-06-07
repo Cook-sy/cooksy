@@ -84,5 +84,17 @@ module.exports = function(sequelize, DataTypes) {
       });
   });
 
+  Meal.beforeUpdate(function(meal, options) {
+    if (meal.zipcode !== meal._previousDataValues.zipcode) {
+      return sequelize.models.Zipcode.findById(meal.zipcode)
+        .then(function(zip) {
+          meal.point = {
+            type: 'POINT',
+            coordinates: [zip.lat, zip.lng]
+          };
+        });
+    }
+  });
+
   return Meal;
 };

@@ -4,6 +4,7 @@
     "node": true
   },
   "rules": {
+    "consistent-return": ["off"],
     "func-names": ["error", "never"],
     "no-console": "off",
     "no-underscore-dangle": "off",
