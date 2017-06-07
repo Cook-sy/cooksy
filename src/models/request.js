@@ -29,10 +29,11 @@ module.exports = function(sequelize, DataTypes) {
     },
 
     instanceMethods: {
-      getNumOrdered: function() {
+      updateNumOrdered: function() {
+        var self = this;
         return sequelize.models.UserRequest.find({
           where: {
-            requestId: this.id
+            requestId: self.id
           },
           attributes: [
             [
@@ -41,6 +42,9 @@ module.exports = function(sequelize, DataTypes) {
             ]
           ],
           group: ['requestId']
+        }).then(function(res) {
+          self.numOrdered = res.get('numOrdered');
+          return self.save();
         });
       }
     }

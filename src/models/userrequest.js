@@ -18,18 +18,27 @@ module.exports = function(sequelize, DataTypes) {
           as: 'request'
         });
       }
-    },
-
-    hooks: {
-      beforeSave: function(request) {
-        console.log('user request before save hook being called');
-      }
     }
   });
 
-  // UserRequest.beforeSave(function(request) {
-  //   console.log('user request before save hook being called');
-  // });
+  var updateNumOrdered = function(requestId) {
+    return sequelize.models.Request.findById(requestId)
+      .then(function(request) {
+        return request.updateNumOrdered();
+      });
+  };
+
+  UserRequest.afterCreate(function(userReq, options) {
+    return updateNumOrdered(userReq.requestId);
+  });
+
+  UserRequest.afterDestroy(function(userReq, options) {
+    return updateNumOrdered(userReq.requestId);
+  });
+
+  UserRequest.afterUpdate(function(userReq, options) {
+    return updateNumOrdered(userReq.requestId);
+  });
 
   return UserRequest;
 };

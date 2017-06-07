@@ -46,44 +46,4 @@ app.use('/api/meals', mealsRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/chefs', chefsRoutes);
 
-// db.Request.findById(1, {
-//   attributes: {
-//     include: [
-//       [
-//         db.sequelize.literal(
-// '(SELECT SUM("UserRequests"."num") FROM "UserRequests" WHERE "UserRequests"."requestId" = 1)'),
-//         'numOrdered'
-//       ]
-//     ]
-//   }
-// }).then(function(res) {
-//   console.log(res.get({ plain: true }));
-// });
-
-// db.Request.findById(5)
-//   .then(function(req) {
-//     return req.getNumOrdered();
-//   })
-//   .then(function(res) {
-//     console.log(res.get({ plain: true }));
-//   });
-
-// db.Request.findById(1, {
-//   attributes: {
-//     include: [
-//       [
-//         db.sequelize.fn('SUM', db.sequelize.col('num')), 'num'
-//       ]
-//     ]
-//   },
-//   include: [{
-//     model: db.UserRequest,
-//     as: 'userRequests',
-//     attributes: []
-//   }],
-//   group: ['Request.id']
-// }).then(function(res) {
-//   console.log(res.get({ plain: true }));
-// });
-
 module.exports = app;
