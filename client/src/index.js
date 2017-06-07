@@ -16,6 +16,7 @@ import SignUpForm from './containers/SignUpForm';
 import PrivateRoute from './utils/PrivateRoute'
 import LogInForm from './containers/LogInForm';
 import ChefProfile from './containers/ChefProfile';
+import NavBar from './containers/NavBar.js';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -26,6 +27,9 @@ ReactDOM.render(
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <BrowserRouter>
         <div>
+          <div className="nav-bar">
+            <NavBar />
+          </div>
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/meals" component={MealList} />
