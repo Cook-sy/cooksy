@@ -9,3 +9,7 @@
   flex-wrap: nowrap !important;
   overflow-x: auto;
 }
+
+.legend {
+  size: 200px;
+}
