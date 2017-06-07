@@ -6,6 +6,7 @@ import { GridList, GridTile } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import _ from 'lodash';
+
 import './Homepage.css';
 
 
