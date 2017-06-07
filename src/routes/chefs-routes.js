@@ -5,6 +5,7 @@ var validateChefSignup = require('../utils/form-validation').validateChefSignup;
 var isChef = require('../middleware/is-authenticated').isChef;
 var chefCtrl = require('../controllers/chef-ctrl');
 var mealCtrl = require('../controllers/meal-ctrl');
+var requestCtrl = require('../controllers/request-ctrl');
 var router = express.Router();
 
 // Check if a meal is owned by a chef
@@ -186,6 +187,17 @@ router.get('/:id/meals', function(req, res) {
     .then(function(meals) {
       return res.status(200).json(meals);
     });
+});
+
+// POST /api/chefs/requests
+// Create a request for a specific chef
+router.post('/requests', isChef, function(req, res) {
+  return checkMealOwnership(req.body.mealId, req.userId, req, res, function() {
+    return requestCtrl.createRequest(req.body)
+      .then(function(request) {
+        return res.status(201).json(request);
+      });
+  });
 });
 
 module.exports = router;
