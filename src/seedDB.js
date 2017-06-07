@@ -17,6 +17,39 @@ var numPurchases = 11;
 var numRequests = 7;
 var numUserRequests = 11;
 
+var addresses = [
+  {
+    address: '780 Arastradero Rd',
+    city: 'Palo Alto',
+    state: 'CA',
+    zipcode: '94306'
+  },
+  {
+    address: '3131 Stone Valley Rd',
+    city: 'Danville',
+    state: 'CA',
+    zipcode: '94526'
+  },
+  {
+    address: '5959 Shellmound St',
+    city: 'Emeryville',
+    state: 'CA',
+    zipcode: '94608'
+  },
+  {
+    address: '7901 Cutting Blvd',
+    city: 'El Cerrito',
+    state: 'CA',
+    zipcode: '94530'
+  },
+  {
+    address: '41000 20th Street East',
+    city: 'Palmdale',
+    state: 'CA',
+    zipcode: '93550'
+  }
+];
+
 var zipcodes = ['94304', '94507', '94608', '94530', '93551'];
 
 var options = { individualHooks: true };
@@ -37,10 +70,10 @@ for (i = 0; i < numChefs; i++) {
     username: i === 0 ? 'chef' : faker.internet.userName(),
     password: i === 0 ? 'chef' : faker.internet.password(),
     image: faker.image.avatar(),
-    address: faker.address.streetAddress(),
-    city: faker.address.city(),
-    state: faker.address.stateAbbr(),
-    zipcode: zipcodes[faker.random.number() % zipcodes.length]
+    address: addresses[i % addresses.length].address,
+    city: addresses[i % addresses.length].city,
+    state: addresses[i % addresses.length].state,
+    zipcode: addresses[i % addresses.length].zipcode
   });
 }
 
@@ -54,10 +87,10 @@ for (i = 0; i < numMeals; i++) {
     price: +faker.commerce.price(),
     servings: ((faker.random.number() % 6) * 5) + 10,
     images: faker.image.food(),
-    address: faker.address.streetAddress(),
-    city: faker.address.city(),
-    state: faker.address.stateAbbr(),
-    zipcode: zipcodes[faker.random.number() % zipcodes.length],
+    address: addresses[i % addresses.length].address,
+    city: addresses[i % addresses.length].city,
+    state: addresses[i % addresses.length].state,
+    zipcode: addresses[i % addresses.length].zipcode,
     chefId: (faker.random.number() % numChefs) + 1
   });
 }
