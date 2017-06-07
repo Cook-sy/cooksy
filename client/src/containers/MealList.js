@@ -29,10 +29,14 @@ class MealList extends Component {
 
   render() {
     const { user } = this.props;
+    const style = {
+      marginRight: 8
+    }
     return (
       <div className="root">
-        <RaisedButton label="ALL Meals" onClick={this.props.fetchMeals} />
+        <RaisedButton style={style} label="ALL Meals" onClick={this.props.fetchMeals} />
         <RaisedButton 
+          style={style}
           label="Nearby Meals" 
           title={ 
             user.user 
