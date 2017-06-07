@@ -189,9 +189,18 @@ router.get('/:id/meals', function(req, res) {
     });
 });
 
-// POST /api/chefs/requests
+// GET /api/chefs/:id/requests
+// Get all requests created by a specific chef
+router.get('/:id/requests', function(req, res) {
+  return requestCtrl.getChefRequests(req.params.id)
+    .then(function(requests) {
+      return res.status(200).json(requests);
+    });
+});
+
+// POST /api/chefs/:id/requests
 // Create a request for a specific chef
-router.post('/requests', isChef, function(req, res) {
+router.post('/:id/requests', isChef, function(req, res) {
   return checkMealOwnership(req.body.mealId, req.userId, req, res, function() {
     return requestCtrl.createRequest(req.body)
       .then(function(request) {
