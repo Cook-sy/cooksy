@@ -1,8 +1,10 @@
 import { TOGGLE_REVIEW, DID_REVIEW, DID_NOT_REVIEW, CAN_NOT_REVIEW } from '../actions/index';
+
 const initialState = {
 	addReview: false,
 	didReview: true
 }
+
 export default function(state = initialState, action) {
   switch (action.type) {
     case TOGGLE_REVIEW:
