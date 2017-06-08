@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 
-import { fetchMeals, getNearbyMeals, getUserDetails } from '../actions/index';
+import { fetchMeals, getNearbyMeals, getUserDetails, fetchMealsByDate } from '../actions/index';
 import './MealList.css';
 import SearchBar from './SearchBar';
 
