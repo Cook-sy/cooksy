@@ -1,8 +1,38 @@
-@import url(https://fonts.google.com/specimen/Satisfy?selection.family=Satisfy)
+@import url(https://fonts.google.com/specimen/Rochester?selection.family=Rochester)
 
 @font-face {
-    font-family: 'Satisfy'; /*a name to be used later*/
-    src: url('https://fonts.google.com/specimen/Satisfy?selection.family=Satisfy'); /*URL to font*/
+    font-family: 'Rochester'; /*a name to be used later*/
+    src: url('https://fonts.google.com/specimen/Rochester?selection.family=Rochester'); /*URL to font*/
+}
+
+h1 {
+  color: rgb(0, 188, 212);
+  font-family: "Rochester";
+  font-size: 120px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 19px;
+}
+
+h2 {
+  font-family: "Rochester";
+  font-size: 68px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+p {
+  color: rgb(0, 188, 212);
+  text-align: center;
+  font-family: "Rochester";
+  font-size: 40px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 19px;
 }
 
 .root-homepage {
@@ -48,43 +78,13 @@
 .content {
   padding: 10px;
   margin: 0px;
-  font-family: "Satisfy";
+  font-family: "Rochester";
   font-size: 35px;
   font-weight: lighter;
   line-height: 35px;
 }
 
-p {
-  color: rgb(0, 188, 212);
-  text-align: center;
-  font-family: "Satisfy";
-  font-size: 35px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: bold;
-  line-height: 19px;
-}
-
 .goleft {
   margin-right: auto;
   margin-left: 20px;
-}
-
-h1 {
-  color: rgb(0, 188, 212);
-  font-family: "Satisfy";
-  font-size: 75px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: bold;
-  line-height: 19px;
-}
-
-h2 {
-  font-family: "Satisfy";
-  font-size: 48px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  line-height: 19px;
 }
