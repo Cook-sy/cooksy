@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
     state: DataTypes.STRING,
     zipcode: DataTypes.STRING,
     rating: {
-      type: DataTypes.DECIMAL,
+      type: DataTypes.DECIMAL(3, 2),
       defaultValue: 0
     },
     reviewCount: {
@@ -69,6 +69,26 @@ module.exports = function(sequelize, DataTypes) {
         Meal.hasMany(models.Request, {
           foreignKey: 'mealId',
           as: 'mealRequests'
+        });
+      }
+    },
+
+    instanceMethods: {
+      updateRating: function() {
+        var self = this;
+        return sequelize.models.MealReview.find({
+          where: {
+            mealId: self.id
+          },
+          attributes: [
+            [sequelize.fn('AVG', sequelize.col('rating')), 'rating'],
+            [sequelize.fn('COUNT', sequelize.col('rating')), 'reviewCount']
+          ],
+          group: ['mealId']
+        }).then(function(res) {
+          self.reviewCount = res.get('reviewCount');
+          self.rating = res.get('rating');
+          return self.save();
         });
       }
     }
