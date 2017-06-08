@@ -5,16 +5,6 @@
     src: url('https://fonts.google.com/specimen/Rochester?selection.family=Rochester'); /*URL to font*/
 }
 
-h1 {
-  color: rgb(0, 188, 212);
-  font-family: "Rochester";
-  font-size: 120px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: bold;
-  line-height: 19px;
-}
-
 h2 {
   font-family: "Rochester";
   font-size: 68px;
@@ -24,7 +14,7 @@ h2 {
   line-height: 19px;
 }
 
-p {
+#date {
   color: rgb(0, 188, 212);
   text-align: center;
   font-family: "Rochester";
@@ -87,4 +77,11 @@ p {
 .goleft {
   margin-right: auto;
   margin-left: 20px;
+  color: rgb(0, 188, 212);
+  font-family: "Rochester";
+  font-size: 60px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 19px;
 }
