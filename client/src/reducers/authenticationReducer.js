@@ -1,4 +1,4 @@
-import { AUTHENTICATE, USER_DETAILS } from '../actions';
+import { AUTHENTICATE, USER_DETAILS, LOG_OUT } from '../actions';
 
 let initialState = {
   user: {},
@@ -21,6 +21,10 @@ export default function reducer(state = initialState, action) {
       return {
         ...state, user: action.payload
       }
+    case LOG_OUT:
+      return {
+        ...state, user: {}
+      };
     default:
       return state;
   }
