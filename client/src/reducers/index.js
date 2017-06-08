@@ -6,6 +6,7 @@ import AuthenticationReducer from './authenticationReducer';
 import ReviewReducer from './reviewReducer';
 import TodaysMealReducer from './todaysMealsReducer';
 import CurrentMealReducer from './CurrentMealReducer';
+import TomorrowsMealReducer from './tomorrowsMealsReducer';
 
 const rootReducer = combineReducers({
   meals: MealReducer,
@@ -13,7 +14,7 @@ const rootReducer = combineReducers({
   auth: AuthenticationReducer,
   review: ReviewReducer,
   todaysMeals: TodaysMealReducer,
-  currentMeal: CurrentMealReducer
+  tomorrowsMeals: TomorrowsMealReducer
 });
 
 export default rootReducer;
