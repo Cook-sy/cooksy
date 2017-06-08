@@ -58,8 +58,8 @@ export function getNearbyMeals(zipcode) {
   }
 }
 
-export function fetchTodaysMeals() {
-  let today = new Date();
+export function fetchTomorrowsMeals() {
+  let today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
   let year = today.getFullYear().toString();
   let month = (today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1).toString() : (today.getMonth() + 1).toString();
   let day = today.getDate().toString().length === 1 ? '0' + today.getDate().toString() : today.getDate().toString();
@@ -73,7 +73,7 @@ export function fetchTodaysMeals() {
     });
 
   return {
-    type: FETCH_TODAYS_MEALS,
+    type: FETCH_TOMORROWS_MEALS,
     payload: request
   };
 }
@@ -92,8 +92,8 @@ export function fetchMealsByDate(date) {
   };
 }
 
-export function fetchTomorrowsMeals() {
-  let today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+export function fetchTodaysMeals() {
+  let today = new Date();
   let year = today.getFullYear().toString();
   let month = (today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1).toString() : (today.getMonth() + 1).toString();
   let day = today.getDate().toString().length === 1 ? '0' + today.getDate().toString() : today.getDate().toString();
@@ -108,7 +108,7 @@ export function fetchTomorrowsMeals() {
     });
 
   return {
-    type: FETCH_TOMORROWS_MEALS,
+    type: FETCH_TODAYS_MEALS,
     payload: request
   };
 }

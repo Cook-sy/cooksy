@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTodaysMeals } from '../actions/index';
+import { fetchTodaysMeals, fetchTomorrowsMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
@@ -14,7 +14,8 @@ import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    this.props.fetchTodaysMeals();
+    console.log(this.props.fetchTodaysMeals());
+    console.log(this.props.fetchTomorrowsMeals());
   }
 
   render() {
@@ -58,7 +59,7 @@ class Homepage extends Component {
           className="grid"
           cols={2.2}
         >
-          {_.map(this.props.todaysMeals, (meal) => (
+          {_.map(this.props.tomorrowsMeals, (meal) => (
             <GridTile
               cellHeight={300}
               className="tile"
@@ -77,8 +78,11 @@ class Homepage extends Component {
 }
 
 function mapStateToProps(state) {
-  return { todaysMeals: state.todaysMeals };
+  return {
+    todaysMeals: state.todaysMeals,
+    tomorrowsMeals: state.tomorrowsMeals
+  };
 }
 
 
-export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals })(Homepage);
+export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals, fetchTomorrowsMeals: fetchTomorrowsMeals })(Homepage);
