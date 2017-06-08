@@ -20,7 +20,11 @@ class Homepage extends Component {
   render() {
     return (
       <div className="root-homepage">
-        <Carousel slidesToShow={2} cellAlign="center" cellSpacing={30}>
+        <Carousel
+          slidesToShow={2}
+          cellAlign="center"
+          cellSpacing={30}
+        >
           <img src="https://greatist.com/sites/default/files/SlowCooker-Pork-Ramen_0.jpg"/>
           <img src="https://static1.squarespace.com/static/53ffb08fe4b0a9868676061c/53ffb0bbe4b006127c1eae3e/53ffcd46e4b0cd9fe3d11696/1409273160709/pasta.jpg"/>
           <img src="http://del.h-cdn.co/assets/15/51/1450278988-honey-soy-chicken.jpg"/>
@@ -47,9 +51,27 @@ class Homepage extends Component {
             </GridTile>
           ))}
         </GridList>
+        <p><h2>Tomorrow's Menu</h2>{new Date(new Date().getTime() + 24 * 60 * 60 * 1000
+          ).toDateString()}</p>
+        <GridList
+          cellHeight={200}
+          className="grid"
+          cols={2.2}
+        >
+          {_.map(this.props.todaysMeals, (meal) => (
+            <GridTile
+              cellHeight={300}
+              className="tile"
+              key={meal.name}
+              title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
+              subtitle={<span>by <b>{meal.chef.username}</b></span>}
+              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
+            >
+              <img src={meal.images} alt="picture"/>
+            </GridTile>
+          ))}
+        </GridList>
       </div>
-
-
     );
   }
 }

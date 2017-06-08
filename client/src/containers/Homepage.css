@@ -6,7 +6,7 @@
 
 .grid {
   width: 1000px;
-  height: 500px;
+  height: 220px;
   display: flex;
   flex-wrap: nowrap !important;
   overflow-x: auto;
