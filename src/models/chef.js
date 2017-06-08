@@ -90,5 +90,17 @@ module.exports = function(sequelize, DataTypes) {
       });
   });
 
+  Chef.beforeUpdate(function(chef, options) {
+    if (chef.zipcode !== chef._previousDataValues.zipcode) {
+      return sequelize.models.Zipcode.findById(chef.zipcode)
+        .then(function(zip) {
+          chef.point = {
+            type: 'POINT',
+            coordinates: [zip.lat, zip.lng]
+          };
+        });
+    }
+  });
+
   return Chef;
 };
