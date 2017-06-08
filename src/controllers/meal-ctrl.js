@@ -1,21 +1,6 @@
 var db = require('../models');
 var radiusQuery = require('../utils/radius-query');
 
-exports.createMeal = function(chefId, body) {
-  body.chefId = chefId;
-  return db.Meal.create(body);
-};
-
-exports.deleteMeal = function(id) {
-  return db.Meal.findById(id)
-    .then(function(meal) {
-      if (meal) {
-        meal.destroy();
-      }
-      return meal;
-    });
-};
-
 var mealInclude = [
   {
     model: db.Chef,
@@ -38,6 +23,26 @@ var mealInclude = [
     ]
   }
 ];
+
+exports.createMeal = function(chefId, body) {
+  body.chefId = chefId;
+  return db.Meal.create(body)
+    .then(function(meal) {
+      return db.Meal.findById(meal.id, {
+        include: mealInclude
+      });
+    });
+};
+
+exports.deleteMeal = function(id) {
+  return db.Meal.findById(id)
+    .then(function(meal) {
+      if (meal) {
+        meal.destroy();
+      }
+      return meal;
+    });
+};
 
 exports.updateMeal = function(id, newValues) {
   return db.Meal.update(newValues, {
