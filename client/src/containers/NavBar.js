@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import { getUserDetails } from '../actions';
+import { getUserDetails, logout } from '../actions';
 import './NavBar.css';
 
 class NavBar extends Component {
@@ -29,7 +28,7 @@ class NavBar extends Component {
             <Link to="/login">Login</Link>
           </li>
           <li className={`nav-auth ${user.user ? null : 'hidden'}`}>
-            <Link to="/logout">Logout</Link>
+            <a onClick={this.props.logout}>Logout</a>
           </li>
         </ul>
       </div>
@@ -43,4 +42,4 @@ function mapStateToProps({ auth }) {
   };
 }
 
-export default connect(mapStateToProps, { getUserDetails })(NavBar);
+export default connect(mapStateToProps, { getUserDetails, logout })(NavBar);
