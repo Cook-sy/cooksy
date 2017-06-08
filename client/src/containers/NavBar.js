@@ -23,10 +23,10 @@ class NavBar extends Component {
           <li><Link to="/meals">Meals</Link></li>
           <li><Link to="/post-new-meal">New Meal</Link></li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
-            <Link to="/sign-up-form">Signup</Link>
+            <Link to="/signup">Signup</Link>
           </li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
-            <Link to="/log-in-form">Login</Link>
+            <Link to="/login">Login</Link>
           </li>
           <li className={`nav-auth ${user.user ? null : 'hidden'}`}>
             <Link to="/logout">Logout</Link>
@@ -42,4 +42,5 @@ function mapStateToProps({ auth }) {
     auth: auth
   };
 }
+
 export default connect(mapStateToProps, { getUserDetails })(NavBar);
