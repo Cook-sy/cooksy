@@ -5,6 +5,7 @@ var validateChefSignup = require('../utils/form-validation').validateChefSignup;
 var isChef = require('../middleware/is-authenticated').isChef;
 var chefCtrl = require('../controllers/chef-ctrl');
 var mealCtrl = require('../controllers/meal-ctrl');
+var requestCtrl = require('../controllers/request-ctrl');
 var router = express.Router();
 
 // Check if a meal is owned by a chef
@@ -29,9 +30,30 @@ var checkMealOwnership = function(mealId, chefId, req, res, callback) {
     });
 };
 
+var checkRequestOwnership = function(requestId, chefId, req, res, callback) {
+  return requestCtrl.getRequest(requestId)
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Request not found'
+        });
+      }
+
+      if (request.meal.chefId === chefId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The request is not owned by you'
+      });
+    });
+};
+
 // GET /api/chefs
 // Get a list of all chefs
-// GET /api/chefs/?zip=ZIPCODE&=radius=NUM
+// GET /api/chefs/?zip=ZIPCODE&radius=NUM
 // Get all nearby chefs around a ZIPCODE that is within NUM meters
 router.get('/', function(req, res) {
   if (req.query.zip && req.query.radius) {
@@ -177,6 +199,78 @@ router.get('/meals', isChef, function(req, res) {
         error: err.message
       });
     });
+});
+
+// GET /api/chefs/:id/meals
+// Get all meals created by a specific chef
+router.get('/:id/meals', function(req, res) {
+  return mealCtrl.getChefsMeals(req.params.id)
+    .then(function(meals) {
+      return res.status(200).json(meals);
+    });
+});
+
+// GET /api/chefs/:id/requests
+// Get all requests created by a specific chef
+router.get('/:id/requests', function(req, res) {
+  return requestCtrl.getChefRequests(req.params.id)
+    .then(function(requests) {
+      return res.status(200).json(requests);
+    });
+});
+
+// POST /api/chefs/requests
+// Create a request for a specific chef
+router.post('/requests', isChef, function(req, res) {
+  return checkMealOwnership(req.body.mealId, req.userId, req, res, function() {
+    return requestCtrl.createRequest(req.body)
+      .then(function(request) {
+        return res.status(201).json({
+          success: true,
+          request: request
+        });
+      });
+  });
+});
+
+// GET /api/chefs/requests/:id
+// Get a specific request
+router.get('/requests/:id', function(req, res) {
+  return requestCtrl.getRequest(req.params.id)
+    .then(function(request) {
+      return res.status(200).json({
+        success: true,
+        request: request
+      });
+    });
+});
+
+// PUT /api/chefs/requests/:id
+// Update a specific request
+router.put('/requests/:id', isChef, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return requestCtrl.updateRequest(req.params.id, req.body)
+      .then(function(updatedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: updatedRequest
+        });
+      });
+  });
+});
+
+// DELETE /api/chefs/requests/:id
+// Delete a specific request
+router.delete('/requests/:id', isChef, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return requestCtrl.deleteRequest(req.params.id)
+      .then(function(deletedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: deletedRequest
+        });
+      });
+  });
 });
 
 module.exports = router;

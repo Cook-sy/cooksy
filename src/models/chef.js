@@ -71,21 +71,22 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   Chef.beforeCreate(function(chef, options) {
+    return bcrypt.genSalt(10)
+      .then(function(salt) {
+        return bcrypt.hash(chef.password, salt);
+      })
+      .then(function(hashedPassword) {
+        chef.password = hashedPassword;
+      });
+  });
+
+  Chef.beforeCreate(function(chef, options) {
     return sequelize.models.Zipcode.findById(chef.zipcode)
       .then(function(zip) {
         chef.point = {
           type: 'POINT',
           coordinates: [zip.lat, zip.lng]
         };
-      })
-      .then(function() {
-        return bcrypt.genSalt(10);
-      })
-      .then(function(salt) {
-        return bcrypt.hash(chef.password, salt);
-      })
-      .then(function(hashedPassword) {
-        chef.password = hashedPassword;
       });
   });
 

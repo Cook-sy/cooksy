@@ -58,21 +58,22 @@ module.exports = function(sequelize, DataTypes) {
   );
 
   User.beforeCreate(function(user, options) {
+    return bcrypt.genSalt(10)
+      .then(function(salt) {
+        return bcrypt.hash(user.password, salt);
+      })
+      .then(function(hashedPassword) {
+        user.password = hashedPassword;
+      });
+  });
+
+  User.beforeCreate(function(user, options) {
     return sequelize.models.Zipcode.findById(user.zipcode)
       .then(function(zip) {
         user.point = {
           type: 'POINT',
           coordinates: [zip.lat, zip.lng]
         };
-      })
-      .then(function() {
-        return bcrypt.genSalt(10);
-      })
-      .then(function(salt) {
-        return bcrypt.hash(user.password, salt);
-      })
-      .then(function(hashedPassword) {
-        user.password = hashedPassword;
       });
   });
 

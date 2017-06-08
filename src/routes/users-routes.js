@@ -7,6 +7,8 @@ var purchaseCtrl = require('../controllers/purchase-ctrl');
 var userCtrl = require('../controllers/user-ctrl');
 var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
+var userRequestCtrl = require('../controllers/user-request-ctrl');
+var requestCtrl = require('../controllers/request-ctrl');
 var router = express.Router();
 
 // Check if a review is owned by a user
@@ -31,9 +33,30 @@ var checkReviewOwnership = function(reviewId, userId, req, res, callback) {
     });
 };
 
+var checkRequestOwnership = function(requestId, userId, req, res, callback) {
+  return userRequestCtrl.getRequest(requestId)
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Request not found'
+        });
+      }
+
+      if (request.userId === userId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The request is not owned by you'
+      });
+    });
+};
+
 // GET /api/users
 // Get a list of all users
-// GET /api/users/?zip=ZIPCODE&=radius=NUM
+// GET /api/users/?zip=ZIPCODE&radius=NUM
 // Get all nearby users around a ZIPCODE that is within NUM meters
 router.get('/', function(req, res) {
   if (req.query.zip && req.query.radius) {
@@ -258,6 +281,82 @@ router.delete('/meals/reviews/:id', isUser, function(req, res) {
         return res.status(200).json({
           success: true,
           review: deletedReview
+        });
+      });
+  });
+});
+
+// GET /api/users/:id/requests
+// Get all requests from a user
+router.get('/:id/requests', function(req, res) {
+  return userRequestCtrl.getUserRequests(req.params.id)
+    .then(function(requests) {
+      return res.status(200).json(requests);
+    });
+});
+
+// POST /api/users/requests
+// Create a request for a specific meal
+router.post('/requests', isUser, function(req, res) {
+  // Check if a request exists for the meal
+  return requestCtrl.getRequest(req.body.requestId)
+    .then(function(request) {
+      if (!request) {
+        return request;
+      }
+      req.body.userId = req.userId;
+      return userRequestCtrl.createRequest(req.body);
+    })
+    .then(function(request) {
+      if (!request) {
+        return res.status(404).json({
+          success: false,
+          message: 'Meal requested not found'
+        });
+      }
+
+      return res.status(201).json({
+        success: true,
+        request: request
+      });
+    });
+});
+
+// GET /api/users/requests/:id
+// Get a specific request
+router.get('/requests/:id', function(req, res) {
+  return userRequestCtrl.getRequest(req.params.id)
+    .then(function(request) {
+      return res.status(200).json({
+        success: true,
+        request: request
+      });
+    });
+});
+
+// PUT /api/chefs/requests/:id
+// Update a specific request
+router.put('/requests/:id', isUser, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return userRequestCtrl.updateRequest(req.params.id, req.body)
+      .then(function(updatedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: updatedRequest
+        });
+      });
+  });
+});
+
+// DELETE /api/chefs/requests/:id
+// Delete a specific request
+router.delete('/requests/:id', isUser, function(req, res) {
+  return checkRequestOwnership(req.params.id, req.userId, req, res, function() {
+    return userRequestCtrl.deleteRequest(req.params.id)
+      .then(function(deletedRequest) {
+        return res.status(200).json({
+          success: true,
+          request: deletedRequest
         });
       });
   });

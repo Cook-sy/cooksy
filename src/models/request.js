@@ -26,6 +26,27 @@ module.exports = function(sequelize, DataTypes) {
           as: 'userRequests'
         });
       }
+    },
+
+    instanceMethods: {
+      updateNumOrdered: function() {
+        var self = this;
+        return sequelize.models.UserRequest.find({
+          where: {
+            requestId: self.id
+          },
+          attributes: [
+            [
+              sequelize.fn('SUM', sequelize.col('num')),
+              'numOrdered'
+            ]
+          ],
+          group: ['requestId']
+        }).then(function(res) {
+          self.numOrdered = res.get('numOrdered');
+          return self.save();
+        });
+      }
     }
   });
   return Request;
