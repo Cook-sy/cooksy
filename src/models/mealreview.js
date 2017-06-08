@@ -29,44 +29,23 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  MealReview.afterCreate(function(review, options) {
-    return sequelize.models.Meal.findById(review.mealId)
+  var updateRating = function(mealId) {
+    return sequelize.models.Meal.findById(mealId)
       .then(function(meal) {
-        return meal.increment('reviewCount');
-      })
-      .then(function(meal) {
-        var rating = (meal.rating * (meal.reviewCount - 1)) + review.rating;
-        meal.rating = rating / meal.reviewCount;
-        return meal.save();
+        return meal.updateRating();
       });
+  };
+
+  MealReview.afterCreate(function(review, options) {
+    return updateRating(review.mealId);
   });
 
-  MealReview.beforeDestroy(function(review, options) {
-    return sequelize.models.Meal.findById(review.mealId)
-      .then(function(meal) {
-        return meal.decrement('reviewCount');
-      })
-      .then(function(meal) {
-        var rating = (meal.rating * (meal.reviewCount + 1)) - review.rating;
-        // If last review, then review count will be zero. Rating will be 0.
-        if (meal.reviewCount === 0) {
-          meal.rating = 0;
-        } else {
-          meal.rating = rating / meal.reviewCount;
-        }
-        return meal.save();
-      });
+  MealReview.afterDestroy(function(review, options) {
+    return updateRating(review.mealId);
   });
 
   MealReview.afterUpdate(function(review, options) {
-    var delta = review.rating - review._previousDataValues.rating;
-
-    return sequelize.models.Meal.findById(review.mealId)
-      .then(function(meal) {
-        var rating = (meal.rating * meal.reviewCount) + delta;
-        meal.rating = rating / meal.reviewCount;
-        return meal.save();
-      });
+    return updateRating(review.mealId);
   });
 
   return MealReview;

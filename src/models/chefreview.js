@@ -21,44 +21,23 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  ChefReview.afterCreate(function(review, options) {
-    return sequelize.models.Chef.findById(review.chefId)
+  var updateRating = function(chefId) {
+    return sequelize.models.Chef.findById(chefId)
       .then(function(chef) {
-        return chef.increment('reviewCount');
-      })
-      .then(function(chef) {
-        var rating = (chef.rating * (chef.reviewCount - 1)) + review.rating;
-        chef.rating = rating / chef.reviewCount;
-        return chef.save();
+        return chef.updateRating();
       });
+  };
+
+  ChefReview.afterCreate(function(review, options) {
+    return updateRating(review.chefId);
   });
 
-  ChefReview.beforeDestroy(function(review, options) {
-    return sequelize.models.Chef.findById(review.chefId)
-      .then(function(chef) {
-        return chef.decrement('reviewCount');
-      })
-      .then(function(chef) {
-        var rating = (chef.rating * (chef.reviewCount + 1)) - review.rating;
-        // If last review, then review count will be zero. Rating will be 0.
-        if (chef.reviewCount === 0) {
-          chef.rating = 0;
-        } else {
-          chef.rating = rating / chef.reviewCount;
-        }
-        return chef.save();
-      });
+  ChefReview.afterDestroy(function(review, options) {
+    return updateRating(review.chefId);
   });
 
   ChefReview.afterUpdate(function(review, options) {
-    var delta = review.rating - review._previousDataValues.rating;
-
-    return sequelize.models.Chef.findById(review.chefId)
-      .then(function(chef) {
-        var rating = (chef.rating * chef.reviewCount) + delta;
-        chef.rating = rating / chef.reviewCount;
-        return chef.save();
-      });
+    return updateRating(review.chefId);
   });
 
   return ChefReview;
