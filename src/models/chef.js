@@ -33,7 +33,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       },
       rating: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(3, 2),
         defaultValue: 0
       },
       reviewCount: {
@@ -65,6 +65,23 @@ module.exports = function(sequelize, DataTypes) {
       instanceMethods: {
         comparePassword: function(password) {
           return bcrypt.compare(password, this.password);
+        },
+        updateRating: function() {
+          var self = this;
+          return sequelize.models.ChefReview.find({
+            where: {
+              chefId: self.id
+            },
+            attributes: [
+              [sequelize.fn('AVG', sequelize.col('rating')), 'rating'],
+              [sequelize.fn('COUNT', sequelize.col('rating')), 'reviewCount']
+            ],
+            group: ['chefId']
+          }).then(function(res) {
+            self.reviewCount = res.get('reviewCount');
+            self.rating = res.get('rating');
+            return self.save();
+          });
         }
       }
     }
