@@ -8,7 +8,6 @@ export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
-export const FETCH_TODAYS_MEALS = 'FETCH_TODAYS_MEALS';
 export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
 
 export function createMeal(values, cb) {
@@ -109,7 +108,7 @@ export function fetchTomorrowsMeals() {
     });
 
   return {
-    type: FETCH_TODAYS_MEALS,
+    type: FETCH_TOMORROWS_MEALS,
     payload: request
   };
 }
