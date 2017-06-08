@@ -92,3 +92,24 @@ export function fetchMealsByDate(date) {
     payload: request
   };
 }
+
+export function fetchTomorrowsMeals() {
+  let today = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+  let year = today.getFullYear().toString();
+  let month = (today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1).toString() : (today.getMonth() + 1).toString();
+  let day = today.getDate().toString().length === 1 ? '0' + today.getDate().toString() : today.getDate().toString();
+  let date = year + '-' + month + '-' + day;
+
+  let request = axios.get('/api/meals')
+    .then(function(meals) {
+      console.log(meals);
+      return _.filter(meals.data, (meal) => {
+        return meal.deliveryDateTime.substr(0, 10) === date;
+      });
+    });
+
+  return {
+    type: FETCH_TODAYS_MEALS,
+    payload: request
+  };
+}
