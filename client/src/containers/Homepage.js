@@ -65,9 +65,9 @@ class Homepage extends Component {
 function mapStateToProps(state) {
   return {
     todaysMeals: state.todaysMeals,
-    tomorrowsMeals: state.tomorrowsMeals
+    upcomingMeals: state.upcomingMeals
   };
 }
 
 
-export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals, fetchTomorrowsMeals: fetchTomorrowsMeals })(Homepage);
+export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals, fetchUpcomingMeals: fetchUpcomingMeals })(Homepage);
