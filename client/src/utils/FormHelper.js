@@ -2,9 +2,8 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
-import AutoComplete from 'material-ui/AutoComplete';
 import { Rating } from 'material-ui-rating';
-
+import { AutoComplete } from 'redux-form-material-ui';
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import uuid from 'uuid';
