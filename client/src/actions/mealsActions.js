@@ -1,5 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
 
 import { attachTokenToTheHeader } from '../utils/RequestHelper';
 
@@ -94,9 +95,33 @@ export function fetchTodaysMeals() {
 }
 
 export function fetchUpcomingMeals() {
+  let mealStorage = {};
+  let time = [];
   let request = axios.get('/api/meals')
     .then(function(meals) {
-      console.log(meals);
+      _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
+        time.push([date.getTime(), meal.deliveryDateTime.substr(0, 10)]);
+      });
+      time.sort(function(a, b) {
+        return a[0] - b[0];
+      });
+      _.map(time, (tuple) => {
+        if (Object.keys(mealStorage).length === 3) {
+          return;
+        }
+        if (!mealStorage[tuple[1]]) {
+          mealStorage[tuple[1]] = [];
+        }
+      });
+      _.map(meals.data, (meal) => {
+        for (var key in mealStorage) {
+          if (key === meal.deliveryDateTime.substr(0, 10)) {
+            mealStorage[key].push(meal);
+          }
+        }
+      })
+      return mealStorage;
     })
 
   return {
@@ -104,3 +129,4 @@ export function fetchUpcomingMeals() {
     payload: request
   }
 }
+
