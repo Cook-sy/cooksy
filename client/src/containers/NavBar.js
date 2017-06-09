@@ -6,10 +6,6 @@ import Avatar from 'material-ui/Avatar';
 import { getUserDetails, logout } from '../actions';
 import './NavBar.css';
 class NavBar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.getUserDetails();
   }
