@@ -83,6 +83,8 @@ class MealDetails extends Component {
             <div style={{width:300, height:300}}>
               <Map
                 address={this.props.meal.address}
+                city={this.props.meal.city}
+                state={this.props.meal.state}
                 containerElement={<div style={{height: `100%`}} />}
                 mapElement={<div style={{height: `100%`}} />}
               />

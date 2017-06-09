@@ -13,7 +13,7 @@ class Map extends Component {
   }
 
   componentDidMount() {
-    this.getCoordinates('1 Infinite Loop, Cupertino') //{this.state.address} (cannot load with fake data)
+    this.getCoordinates(`${this.props.address}, ${this.props.city}, ${this.props.state}`)
     this.setState({zoom: 16})
   }
 
