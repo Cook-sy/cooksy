@@ -78,8 +78,13 @@ module.exports = function(sequelize, DataTypes) {
             ],
             group: ['chefId']
           }).then(function(res) {
-            self.reviewCount = res.get('reviewCount');
-            self.rating = res.get('rating');
+            if (res) {
+              self.reviewCount = res.get('reviewCount');
+              self.rating = res.get('rating');
+            } else {
+              self.reviewCount = 0;
+              self.rating = 0;
+            }
             return self.save();
           });
         }

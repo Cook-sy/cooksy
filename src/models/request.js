@@ -43,7 +43,11 @@ module.exports = function(sequelize, DataTypes) {
           ],
           group: ['requestId']
         }).then(function(res) {
-          self.numOrdered = res.get('numOrdered');
+          if (res) {
+            self.numOrdered = res.get('numOrdered');
+          } else {
+            self.numOrdered = 0;
+          }
           return self.save();
         });
       }
