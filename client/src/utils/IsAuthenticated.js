@@ -12,3 +12,7 @@ export function successfulAuth(token) {
   localStorage.setItem('cooksy', token);
   this.props.history.push('/meals');
 }
+
+export function deleteToken(tokenKey) {
+	localStorage.removeItem(tokenKey);
+}

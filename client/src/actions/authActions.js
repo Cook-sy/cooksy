@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-import { decodeToken as userDetails } from '../utils/IsAuthenticated';
+import { decodeToken as userDetails, deleteToken } from '../utils/IsAuthenticated';
 
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const USER_DETAILS = 'USER_DETAILS';
+export const LOG_OUT = 'LOG_OUT';
 
 export function signUpUser(values, cb) {
   const request = axios
@@ -56,10 +57,17 @@ export function getUserDetails() {
     return {
       type: USER_DETAILS,
       payload: user
-    }
+    };
   } else {
     return {
       type:'USER_NOT_REGISTERED'
-    }
+    };
   }
 } 
+
+export function logout() {
+  deleteToken('cooksy');
+  return {
+    type: LOG_OUT
+  };
+}

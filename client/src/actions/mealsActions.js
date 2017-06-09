@@ -65,7 +65,6 @@ export function fetchTodaysMeals() {
 
   let request = axios.get('/api/meals')
     .then(function(meals) {
-      console.log(meals);
       return _.filter(meals.data, (meal) => {
         return meal.deliveryDateTime.substr(0, 10) === date;
       });
