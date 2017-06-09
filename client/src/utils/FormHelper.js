@@ -2,6 +2,7 @@ import React from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
+import AutoComplete from 'material-ui/AutoComplete';
 import { Rating } from 'material-ui-rating';
 
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
@@ -102,5 +103,13 @@ export const renderRatingField = ({ input: { onChange, value }, ...custom }) => 
       onChange={onChange}
       {...custom}
     />
+  );
+}
+
+export const renderAutoComplete = ({ ...custom }) => {
+  return (
+    <AutoComplete
+      {...custom}
+    />  
   );
 }
