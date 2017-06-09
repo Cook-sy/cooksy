@@ -3,7 +3,7 @@
 	left:0px;
 	position:absolute;
 	overflow:hidden;
-	height:70px;
+	height:65px;
 	background-color:rgb(0, 188, 212);
 	margin: 0;
 	padding: 0;
@@ -18,7 +18,7 @@
 	padding-left:20px;
 	padding-right:20px;
 	cursor:pointer;
-	padding-top:17.5px !important;
+	padding-top:15px !important;
 	float: left;
 	list-style: none;
 	font-weight: 200;
@@ -50,7 +50,8 @@
 
 li img {
 	vertical-align: -webkit-baseline-middle;
-	margin-right: 20px;
+	margin-right: 20px !important;
+	margin-top: 0 !important;
 }
 
 .no-cursor {
