@@ -14,8 +14,15 @@ import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    console.log(this.props.fetchTodaysMeals());
-    console.log(this.props.fetchTomorrowsMeals());
+    // console.log(this.props.fetchTodaysMeals());
+    // console.log(this.props.fetchTomorrowsMeals());
+    this.props.fetchTomorrowsMeals()
+      .then(function(meals) {
+        console.log(meals)
+        // meals.data.sort(function(a, b) {
+        //   return Number(b.deliveryDateTime
+        // })
+      })
   }
 
   render() {
@@ -45,7 +52,7 @@ class Homepage extends Component {
           className="grid"
           cols={2.2}
         >
-          {_.map(this.props.todaysMeals, (meal) => (
+          {_.map(this.props.tomorrowsMeals, (meal) => (
             <GridTile
               cellHeight={300}
               className="tile"
