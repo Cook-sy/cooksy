@@ -58,26 +58,6 @@ class Homepage extends Component {
             </GridTile>
           ))}
         </GridList>
-        <p id="date"><h2>Tomorrow's Menu</h2>{new Date(new Date().getTime() + 24 * 60 * 60 * 1000
-          ).toDateString()}</p>
-        <GridList
-          cellHeight={200}
-          className="grid"
-          cols={2.2}
-        >
-          {_.map(this.props.tomorrowsMeals, (meal) => (
-            <GridTile
-              cellHeight={300}
-              className="tile"
-              key={meal.name}
-              title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
-              subtitle={<span>by <b>{meal.chef.username}</b></span>}
-              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
-            >
-              <img src={meal.images} alt="picture"/>
-            </GridTile>
-          ))}
-        </GridList>
       </div>
     );
   }
