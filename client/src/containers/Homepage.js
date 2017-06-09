@@ -14,18 +14,14 @@ import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    // console.log(this.props.fetchTodaysMeals());
+    console.log(this.props.fetchTodaysMeals());
     // console.log(this.props.fetchTomorrowsMeals());
-    this.props.fetchTomorrowsMeals()
-      .then(function(meals) {
-        console.log(meals)
-        // meals.data.sort(function(a, b) {
-        //   return Number(b.deliveryDateTime
-        // })
-      })
+    //console.log(this.props.fetchTomorrowsMeals())
+
   }
 
   render() {
+    console.log(this.props.tomorrowsMeals);
     return (
       <div className="root-homepage">
         <div className="goleft"><h1>Cooksy</h1></div>
@@ -58,7 +54,7 @@ class Homepage extends Component {
               className="tile"
               key={meal.name}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
-              subtitle={<span>by <b>{meal.chef.username}</b></span>}
+              subtitle={<span>by <b>{meal.chef && meal.chef.username}</b></span>}
               actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
               <img src={meal.images} alt="picture"/>
