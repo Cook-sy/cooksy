@@ -35,17 +35,18 @@ class MealDetails extends Component {
     this.props.fetchMealDetail(id);
   }
 
-  addReview(e) {
+  addReview() {
     this.props.toggleReview();
   }
 
-  didReview(meal) {
-    this.props.didReview(this.props.meal);
+  didReview() {
+    this.props.didReview(this.props.currentMeal);
   }
 
   render() {
-    const { meal, review } = this.props;
-    if (!meal) {
+    const { currentMeal, review } = this.props;
+    
+    if (Object.keys(currentMeal).length === 0) {
       return <div>Loading...</div>;
     }
 
@@ -53,38 +54,38 @@ class MealDetails extends Component {
       <div onLoad={this.didReview}>
         <Card>
           <CardHeader
-            title={meal.chef.username}
+            title={currentMeal.chef.username}
             subtitle="Chef"
-            avatar={meal.chef.image}
+            avatar={currentMeal.chef.image}
           />
           <CardMedia
             overlay={
               <CardTitle
-                title={this.props.meal.name}
-                subtitle={meal.chef.username}
+                title={currentMeal.name}
+                subtitle={currentMeal.chef.username}
               />
             }
           >
             <img
-              src={this.props.meal.images}
-              alt="meal"
+              src={currentMeal.images}
+              alt="currentMeal"
               width="500"
               height="500"
             />
           </CardMedia>
           <CardTitle title="Meal Details" subtitle="Description" />
           <CardText>
-            {this.props.meal.description}
+            {currentMeal.description}
           </CardText>
           <CardTitle subtitle="Pickup Information" />
           <CardText>
-            <p>{this.props.meal.pickupInfo}</p>
-            <p>{`${this.props.meal.address}, ${this.props.meal.city}, ${this.props.meal.state} ${this.props.meal.zipcode}`}</p>
+            <p>{currentMeal.pickupInfo}</p>
+            <p>{`${currentMeal.address}, ${currentMeal.city}, ${currentMeal.state} ${currentMeal.zipcode}`}</p>
             <div style={{width:300, height:300}}>
               <Map
-                address={this.props.meal.address}
-                city={this.props.meal.city}
-                state={this.props.meal.state}
+                address={currentMeal.address}
+                city={currentMeal.city}
+                state={currentMeal.state}
                 containerElement={<div style={{height: `100%`}} />}
                 mapElement={<div style={{height: `100%`}} />}
               />
@@ -107,7 +108,7 @@ class MealDetails extends Component {
         </Card>
         <ReviewForm id={this.props.match.params.id} />
         <div className="reviews">
-          {meal.mealReviews.reverse().map(review =>
+          {review.currentReviews.reverse().map(review =>
             <div className="review" key={review.id}>
               <div>
                 <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
@@ -123,10 +124,9 @@ class MealDetails extends Component {
   }
 }
 
-function mapStateToProps({ meals, review }, ownProps) {
+function mapStateToProps({ review, currentMeal }, ownProps) {
   return {
-    meals: meals,
-    meal: meals[ownProps.match.params.id],
+    currentMeal: currentMeal,
     review: review
   };
 }
