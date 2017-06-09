@@ -3,8 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
   var Purchase = sequelize.define('Purchase', {
     individualPrice: {
-      type: DataTypes.DECIMAL,
-      allowNull: false
+      type: DataTypes.DECIMAL
     },
     num: {
       type: DataTypes.INTEGER,
