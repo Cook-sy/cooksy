@@ -17,6 +17,7 @@ import PrivateRoute from './utils/PrivateRoute'
 import LogInForm from './containers/LogInForm';
 import ChefProfile from './containers/ChefProfile';
 import NavBar from './containers/NavBar.js';
+import RequestForm from './containers/RequestForm.js';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
 
@@ -38,6 +39,7 @@ ReactDOM.render(
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <Route exact path="/login" component={LogInForm} />
             <Route exact path="/chef-profile" component={ChefProfile}/>
+            <Route exact path="/request-form" component={RequestForm}/>
           </Switch>
         </div>
       </BrowserRouter>
