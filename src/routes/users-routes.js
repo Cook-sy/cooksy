@@ -207,6 +207,20 @@ router.get('/purchases/:id', isUser, function(req, res) {
   });
 });
 
+// DELETE /api/users/purchases/:id
+// Delete a purchase made by a user
+router.delete('/purchases/:id', isUser, function(req, res) {
+  return checkPurchaseOwnership(req.params.id, req.userId, req, res, function() {
+    return purchaseCtrl.deletePurchase(req.params.id)
+      .then(function(deletedPurchase) {
+        return res.status(200).json({
+          success: true,
+          purchase: deletedPurchase
+        });
+      });
+  });
+});
+
 // GET /api/users/:id/meals/reviews
 // Get all meal reviews by a specific user
 router.get('/:id/meals/reviews', function(req, res) {
