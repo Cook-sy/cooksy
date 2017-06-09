@@ -16,7 +16,8 @@ module.exports = new Strategy(
           sub: chef.id,
           user: chef.username,
           role: 'chef',
-          zipcode: chef.zipcode
+          zipcode: chef.zipcode,
+          image: chef.image
         };
 
         var token = jwt.sign(payload, process.env.JWT_SECRET, {
