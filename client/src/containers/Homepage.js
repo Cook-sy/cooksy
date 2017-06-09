@@ -39,7 +39,7 @@ class Homepage extends Component {
           <img src="https://halfoff.adspayusa.com/wp-content/uploads/2017/04/sushi_and_sashimi_for_two.0.jpg"/>
           <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg"/>
         </Carousel>
-        <p id="date"><h2>  Today's Menu  </h2>{new Date().toDateString()}</p>
+        <p id="date"><h2>  Upcoming Meals  </h2></p>
         <GridList
           cellHeight={200}
           className="grid"

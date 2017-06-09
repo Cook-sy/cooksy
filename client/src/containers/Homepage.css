@@ -16,7 +16,8 @@ h2 {
 
 #date {
   color: rgb(0, 188, 212);
-  text-align: center;
+  margin-right: auto;
+  margin-left: 20px;
   font-family: "Rochester";
   font-size: 40px;
   font-style: normal;
