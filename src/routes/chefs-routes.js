@@ -156,6 +156,20 @@ router.post('/meals', isChef, function(req, res) {
     });
 });
 
+// GET /api/chefs/meals/:id
+// Get a meal that is owned by a chef. Includes purchase information.
+router.get('/meals/:id', isChef, function(req, res) {
+  return checkMealOwnership(req.params.id, req.userId, req, res, function() {
+    return mealCtrl.getChefsMeal(req.params.id)
+      .then(function(meal) {
+        return res.status(200).json({
+          success: true,
+          meal: meal
+        });
+      });
+  });
+});
+
 // DELETE /api/chefs/meals/:id
 // Delete a meal that is owned by a chef
 router.delete('/meals/:id', isChef, function(req, res) {

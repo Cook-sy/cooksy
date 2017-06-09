@@ -64,11 +64,11 @@ module.exports = function(sequelize, DataTypes) {
         });
         Meal.hasMany(models.Purchase, {
           foreignKey: 'mealId',
-          as: 'mealPurchases'
+          as: 'purchases'
         });
         Meal.hasMany(models.Request, {
           foreignKey: 'mealId',
-          as: 'mealRequests'
+          as: 'requests'
         });
       }
     },

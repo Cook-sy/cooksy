@@ -91,11 +91,6 @@ exports.getChefsMeal = function(id) {
   });
 };
 
-exports.getChefsMeal(6)
-  .then(function(res) {
-    console.log(res.toJSON());
-  });
-
 exports.getChefsMeals = function(id) {
   return db.Meal.findAll({
     where: {
