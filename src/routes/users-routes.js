@@ -54,6 +54,27 @@ var checkRequestOwnership = function(requestId, userId, req, res, callback) {
     });
 };
 
+var checkPurchaseOwnership = function(purchaseId, userId, req, res, callback) {
+  return purchaseCtrl.getPurchase(purchaseId)
+    .then(function(purchase) {
+      if (!purchase) {
+        return res.status(404).json({
+          success: false,
+          message: 'Purchase not found'
+        });
+      }
+
+      if (purchase.userId === userId) {
+        return callback();
+      }
+
+      return res.status(403).json({
+        success: false,
+        message: 'The purchase is not owned by you'
+      });
+    });
+};
+
 // GET /api/users
 // Get a list of all users
 // GET /api/users/?zip=ZIPCODE&radius=NUM
@@ -140,36 +161,50 @@ router.post('/signup', function(req, res, next) {
   })(req, res, next);
 });
 
-// /api/users/purchases
-// GET all meals the user has purchased
-router.post('/purchases', isUser, function(req, res, next) {
-  return purchaseCtrl.createPurchase(req.body, req.userId)
-    .then(function(meal) {
-      return res.status(200).json(meal);
-    })
-    .catch(function(err) {
-      return res.status(500).json({
-        success: false,
-        message: 'Please try again later',
-        error: err.message
-      });
-    });
-});
-
-// /api/users/purchases
-// Allow user to purchase a meal
+// GET /api/users/purchases
+// Get all meals the user has purchased
 router.get('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.getPurchases(req.userId)
-    .then(function(meals) {
-      return res.json(meals);
-    })
-    .catch(function(err) {
-      return res.status(500).json({
-        success: false,
-        message: 'Please try again later',
-        error: err.message
-      });
+  .then(function(meals) {
+    return res.json(meals);
+  })
+  .catch(function(err) {
+    return res.status(500).json({
+      success: false,
+      message: 'Please try again later',
+      error: err.message
     });
+  });
+});
+
+// POST /api/users/purchases
+// Allow user to purchase a meal
+router.post('/purchases', isUser, function(req, res, next) {
+  return purchaseCtrl.createPurchase(req.body, req.userId)
+  .then(function(meal) {
+    return res.status(200).json(meal);
+  })
+  .catch(function(err) {
+    return res.status(500).json({
+      success: false,
+      message: 'Please try again later',
+      error: err.message
+    });
+  });
+});
+
+// GET /api/users/purchases/:id
+// Get a meal purchased by a specific user
+router.get('/purchases/:id', isUser, function(req, res) {
+  return checkPurchaseOwnership(req.params.id, req.userId, req, res, function() {
+    return purchaseCtrl.getPurchase(req.params.id)
+      .then(function(purchase) {
+        return res.status(200).json({
+          success: true,
+          purchase: purchase
+        });
+      });
+  });
 });
 
 // GET /api/users/:id/meals/reviews
