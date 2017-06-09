@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import _ from 'lodash';
+
+import Carousel from 'nuka-carousel';
+import Moment from 'react-moment';
+
 import { connect } from 'react-redux';
 import { fetchUpcomingMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
-import Carousel from 'nuka-carousel';
-import IconButton from 'material-ui/IconButton';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import _ from 'lodash';
 
 import './Homepage.css';
 
 
 class Homepage extends Component {
   componentDidMount() {
+
+    console.log(this.props.fetchUpcomingMeals());
 
   }
 
@@ -44,7 +47,7 @@ class Homepage extends Component {
           className="grid"
           cols={2.2}
         >
-          {_.map(this.props.tomorrowsMeals, (meal) => (
+          {_.map(this.props.upcomingMeals, (meal) => (
             <GridTile
               cellHeight={300}
               className="tile"
@@ -64,10 +67,9 @@ class Homepage extends Component {
 
 function mapStateToProps(state) {
   return {
-    todaysMeals: state.todaysMeals,
     upcomingMeals: state.upcomingMeals
   };
 }
 
 
-export default connect(mapStateToProps, { fetchTodaysMeals: fetchTodaysMeals, fetchUpcomingMeals: fetchUpcomingMeals })(Homepage);
+export default connect(mapStateToProps, { fetchUpcomingMeals: fetchUpcomingMeals })(Homepage);

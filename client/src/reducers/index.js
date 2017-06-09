@@ -5,7 +5,7 @@ import MealReducer from './mealsReducer';
 import AuthenticationReducer from './authenticationReducer';
 import ReviewReducer from './reviewReducer';
 import CurrentMealReducer from './CurrentMealReducer';
-import UpcomingMealReducer from './UpcomingMealsReducer';
+import UpcomingMealReducer from './upcomingMealsReducer';
 
 const rootReducer = combineReducers({
   meals: MealReducer,

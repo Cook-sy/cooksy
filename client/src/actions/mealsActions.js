@@ -95,6 +95,9 @@ export function fetchTodaysMeals() {
 
 export function fetchUpcomingMeals() {
   let request = axios.get('/api/meals')
+    .then(function(meals) {
+      console.log(meals);
+    })
 
   return {
     type: FETCH_UPCOMING_MEALS,
