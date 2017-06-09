@@ -63,6 +63,18 @@ On the initial test, some tests may fail. Please run the the test again.
 
 If you would prefer to generate an HTML coverage view, you may run the `npm run test:html` command. After the script has executed, navigate to the `cooksy/coverage` directory and open the `index.html` file in your browser.
 
+## Deployment on Heroku
+To deploy on Heroku, run
+```
+$ heroku create
+$ git push heroku master
+```
+There is a npm `heroku-postbuild` script that will build the frontend after the server is built.
+
+Afterward, set the appropriate environment variables. See the file `.env` for what environment variables are necessary.
+
+A PostgreSQL database is required. Either provision one on Heroku or use another database as a service provider. The `Zipcodes` table needs to be created on the database. Note that this will exceed the 10,000 row limit on the free tier of Heroku PostgreSQL.
+
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
 
