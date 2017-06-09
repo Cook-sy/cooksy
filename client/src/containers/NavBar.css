@@ -47,3 +47,12 @@
 .nav-auth {
 	float: right !important;
 }
+
+li img {
+	vertical-align: -webkit-baseline-middle;
+	margin-right: 20px;
+}
+
+.no-cursor {
+	cursor: default !important;
+}
