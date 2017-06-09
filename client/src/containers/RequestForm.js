@@ -8,13 +8,21 @@ import {
   renderAutoComplete
 } from '../utils/FormHelper';
 import RaisedButton from 'material-ui/RaisedButton';
-import { } from '../actions';
+import { createRequest } from '../actions';
 
 class RequestForm extends Component {
+	constructor(props) {
+		super(props);
+		this.submitForm = this.submitForm.bind(this);
+	}
   submitForm(values) {
+  	console.log('here')
+  	values.mealId = 12;
+  	this.props.createRequest(values);
   }
 
   handleUpdateInput(e) {
+  	console.log(e)
   }
   render() {
     const { handleSubmit, pristine, submitting } = this.props;
@@ -26,7 +34,7 @@ class RequestForm extends Component {
       >
         <div>
           <Field
-            name="Meal" 
+            name="meal" 
             component={renderAutoComplete} 
             floatingLabelText="Meal" 
             dataSource={dataSource}
@@ -36,7 +44,7 @@ class RequestForm extends Component {
         <div>
           <Field
             hintText="Deadline"
-            name="Deadline"
+            name="deadline"
             component={renderDateField}
             autoOk={true}
           />
@@ -68,21 +76,26 @@ function mapStateToProps() {
 
 export const validate = values => {
   const errors = {};
-  // if (!values.title) {
-  // 	errors.title = 'Title is required';
-  // }
+  if (!values.meal) {
+  	errors.meal = 'Meal is required';
+  }
 
-  // if (!values.review) {
-  // 	errors.review = 'Review is required';
-  // }
+  if (!values.deadline) {
+  	errors.deadline = 'Deadline is required';
+  }
+
+  if (!values.numRequired) {
+  	errors.numRequired = 'This field is required';
+  }
 
   return errors;
 };
 
 export default reduxForm({
 	validate,
-  form: 'ReviewsForm'
+  form: 'RequestForm'
 })(
   connect(mapStateToProps, {
+  	createRequest
   })(RequestForm)
 );
