@@ -19,7 +19,8 @@
     "test:client": "cd client && npm test",
     "test:server": "NODE_ENV=test nyc mocha test/*",
     "test:html": "nyc --reporter=html mocha test/*",
-    "precommit": "npm run lint"
+    "precommit": "npm run lint",
+    "heroku-postbuild": "cd client/ && npm install --only=dev && npm install && npm run build"
   },
   "dependencies": {
     "axios": "^0.16.1",

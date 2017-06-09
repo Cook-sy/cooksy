@@ -48,7 +48,7 @@ If you want to seed the database, run the command from the root directory
 ```
 $ node src/seedDB.js
 ```
-from the root directory. Replace `sequelize` with `node_modules/.bin/sequelize` if `sequelize-cli` is not installed globally.
+from the root directory.
 
 For testing, you'll have to seed your test database. Run the command
 ```
@@ -62,6 +62,22 @@ The provided tests utilize the Mocha, Chai, supertest and Sinon testing librarie
 On the initial test, some tests may fail. Please run the the test again.
 
 If you would prefer to generate an HTML coverage view, you may run the `npm run test:html` command. After the script has executed, navigate to the `cooksy/coverage` directory and open the `index.html` file in your browser.
+
+## Deployment on Heroku
+To deploy on Heroku, run
+```
+$ heroku create
+$ git push heroku master
+```
+There is a npm `heroku-postbuild` script that will build the frontend after the server is built.
+
+Afterwards, set the appropriate environment variables in Heroku. See the file `.env` for what environment variables are necessary (`JWT_SECRET` and `DATABASE_URL`).
+
+A PostgreSQL database with PostGIS enabled is required. Either provision one on Heroku or use another database service. The `Zipcodes` table needs to be created on the database. Note that this will exceed the 10,000 row limit on the free tier of Heroku PostgreSQL. To create the `Zipcodes` table, set `DATABASE_URL` in the file `.env` to your production database URL. Then run
+```
+$ NODE_ENV=production node src/create-zipcodes.js
+```
+
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
