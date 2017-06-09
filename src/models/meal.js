@@ -90,6 +90,22 @@ module.exports = function(sequelize, DataTypes) {
           self.rating = res.get('rating');
           return self.save();
         });
+      },
+
+      updateNumOrdered: function() {
+        var self = this;
+        return sequelize.models.Purchase.find({
+          where: {
+            mealId: self.id
+          },
+          attributes: [
+            [sequelize.fn('SUM', sequelize.col('num')), 'numOrdered']
+          ],
+          group: ['mealId']
+        }).then(function(res) {
+          self.numOrdered = res.get('numOrdered');
+          return self.save();
+        });
       }
     }
   });
