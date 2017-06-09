@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import _ from 'lodash';
 
 import {
   renderDateField,
@@ -8,7 +9,7 @@ import {
   renderAutoComplete
 } from '../utils/FormHelper';
 import RaisedButton from 'material-ui/RaisedButton';
-import { createRequest } from '../actions';
+import { createRequest, fetchMealsByChef } from '../actions';
 
 class RequestForm extends Component {
 	constructor(props) {
@@ -24,9 +25,14 @@ class RequestForm extends Component {
   handleUpdateInput(e) {
   	console.log(e)
   }
+
+  componentDidMount() {
+  	this.props.fetchMealsByChef();
+  }
+
   render() {
-    const { handleSubmit, pristine, submitting } = this.props;
-    const dataSource = ['obay', 'obama'];
+    const { meals, handleSubmit, pristine, submitting } = this.props;
+    const dataSource = Object.keys(meals).length && _.uniqBy(meals, 'name').map(meal => meal.name) || [];
 
     return (
       <form
@@ -67,10 +73,9 @@ class RequestForm extends Component {
   }
 }
 
-function mapStateToProps() {
+function mapStateToProps({ meals }) {
   return {
-    // review: review,
-    // currentMeal: currentMeal
+  	meals: meals
   };
 }
 
@@ -96,6 +101,7 @@ export default reduxForm({
   form: 'RequestForm'
 })(
   connect(mapStateToProps, {
-  	createRequest
+  	createRequest,
+  	fetchMealsByChef
   })(RequestForm)
 );
