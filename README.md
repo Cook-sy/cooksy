@@ -48,7 +48,7 @@ If you want to seed the database, run the command from the root directory
 ```
 $ node src/seedDB.js
 ```
-from the root directory. Replace `sequelize` with `node_modules/.bin/sequelize` if `sequelize-cli` is not installed globally.
+from the root directory.
 
 For testing, you'll have to seed your test database. Run the command
 ```
@@ -71,9 +71,13 @@ $ git push heroku master
 ```
 There is a npm `heroku-postbuild` script that will build the frontend after the server is built.
 
-Afterward, set the appropriate environment variables. See the file `.env` for what environment variables are necessary.
+Afterwards, set the appropriate environment variables in Heroku. See the file `.env` for what environment variables are necessary (`JWT_SECRET` and `DATABASE_URL`).
 
-A PostgreSQL database is required. Either provision one on Heroku or use another database as a service provider. The `Zipcodes` table needs to be created on the database. Note that this will exceed the 10,000 row limit on the free tier of Heroku PostgreSQL.
+A PostgreSQL database with PostGIS enabled is required. Either provision one on Heroku or use another database service. The `Zipcodes` table needs to be created on the database. Note that this will exceed the 10,000 row limit on the free tier of Heroku PostgreSQL. To create the `Zipcodes` table, set `DATABASE_URL` in the file `.env` to your production database URL. Then run
+```
+$ NODE_ENV=production node src/create-zipcodes.js
+```
+
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
