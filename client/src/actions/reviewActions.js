@@ -54,11 +54,11 @@ export function didReview(meal) {
     };
   }
 
-  const mealReviewwedByTheUser = meal.mealReviews.find(
+  const mealReviewedByTheUser = meal.mealReviews.find(
     review => review.user.username === username
   );
 
-  if (mealReviewwedByTheUser) {
+  if (mealReviewedByTheUser) {
     return {
       type: DID_REVIEW
     };
