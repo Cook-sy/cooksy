@@ -16,20 +16,20 @@ class NavBar extends Component {
 
   render() {
     const { auth: { user } } = this.props;
-    const style = {margin: 5};
-    
+    const style = { margin: 5 };
+
     return (
       <div>
         <ul className="nav">
-          {user .role === 'chef' ? <li className="no-cursor">
-            <Avatar
-              src={user.image}
-              size={30}
-              style={style}
-            />
-            {user.user}
-          </li> : null }
-          { user.role === 'user' ? <li className="no-cursor">Welcome {user.user} !</li> : null}
+          {user.role === 'chef'
+            ? <li className="no-cursor">
+                <Avatar src={user.image} size={30} style={style} />
+                {user.user}
+              </li>
+            : null}
+          {user.role === 'user'
+            ? <li className="no-cursor">Welcome {user.user} !</li>
+            : null}
           <li className="active"><Link to="/">Home</Link></li>
           <li><Link to="/meals">Meals</Link></li>
           <li><Link to="/post-new-meal">New Meal</Link></li>
