@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { fetchMealsByDate } from '../actions';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import { Field, reduxForm } from 'redux-form';
-import {renderDateField} from '../utils/FormHelper';
-
+// // import { Field, reduxForm } from 'redux-form';
+// import {renderDateField} from '../utils/FormHelper';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -30,23 +29,39 @@ class SearchBar extends Component {
   render() {
     return (
       <form onSubmit={this.onFormSubmit}>
-      <Field
-        name="find a meal by date"
-        component={renderDateField}
-        hintText="Find a meal by date"
-        autoOk={true}
-        value={this.state.term} />
+        <input
+          placeholder="Find meal by date"
+          value={this.state.term}
+          onChange={this.onInputChange}
+        />
         <span>
-        <RaisedButton label="Submit"></RaisedButton>
+          <button type="submit">Submit</button>
         </span>
       </form>
-    )
+    );
   }
 }
+
+//   render() {
+//     return (
+//       <form onSubmit={this.onFormSubmit}>
+//       <Field
+//         name="find a meal by date"
+//         component={renderDateField}
+//         hintText="Find a meal by date"
+//         autoOk={true}
+//         value={this.state.term} />
+//         <span>
+//         <RaisedButton label="Submit"></RaisedButton>
+//         </span>
+//       </form>
+//     )
+//   }
+// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchMealsByDate }, dispatch);
 }
 
 
-export default reduxForm({form: 'SearchBar'})(connect(null, mapDispatchToProps)(SearchBar));
+export default connect(null, mapDispatchToProps)(SearchBar);
