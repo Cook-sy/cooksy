@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchTodaysMeals, fetchTomorrowsMeals } from '../actions/index';
+import { fetchUpcomingMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
@@ -14,14 +14,10 @@ import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-    console.log(this.props.fetchTodaysMeals());
-    // console.log(this.props.fetchTomorrowsMeals());
-    //console.log(this.props.fetchTomorrowsMeals())
 
   }
 
   render() {
-    console.log(this.props.tomorrowsMeals);
     return (
       <div className="root-homepage">
         <div className="goleft"><h1>Cooksy</h1></div>

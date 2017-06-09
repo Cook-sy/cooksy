@@ -8,7 +8,13 @@ export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
+<<<<<<< HEAD
 export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
+=======
+export const FETCH_TODAYS_MEALS = 'FETCH_TODAYS_MEALS';
+export const FETCH_TOMORROWS_MEALS = 'FETCH_TOMORROWS_MEALS';
+export const FETCH_UPCOMING_MEALS = 'FETCH_TOMORROWS_MEALS';
+>>>>>>> Add action for fetching upcoming meals
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -114,9 +120,11 @@ export function fetchTodaysMeals() {
   };
 }
 
-// export function fetchUpcomingMeals() {
-//   let request = axios.get('/api/meals')
-//     .then(function(meals) {
-//       meals.data.sort()
-//     })
-// }
+export function fetchUpcomingMeals() {
+  let request = axios.get('/api/meals')
+
+  return {
+    type: FETCH_UPCOMING_MEALS,
+    payload: request
+  }
+}
