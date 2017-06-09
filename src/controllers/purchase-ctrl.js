@@ -26,6 +26,16 @@ exports.createPurchase = function(body, id) {
     });
 };
 
+exports.deletePurchase = function(id) {
+  return db.Purchase.findById(id)
+    .then(function(purchase) {
+      if (purchase) {
+        purchase.destroy();
+      }
+      return purchase;
+    });
+};
+
 exports.getPurchases = function(id) {
   return db.Purchase.findAll({
     where: {

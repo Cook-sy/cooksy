@@ -103,7 +103,11 @@ module.exports = function(sequelize, DataTypes) {
           ],
           group: ['mealId']
         }).then(function(res) {
-          self.numOrdered = res.get('numOrdered');
+          if (res) {
+            self.numOrdered = res.get('numOrdered');
+          } else {
+            self.numOrdered = 0;
+          }
           return self.save();
         });
       }
