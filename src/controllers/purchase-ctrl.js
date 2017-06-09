@@ -26,6 +26,12 @@ exports.createPurchase = function(body, id) {
     });
 };
 
+exports.getPurchase = function(id) {
+  return db.Purchase.findById(id, {
+    include: purchaseInclude
+  });
+};
+
 exports.deletePurchase = function(id) {
   return db.Purchase.findById(id)
     .then(function(purchase) {
