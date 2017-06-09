@@ -12,7 +12,7 @@ export default function(state = {}, action) {
     case FETCH_MEALS:
       return _.mapKeys(action.payload.data, 'id');
     case FETCH_MEALS_BY_CHEF:
-      return _.pickBy(action.payload.data, (x)=> x.chefId === 1);
+      return action.payload.data;
     case GET_NEAR_BY_MEALS:
       return _.mapKeys(action.payload.data, 'id'); 
     case CREATE_MEAL:
