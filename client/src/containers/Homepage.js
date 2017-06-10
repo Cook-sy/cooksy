@@ -3,12 +3,13 @@ import _ from 'lodash';
 
 import Carousel from 'nuka-carousel';
 import Moment from 'react-moment';
-
-import { connect } from 'react-redux';
-import { fetchUpcomingMeals } from '../actions/index';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
+
+import { connect } from 'react-redux';
+import { fetchUpcomingMeals } from '../actions/index';
+import HorizontalGrid from '../components/HorizontalGrid'
 
 import './Homepage.css';
 
@@ -21,6 +22,11 @@ class Homepage extends Component {
   }
 
   render() {
+    let dates = Object.keys(this.props.upcomingMeals).sort(function(a, b) {
+      return new Date(a).getTime() - new Date(b).getTime();
+    });
+    console.log(this.props.upcomingMeals);
+    console.log(dates);
     return (
       <div className="root-homepage">
         <div className="goleft"><h1>Cooksy</h1></div>
@@ -41,35 +47,20 @@ class Homepage extends Component {
           <img src="https://halfoff.adspayusa.com/wp-content/uploads/2017/04/sushi_and_sashimi_for_two.0.jpg"/>
           <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg"/>
         </Carousel>
-        <p id="date"><h2>  Upcoming Meals  </h2></p>
-        <GridList
-          cellHeight={200}
-          className="grid"
-          cols={2.2}
-        >
-          {_.map(this.props.upcomingMeals, (meal) => (
-            <GridTile
-              cellHeight={300}
-              className="tile"
-              key={meal.name}
-              title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
-              subtitle={<span>by <b>{meal.chef && meal.chef.username}</b></span>}
-              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
-            >
-              <img src={meal.images} alt="picture"/>
-            </GridTile>
-          ))}
-        </GridList>
+        <p id="date">Upcoming Meals</p>
+        {dates.length !== 0 && _.map(dates, (date) => (
+          <HorizontalGrid key={date} meals={this.props.upcomingMeals[date]}/>
+        ))}
       </div>
     );
-  }
-}
+  };
+};
 
 function mapStateToProps(state) {
   return {
     upcomingMeals: state.upcomingMeals
   };
-}
+};
 
 
-export default connect(mapStateToProps, { fetchUpcomingMeals: fetchUpcomingMeals })(Homepage);
+export default connect(mapStateToProps, { fetchUpcomingMeals })(Homepage);

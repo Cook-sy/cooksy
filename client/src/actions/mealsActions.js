@@ -1,6 +1,5 @@
 import axios from 'axios';
 import _ from 'lodash';
-import moment from 'moment';
 
 import { attachTokenToTheHeader } from '../utils/RequestHelper';
 
@@ -109,24 +108,24 @@ export function fetchUpcomingMeals() {
       _.map(time, (tuple) => {
         if (Object.keys(mealStorage).length === 3) {
           return;
-        }
+        };
         if (!mealStorage[tuple[1]]) {
           mealStorage[tuple[1]] = [];
-        }
+        };
       });
       _.map(meals.data, (meal) => {
         for (var key in mealStorage) {
           if (key === meal.deliveryDateTime.substr(0, 10)) {
             mealStorage[key].push(meal);
-          }
-        }
-      })
+          };
+        };
+      });
       return mealStorage;
-    })
+    });
 
   return {
     type: FETCH_UPCOMING_MEALS,
     payload: request
-  }
-}
+  };
+};
 
