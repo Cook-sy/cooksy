@@ -16,14 +16,10 @@ class RequestForm extends Component {
 		super(props);
 		this.submitForm = this.submitForm.bind(this);
 	}
-  submitForm(values) {
-  	console.log('here')
-  	values.mealId = 12;
-  	this.props.createRequest(values);
-  }
 
-  handleUpdateInput(e) {
-  	console.log(e)
+  submitForm(values) {
+  	values.mealId = _.findLast(this.props.meals, meal => meal.name === values.meal).id;
+  	this.props.createRequest(values);
   }
 
   componentDidMount() {
@@ -32,7 +28,8 @@ class RequestForm extends Component {
 
   render() {
     const { meals, handleSubmit, pristine, submitting } = this.props;
-    const dataSource = Object.keys(meals).length && _.uniqBy(meals, 'name').map(meal => meal.name) || [];
+    const uniqueMeals = meals && _.uniqBy(meals, meal => meal.name).map(meal => meal.name);
+    const dataSource = uniqueMeals || [];
 
     return (
       <form
@@ -44,7 +41,6 @@ class RequestForm extends Component {
             component={renderAutoComplete} 
             floatingLabelText="Meal" 
             dataSource={dataSource}
-            onUpdateInput={this.handleUpdateInput}
            />
         </div>
         <div>
