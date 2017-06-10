@@ -1,14 +1,20 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-class MealList extends Component {
+import { getPurchases } from '../actions/purchaseActions';
+
+class UserProfile extends Component {
 
   componentDidMount() {
+
+    console.log(this.props.getPurchases);
+
   }
 
   render() {
     return (
-
-    );
+      <h1>{this.props.purchase}</h1>
+    )
   }
 }
 

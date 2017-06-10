@@ -19,6 +19,7 @@ import ChefProfile from './containers/ChefProfile';
 import NavBar from './containers/NavBar.js';
 import RequestForm from './containers/RequestForm.js';
 import registerServiceWorker from './registerServiceWorker';
+import UserProfile from './containers/UserProfile';
 import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);

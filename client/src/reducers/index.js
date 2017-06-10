@@ -13,8 +13,9 @@ const rootReducer = combineReducers({
   form: ReduxFormReducer,
   auth: AuthenticationReducer,
   review: ReviewReducer,
-  currentMeal: CurrentMealReducer,
   upcomingMeals: UpcomingMealReducer
+  todaysMeals: TodaysMealReducer,
+  currentMeal: CurrentMealReducer,
   purchase: PurchaseReducer
 });
 
