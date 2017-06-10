@@ -17,24 +17,22 @@ class NavBar extends Component {
     return (
       <div>
         <ul className="nav">
-          {user.role === 'chef'
-            ? <li className="no-cursor">
-                <Avatar src={user.image} size={30} style={style} />
-                {user.user}
-              </li>
-            : null}
-          {user.role === 'user'
-            ? <li className="no-cursor">Welcome {user.user} !</li>
-            : null}
+          {user.role === 'chef' &&
+            <li className="no-cursor">
+              <Avatar src={user.image} size={30} style={style} />
+              {user.user}
+            </li>}
+          {user.role === 'user' &&
+            <li className="no-cursor">Welcome {user.user} !</li>}
           <li className="active"><Link to="/">Home</Link></li>
           <li><Link to="/meals">Meals</Link></li>
-          {user.role === 'chef'
-            ? <li><Link to="/post-new-meal">New Meal</Link></li>
-            : null}
-          {user.role === 'chef'
-            ? <li><Link to="/request-form">New Request</Link></li>
-            : null}
-          <li className={`nav-auth ${!user.user ? null : 'hidden'}`}><Link to="/signup">Signup</Link></li>
+          {user.role === 'chef' &&
+            <li><Link to="/post-new-meal">New Meal</Link></li>}
+          {user.role === 'chef' &&
+            <li><Link to="/request-form">New Request</Link></li>}
+          <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
+            <Link to="/signup">Signup</Link>
+          </li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
             <Link to="/login">Login</Link>
           </li>
