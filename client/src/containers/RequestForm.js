@@ -12,36 +12,38 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { createRequest, fetchMealsByChef } from '../actions';
 
 class RequestForm extends Component {
-	constructor(props) {
-		super(props);
-		this.submitForm = this.submitForm.bind(this);
-	}
+  constructor(props) {
+    super(props);
+    this.submitForm = this.submitForm.bind(this);
+  }
 
   submitForm(values) {
-  	values.mealId = _.findLast(this.props.meals, meal => meal.name === values.meal).id;
-  	this.props.createRequest(values);
+    values.mealId = _.findLast(
+      this.props.meals,
+      meal => meal.name === values.meal
+    ).id;
+    this.props.createRequest(values);
   }
 
   componentDidMount() {
-  	this.props.fetchMealsByChef();
+    this.props.fetchMealsByChef();
   }
 
   render() {
     const { meals, handleSubmit, pristine, submitting } = this.props;
-    const uniqueMeals = meals && _.uniqBy(meals, meal => meal.name).map(meal => meal.name);
+    const uniqueMeals =
+      meals && _.uniqBy(meals, meal => meal.name).map(meal => meal.name);
     const dataSource = uniqueMeals || [];
 
     return (
-      <form
-        onSubmit={handleSubmit(this.submitForm)}
-      >
+      <form onSubmit={handleSubmit(this.submitForm)}>
         <div>
           <Field
-            name="meal" 
-            component={renderAutoComplete} 
-            floatingLabelText="Meal" 
+            name="meal"
+            component={renderAutoComplete}
+            floatingLabelText="Meal"
             dataSource={dataSource}
-           />
+          />
         </div>
         <div>
           <Field
@@ -71,33 +73,33 @@ class RequestForm extends Component {
 
 function mapStateToProps({ meals }) {
   return {
-  	meals: meals
+    meals: meals
   };
 }
 
 export const validate = values => {
   const errors = {};
   if (!values.meal) {
-  	errors.meal = 'Meal is required';
+    errors.meal = 'Meal is required';
   }
 
   if (!values.deadline) {
-  	errors.deadline = 'Deadline is required';
+    errors.deadline = 'Deadline is required';
   }
 
   if (!values.numRequired) {
-  	errors.numRequired = 'This field is required';
+    errors.numRequired = 'This field is required';
   }
 
   return errors;
 };
 
 export default reduxForm({
-	validate,
+  validate,
   form: 'RequestForm'
 })(
   connect(mapStateToProps, {
-  	createRequest,
-  	fetchMealsByChef
+    createRequest,
+    fetchMealsByChef
   })(RequestForm)
 );
