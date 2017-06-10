@@ -53,5 +53,24 @@ mail.sendPurchase = function(purchase) {
   });
 };
 
+mail.sendRequest = function(req) {
+  var subject = req.user.username + ' just requested ' + req.num + ' of ' + req.request.meal.name;
+  var message = req.user.username + ' just requested ' + req.num + ' of ' + req.request.meal.name + '.\n';
+
+  var mailOptions = {
+    from: process.env.MAIL_USER,
+    bcc: [req.user.email, req.request.meal.chef.email],
+    subject: subject,
+    html: message
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+};
+
 
 module.exports = mail;

@@ -366,6 +366,7 @@ router.post('/requests', isUser, function(req, res) {
         });
       }
 
+      mail.sendRequest(request);
       return res.status(201).json({
         success: true,
         request: request
