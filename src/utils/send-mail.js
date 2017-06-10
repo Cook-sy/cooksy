@@ -14,10 +14,12 @@ var transporter = nodemailer.createTransport({
 
 transporter.use('compile', htmlToText());
 
-module.exports = function(bcc, subject, message) {
+var mail = {};
+
+mail.send = function(to, subject, message) {
   var mailOptions = {
     from: process.env.MAIL_USER,
-    bcc: bcc,
+    to: to,
     subject: subject,
     html: message
   };
@@ -29,3 +31,27 @@ module.exports = function(bcc, subject, message) {
     console.log('Message %s sent: %s', info.messageId, info.response);
   });
 };
+
+mail.sendPurchase = function(purchase) {
+  var subject = purchase.user.username + ' just bought ' + purchase.num + ' of ' + purchase.meal.name;
+  var message = purchase.user.username + ' just bought ' + purchase.num + ' of ' + purchase.meal.name + '.\n';
+  message += 'Pickup is on ' + purchase.meal.deliveryDateTime + ' at ';
+  message += purchase.meal.address + ' ' + purchase.meal.city + ', ' + purchase.meal.state + ' ' + purchase.meal.zipcode;
+
+  var mailOptions = {
+    from: process.env.MAIL_USER,
+    bcc: [purchase.user.email, purchase.meal.chef.email],
+    subject: subject,
+    html: message
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+};
+
+
+module.exports = mail;

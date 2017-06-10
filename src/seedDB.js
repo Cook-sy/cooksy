@@ -60,7 +60,7 @@ for (i = 0; i < numUsers; i++) {
   users.push({
     username: i === 0 ? 'user' : faker.internet.userName(),
     password: i === 0 ? 'user' : faker.internet.password(),
-    email: faker.internet.email(),
+    email: i === 0 ? 'cooksiesuser@mailinator.com' : faker.internet.email(),
     zipcode: zipcodes[faker.random.number() % zipcodes.length]
   });
 }
@@ -70,7 +70,7 @@ for (i = 0; i < numChefs; i++) {
   chefs.push({
     username: i === 0 ? 'chef' : faker.internet.userName(),
     password: i === 0 ? 'chef' : faker.internet.password(),
-    email: faker.internet.email(),
+    email: i === 0 ? 'cooksies@mailinator.com' : faker.internet.email(),
     image: faker.image.avatar(),
     address: addresses[i % addresses.length].address,
     city: addresses[i % addresses.length].city,
