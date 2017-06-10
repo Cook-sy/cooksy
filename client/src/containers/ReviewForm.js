@@ -17,7 +17,7 @@ class ReviewForm extends Component {
   }
 
   submitForm(values) {
-    values.mealId = this.props.meal.id;
+    values.mealId = this.props.currentMeal.id;
     values.rating = values.rating || 5;  
     this.props.reviewMeal(values);
     this.props.successfullReview()
@@ -62,11 +62,10 @@ class ReviewForm extends Component {
   }
 }
 
-function mapStateToProps({ review, meals }, ownProps) {
-  const id = ownProps.id;
+function mapStateToProps({ review, currentMeal }, ownProps) {
   return {
     review: review,
-    meal: meals[id]
+    currentMeal: currentMeal
   };
 }
 

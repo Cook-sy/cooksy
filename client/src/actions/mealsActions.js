@@ -30,7 +30,9 @@ export function fetchMeals() {
 }
 
 export function fetchMealsByChef() {
-  const request = axios.get('/api/meals');
+  const headers = attachTokenToTheHeader();
+
+  const request = axios.get('/api/chefs/meals', { headers: headers });
 
   return {
     type: FETCH_MEALS_BY_CHEF,

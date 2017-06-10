@@ -3,7 +3,7 @@ import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { RadioButtonGroup } from 'material-ui/RadioButton';
 import { Rating } from 'material-ui-rating';
-
+import { AutoComplete } from 'redux-form-material-ui';
 // Import injectTapEvent to get rid of Unknown props onTouchTap error
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import uuid from 'uuid';
@@ -102,5 +102,13 @@ export const renderRatingField = ({ input: { onChange, value }, ...custom }) => 
       onChange={onChange}
       {...custom}
     />
+  );
+}
+
+export const renderAutoComplete = ({ ...custom }) => {
+  return (
+    <AutoComplete
+      {...custom}
+    />  
   );
 }
