@@ -3,61 +3,50 @@ import { connect } from 'react-redux';
 import { fetchMealsByDate } from '../actions';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
-// // import { Field, reduxForm } from 'redux-form';
+// import { Field, reduxForm } from 'redux-form';
 // import {renderDateField} from '../utils/FormHelper';
+import DatePicker from 'material-ui/DatePicker';
 
 class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: ''};
-    this.onInputChange = this.onInputChange.bind(this);
+    this.state = {
+      controlledDate: null,
+    };
+    this.handleChange = this.handleChange.bind(this);
     this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
-  onInputChange(event) {
-    this.setState({ term: event.target.value })
-  }
+  handleChange(event, date) {
+    this.setState({
+      controlledDate: date
+    });
+  };
 
   onFormSubmit(event) {
-    console.log(this.props.fetchMealsByDate(this.state.term))
-    event.preventDefault();
-    this.props.fetchMealsByDate(this.state.term);
-    this.setState({ term: '' })
+    var dateobj = new Date(this.state.controlledDate)
+    var date = dateobj.toISOString().substring(0,10)
+    this.props.fetchMealsByDate(date);
+    this.setState({ controlledDate: null })
   }
 
   render() {
     return (
-      <form onSubmit={this.onFormSubmit}>
-        <input
-          placeholder="Find meal by date"
-          value={this.state.term}
-          onChange={this.onInputChange}
+      <div>
+        <DatePicker
+          hintText="Find a meal by date"
+          autoOk= {true}
+          value={this.state.controlledDate}
+          onChange={this.handleChange}
         />
         <span>
-          <button type="submit">Submit</button>
+        <RaisedButton onClick={this.onFormSubmit}>Submit</RaisedButton>
         </span>
-      </form>
-    );
+      </div>
+    )
   }
 }
-
-//   render() {
-//     return (
-//       <form onSubmit={this.onFormSubmit}>
-//       <Field
-//         name="find a meal by date"
-//         component={renderDateField}
-//         hintText="Find a meal by date"
-//         autoOk={true}
-//         value={this.state.term} />
-//         <span>
-//         <RaisedButton label="Submit"></RaisedButton>
-//         </span>
-//       </form>
-//     )
-//   }
-// }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchMealsByDate }, dispatch);

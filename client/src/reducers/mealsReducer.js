@@ -15,7 +15,7 @@ export default function(state = {}, action) {
     case GET_NEAR_BY_MEALS:
       return _.mapKeys(action.payload.data, 'id');
     case FETCH_MEALS_BY_DATE:
-      return _.mapKeys(action.payload.data, 'id');
+      return _.mapKeys(action.payload, 'id');
     case CREATE_MEAL:
       return { ...state, [action.payload.data.meal.id]: action.payload.data.meal };
     default:
