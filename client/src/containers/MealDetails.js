@@ -43,6 +43,17 @@ class MealDetails extends Component {
     this.props.didReview(this.props.currentMeal);
   }
 
+  onInputChange(event) {
+    this.setState({ term: event.target.value })
+  }
+
+  onFormSubmit(event) {
+    console.log(this.props.fetchMealsByDate(this.state.term))
+    event.preventDefault();
+    this.props.fetchMealsByDate(this.state.term);
+    this.setState({ term: '' })
+  }
+
   render() {
     const { currentMeal, review } = this.props;
 
