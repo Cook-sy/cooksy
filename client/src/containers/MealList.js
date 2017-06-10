@@ -15,8 +15,6 @@ class MealList extends Component {
   constructor(props) {
     super(props);
     this.showNearbyMeals = this.showNearbyMeals.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -26,16 +24,6 @@ class MealList extends Component {
 
   showNearbyMeals() {
     this.props.getNearbyMeals(this.props.user.zipcode);
-  }
-
-  onInputChange(event) {
-    this.setState({ term: event.target.value })
-  }
-
-  onFormSubmit(event) {
-    console.log(this.props.fetchMealsByDate(this.state.term))
-    event.preventDefault();
-    this.props.fetchMealsByDate(this.state.term);
   }
 
   render() {

@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { fetchMealsByDate } from '../actions';
 import { bindActionCreators } from 'redux';
 import RaisedButton from 'material-ui/RaisedButton';
-// import { Field, reduxForm } from 'redux-form';
-// import {renderDateField} from '../utils/FormHelper';
 import DatePicker from 'material-ui/DatePicker';
 
 class SearchBar extends Component {
@@ -25,10 +23,10 @@ class SearchBar extends Component {
   };
 
   onFormSubmit(event) {
-    var dateobj = new Date(this.state.controlledDate)
-    var date = dateobj.toISOString().substring(0,10)
+    var dateobj = new Date(this.state.controlledDate);
+    var date = dateobj.toISOString().substring(0,10);
     this.props.fetchMealsByDate(date);
-    this.setState({ controlledDate: null })
+    this.setState({ controlledDate: null });
   }
 
   render() {
@@ -41,7 +39,7 @@ class SearchBar extends Component {
           onChange={this.handleChange}
         />
         <span>
-        <RaisedButton onClick={this.onFormSubmit}>Submit</RaisedButton>
+          <RaisedButton onClick={this.onFormSubmit}>Submit</RaisedButton>
         </span>
       </div>
     )
