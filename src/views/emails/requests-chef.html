@@ -1,0 +1,64 @@
+<html>
+<head>
+  <title>Request from Cooksy</title>
+
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td, th {
+      border: 1px solid #e0e0e0;
+      text-align: left;
+      padding: 8px;
+    }
+
+    .heading {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    Hi <%= chefUsername %>,
+  </p>
+  <p>
+     <%= username %> recently requested a meal from you. Below is a summary of their request.
+  </p>
+
+  <p>
+    <span class="heading">Date requested:</span>
+    <%= dateRequested %>
+  </p>
+
+  <table>
+    <tr>
+      <th>Description</th>
+      <th>Quanity</th>
+    </tr>
+
+    <tr>
+      <td><%= mealName %></td>
+      <td><%= quantity %></td>
+    </tr>
+  </table>
+
+  <p>
+    <span class="heading">Request Deadline:</span>
+    <%= deadline %>
+  </p>
+
+  <p>
+    If enough people request it and you decide to fulfill it, we'll let them know!
+  </p>
+
+
+  <p>
+    Thank you,
+    <br>
+    Cooksy
+  </p>
+</body>
+
+</html>
