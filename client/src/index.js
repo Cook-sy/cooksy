@@ -39,7 +39,7 @@ ReactDOM.render(
             <Route exact path="/login" component={LogInForm} />
             <Route exact path="/chef-profile" component={ChefProfile}/>
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
-            <PrivateRoute exact path="/request-form" component={RequestForm}/>
+            <PrivateRoute exact user='chef' path="/request-form" component={RequestForm}/>
           </Switch>
         </div>
       </BrowserRouter>
