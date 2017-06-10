@@ -68,7 +68,7 @@ class MealDetails extends Component {
           >
             <img
               src={currentMeal.images}
-              alt="currentMeal"
+              alt={currentMeal.name}
               width="500"
               height="500"
             />
