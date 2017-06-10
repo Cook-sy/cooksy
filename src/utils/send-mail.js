@@ -41,21 +41,47 @@ mail.send = function(to, subject, message) {
 
 mail.sendPurchase = function(purchase) {
   var subject = purchase.user.username + ' just bought ' + purchase.num + ' of ' + purchase.meal.name;
-  var message = purchase.user.username + ' just bought ' + purchase.num + ' of ' + purchase.meal.name + '.\n';
-  message += 'Pickup is on ' + purchase.meal.deliveryDateTime + ' at ';
-  message += purchase.meal.address + ' ' + purchase.meal.city + ', ' + purchase.meal.state + ' ' + purchase.meal.zipcode;
 
-  var mailOptions = {
-    from: process.env.MAIL_USER,
-    bcc: [purchase.user.email, purchase.meal.chef.email],
-    subject: subject,
-    html: message
+  var templateContentUser = fs.readFileSync(templatePath('purchases-user'), { encoding: 'utf8' });
+  var templateContentChef = fs.readFileSync(templatePath('purchases-chef'), { encoding: 'utf8' });
+  var compiledUser = _.template(templateContentUser);
+  var compiledChef = _.template(templateContentChef);
+
+  var data = {
+    username: purchase.user.username,
+    chefUsername: purchase.meal.chef.username,
+    dateOrdered: purchase.createdAt,
+    mealName: purchase.meal.name,
+    quantity: purchase.num,
+    individualPrice: purchase.individualPrice,
+    amount: +purchase.num * +purchase.individualPrice,
+    totalAmount: +purchase.num * +purchase.individualPrice,
+    deliveryDateTime: purchase.meal.deliveryDateTime,
+    address: purchase.meal.address,
+    city: purchase.meal.city,
+    state: purchase.meal.state,
+    zipcode: purchase.meal.zipcode
   };
 
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      return console.log(error);
-    }
+  var mailOptionsUser = {
+    from: process.env.MAIL_USER,
+    to: purchase.user.email,
+    subject: subject,
+    html: compiledUser(data)
+  };
+  var mailOptionsChef = {
+    from: process.env.MAIL_USER,
+    to: purchase.meal.chef.email,
+    subject: subject,
+    html: compiledChef(data)
+  };
+
+  transporter.sendMail(mailOptionsUser, function(error, info) {
+    if (error) { return console.log(error); }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+  transporter.sendMail(mailOptionsChef, function(error, info) {
+    if (error) { return console.log(error); }
     console.log('Message %s sent: %s', info.messageId, info.response);
   });
 };
