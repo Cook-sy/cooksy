@@ -14,7 +14,7 @@ class MealList extends Component {
 
 function mapStateToProps(state) {
   return {
-    purchases: state.purchases
+    purchase: state.purchase
   };
 }
 
