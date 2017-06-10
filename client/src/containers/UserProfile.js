@@ -12,10 +12,10 @@ class MealList extends Component {
   }
 }
 
-function mapStateToProps({ meals, auth: { user } }) {
+function mapStateToProps(state) {
   return {
-    purchases: purchases
+    purchases: state.purchases
   };
 }
 
-export default connect(mapStateToProps, { fetchPurchases })(UserProfile);
+export default connect(mapStateToProps, { getPurchases })(UserProfile);
