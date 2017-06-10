@@ -73,6 +73,24 @@ exports.getMeal = function(id) {
   });
 };
 
+exports.getChefsMeal = function(id) {
+  return db.Meal.findById(id, {
+    include: mealInclude.concat({
+      model: db.Purchase,
+      as: 'purchases',
+      include: [
+        {
+          model: db.User,
+          as: 'user',
+          attributes: {
+            exclude: ['password']
+          }
+        }
+      ]
+    })
+  });
+};
+
 exports.getChefsMeals = function(id) {
   return db.Meal.findAll({
     where: {

@@ -115,6 +115,16 @@ for (i = 0; i < numMealReviews; i++) {
   });
 }
 
+var purchases = [];
+for (i = 0; i < numPurchases; i++) {
+  purchases.push({
+    num: (faker.random.number() % 5) + 1,
+    status: faker.random.number() % 3,
+    mealId: (faker.random.number() % numMeals) + 1,
+    userId: (i % numUsers) + 1
+  });
+}
+
 var requests = [];
 for (i = 0; i < numRequests; i++) {
   requests.push({
@@ -133,9 +143,6 @@ for (i = 0; i < numUserRequests; i++) {
   });
 }
 
-var mealIds;
-var mealPrices;
-
 db.User.sync({ force: true })
   .then(function() { return db.Chef.sync({ force: true }); })
   .then(function() { return db.Meal.sync({ force: true }); })
@@ -147,31 +154,9 @@ db.User.sync({ force: true })
   .then(function() { return db.User.bulkCreate(users, options); })
   .then(function() { return db.Chef.bulkCreate(chefs, options); })
   .then(function() { return db.Meal.bulkCreate(meals, options); })
-  .then(function(res) {
-    mealIds = res.map(function(instance) {
-      return instance.id;
-    });
-    mealPrices = res.map(function(instance) {
-      return instance.price;
-    });
-
-    return db.ChefReview.bulkCreate(chefReviews, options);
-  })
+  .then(function() { return db.ChefReview.bulkCreate(chefReviews, options); })
   .then(function() { return db.MealReview.bulkCreate(mealReviews, options); })
-  .then(function(res) {
-    var purchases = [];
-    for (i = 0; i < numPurchases; i++) {
-      purchases.push({
-        individualPrice: mealPrices[i],
-        num: (faker.random.number() % 5) + 1,
-        status: faker.random.number() % 3,
-        mealId: mealIds[i],
-        userId: (i % numUsers) + 1
-      });
-    }
-
-    return db.Purchase.bulkCreate(purchases, options);
-  })
+  .then(function() { return db.Purchase.bulkCreate(purchases, options); })
   .then(function() { return db.Request.bulkCreate(requests, options); })
   .then(function() { return db.UserRequest.bulkCreate(userRequests, options); })
   .then(function() {

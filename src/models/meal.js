@@ -64,11 +64,11 @@ module.exports = function(sequelize, DataTypes) {
         });
         Meal.hasMany(models.Purchase, {
           foreignKey: 'mealId',
-          as: 'mealPurchases'
+          as: 'purchases'
         });
         Meal.hasMany(models.Request, {
           foreignKey: 'mealId',
-          as: 'mealRequests'
+          as: 'requests'
         });
       }
     },
@@ -86,8 +86,33 @@ module.exports = function(sequelize, DataTypes) {
           ],
           group: ['mealId']
         }).then(function(res) {
-          self.reviewCount = res.get('reviewCount');
-          self.rating = res.get('rating');
+          if (res) {
+            self.reviewCount = res.get('reviewCount');
+            self.rating = res.get('rating');
+          } else {
+            self.reviewCount = 0;
+            self.rating = 0;
+          }
+          return self.save();
+        });
+      },
+
+      updateNumOrdered: function() {
+        var self = this;
+        return sequelize.models.Purchase.find({
+          where: {
+            mealId: self.id
+          },
+          attributes: [
+            [sequelize.fn('SUM', sequelize.col('num')), 'numOrdered']
+          ],
+          group: ['mealId']
+        }).then(function(res) {
+          if (res) {
+            self.numOrdered = res.get('numOrdered');
+          } else {
+            self.numOrdered = 0;
+          }
           return self.save();
         });
       }
