@@ -28,10 +28,13 @@ class NavBar extends Component {
             : null}
           <li className="active"><Link to="/">Home</Link></li>
           <li><Link to="/meals">Meals</Link></li>
-          <li><Link to="/post-new-meal">New Meal</Link></li>
-          <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
-            <Link to="/signup">Signup</Link>
-          </li>
+          {user.role === 'chef'
+            ? <li><Link to="/post-new-meal">New Meal</Link></li>
+            : null}
+          {user.role === 'chef'
+            ? <li><Link to="/request-form">New Request</Link></li>
+            : null}
+          <li className={`nav-auth ${!user.user ? null : 'hidden'}`}><Link to="/signup">Signup</Link></li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
             <Link to="/login">Login</Link>
           </li>
