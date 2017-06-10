@@ -7,13 +7,15 @@ class UserProfile extends Component {
 
   componentDidMount() {
 
-    console.log(this.props.getPurchases);
+    console.log(this.props.getPurchases());
 
   }
 
   render() {
     return (
-      <h1>{this.props.purchase}</h1>
+      <div>
+        <h1>hello world</h1>
+      </div>
     )
   }
 }
