@@ -1,3 +1,31 @@
+@import url(https://fonts.google.com/specimen/Rochester?selection.family=Rochester)
+
+@font-face {
+    font-family: 'Rochester'; /*a name to be used later*/
+    src: url('https://fonts.google.com/specimen/Rochester?selection.family=Rochester'); /*URL to font*/
+}
+
+h2 {
+  font-family: "Rochester";
+  font-size: 68px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+#date {
+  color: rgb(0, 188, 212);
+  margin-right: auto;
+  margin-left: 20px;
+  font-family: "Rochester";
+  font-size: 40px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 19px;
+}
+
 .root-homepage {
   display: flex;
   flex-wrap: wrap;
@@ -5,7 +33,56 @@
 }
 
 .grid {
+  width: 1000px;
+  height: 220px;
   display: flex;
   flex-wrap: nowrap !important;
   overflow-x: auto;
+}
+
+.tile {
+  width: 450px;
+  height: 400px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper {
+  float: left;
+  position: relative;
+}
+
+.description {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: black;
+  color: white;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+}
+
+.content {
+  padding: 10px;
+  margin: 0px;
+  font-family: "Rochester";
+  font-size: 35px;
+  font-weight: lighter;
+  line-height: 35px;
+}
+
+.goleft {
+  margin-right: auto;
+  margin-left: 20px;
+  color: rgb(0, 188, 212);
+  font-family: "Rochester";
+  font-size: 60px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  line-height: 19px;
 }

@@ -8,8 +8,8 @@ export const FETCH_MEALS = 'FETCH_MEALS';
 export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
-export const FETCH_TODAYS_MEALS = 'FETCH_TODAYS_MEALS';
 export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
+export const FETCH_UPCOMING_MEALS = 'FETCH_UPCOMING_MEALS';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -59,26 +59,6 @@ export function getNearbyMeals(zipcode) {
   }
 }
 
-export function fetchTodaysMeals() {
-  let today = new Date();
-  let year = today.getFullYear().toString();
-  let month = (today.getMonth() + 1).toString().length === 1 ? '0' + (today.getMonth() + 1).toString() : (today.getMonth() + 1).toString();
-  let day = today.getDate().toString().length === 1 ? '0' + today.getDate().toString() : today.getDate().toString();
-  let date = year + '-' + month + '-' + day;
-
-  let request = axios.get('/api/meals')
-    .then(function(meals) {
-      return _.filter(meals.data, (meal) => {
-        return meal.deliveryDateTime.substr(0, 10) === date;
-      });
-    });
-
-  return {
-    type: FETCH_TODAYS_MEALS,
-    payload: request
-  };
-}
-
 export function fetchMealsByDate(date) {
   let request = axios.get('/api/meals')
   .then(function (meals){
@@ -92,3 +72,40 @@ export function fetchMealsByDate(date) {
     payload: request
   };
 }
+
+export function fetchUpcomingMeals() {
+  let mealStorage = {};
+  let time = [];
+  let request = axios.get('/api/meals')
+    .then(function(meals) {
+      _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
+        time.push([date.getTime(), meal.deliveryDateTime.substr(0, 10)]);
+      });
+      time.sort(function(a, b) {
+        return a[0] - b[0];
+      });
+      _.map(time, (tuple) => {
+        if (Object.keys(mealStorage).length === 3) {
+          return;
+        };
+        if (!mealStorage[tuple[1]]) {
+          mealStorage[tuple[1]] = [];
+        };
+      });
+      _.map(meals.data, (meal) => {
+        for (var key in mealStorage) {
+          if (key === meal.deliveryDateTime.substr(0, 10)) {
+            mealStorage[key].push(meal);
+          };
+        };
+      });
+      return mealStorage;
+    });
+
+  return {
+    type: FETCH_UPCOMING_MEALS,
+    payload: request
+  };
+};
+
