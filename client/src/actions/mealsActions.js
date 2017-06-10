@@ -9,6 +9,7 @@ export const FETCH_MEALDETAIL = 'FETCH_MEALDETAIL';
 export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
 export const FETCH_TODAYS_MEALS = 'FETCH_TODAYS_MEALS';
+export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -74,6 +75,20 @@ export function fetchTodaysMeals() {
 
   return {
     type: FETCH_TODAYS_MEALS,
+    payload: request
+  };
+}
+
+export function fetchMealsByDate(date) {
+  let request = axios.get('/api/meals')
+  .then(function (meals){
+    return _.filter(meals.data, (meal) => {
+      return meal.deliveryDateTime.substr(0, 10) === date;
+    });
+  });
+
+  return {
+    type: FETCH_MEALS_BY_DATE,
     payload: request
   };
 }

@@ -45,7 +45,7 @@ class MealDetails extends Component {
 
   render() {
     const { currentMeal, review } = this.props;
-    
+
     if (Object.keys(currentMeal).length === 0) {
       return <div>Loading...</div>;
     }
