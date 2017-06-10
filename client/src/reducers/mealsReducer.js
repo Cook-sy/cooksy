@@ -2,7 +2,7 @@ import {
   FETCH_MEALS,
   CREATE_MEAL,
   FETCH_MEALS_BY_CHEF,
-  GET_NEAR_BY_MEALS
+  GET_NEAR_BY_MEALS,
   FETCH_MEALS_BY_DATE
 } from '../actions/index';
 import _ from 'lodash';
