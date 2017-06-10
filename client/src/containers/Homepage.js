@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import Carousel from 'nuka-carousel';
-import Moment from 'react-moment';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
@@ -17,7 +16,7 @@ import './Homepage.css';
 class Homepage extends Component {
   componentDidMount() {
 
-    console.log(this.props.fetchUpcomingMeals());
+    this.props.fetchUpcomingMeals();
 
   }
 
@@ -25,8 +24,6 @@ class Homepage extends Component {
     let dates = Object.keys(this.props.upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
-    console.log(this.props.upcomingMeals);
-    console.log(dates);
     return (
       <div className="root-homepage">
         <div className="goleft"><h1>Cooksy</h1></div>
