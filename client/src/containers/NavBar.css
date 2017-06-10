@@ -57,3 +57,8 @@ li img {
 .no-cursor {
 	cursor: default !important;
 }
+
+li a {
+  display: inline-block;
+  height: 100%;
+}
