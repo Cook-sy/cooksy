@@ -13,8 +13,7 @@ const rootReducer = combineReducers({
   form: ReduxFormReducer,
   auth: AuthenticationReducer,
   review: ReviewReducer,
-  upcomingMeals: UpcomingMealReducer
-  todaysMeals: TodaysMealReducer,
+  upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
   purchase: PurchaseReducer
 });

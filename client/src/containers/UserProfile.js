@@ -25,17 +25,14 @@ class UserProfile extends Component {
         >
           <Subheader>Purchases</Subheader>
           {_.map(this.props.purchase, (purchase) => (
-            <div className="space">
-              <p>${purchase.individualPrice} Servings: {purchase.num}</p>
-              <GridTile
-                key={purchase.id}
-                title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}</Link>}
-                subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
-                actionIcon={<Rating value={Math.ceil(purchase.meal.rating)} max={5} readOnly={true} />}
-              >
-                <img src={purchase.meal.images} alt={purchase.meal.name}/>
-              </GridTile>
-            </div>
+            <GridTile
+              key={purchase.id}
+              title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}<br/>${purchase.individualPrice}</Link>}
+              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
+              actionIcon={<Rating value={Math.ceil(purchase.meal.rating)} max={5} readOnly={true} />}
+            >
+              <img src={purchase.meal.images} alt={purchase.meal.name}/>
+            </GridTile>
           ))}
         </GridList>
       </div>
