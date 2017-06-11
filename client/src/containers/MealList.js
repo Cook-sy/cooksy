@@ -7,45 +7,17 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 
-import { fetchMeals, getNearbyMeals, getUserDetails } from '../actions/index';
+import { fetchMeals, getUserDetails } from '../actions/index';
 import './MealList.css';
 import SearchBar from './SearchBar';
 
 class MealList extends Component {
-  constructor(props) {
-    super(props);
-    this.showNearbyMeals = this.showNearbyMeals.bind(this);
-  }
-
   componentDidMount() {
     this.props.fetchMeals();
     this.props.getUserDetails();
   }
 
-  showNearbyMeals() {
-    this.props.getNearbyMeals(this.props.user.zipcode);
-  }
-
-  renderNearByMealsBtn = () => {
-    const { user } = this.props;
-    const style = { marginRight: 8 };
-
-    return (
-      <RaisedButton
-        style={style}
-        label="Nearby Meals"
-        title={
-          user.user
-          ? "Look for nearby meals"
-          : "Please Signup/Login to view nearby meals"
-        } onClick={this.showNearbyMeals}
-        disabled={!user.user}
-      />
-    );
-  }
-
   render() {
-    const { user } = this.props;
     const style = { marginRight: 8 };
 
     return (
@@ -54,12 +26,9 @@ class MealList extends Component {
           <RaisedButton style={style} label="ALL Meals" primary={true} />
         </Link>
 
-        { !user.user
-          ? this.renderNearByMealsBtn()
-          : <Link to="/nearby-meals">
-              {this.renderNearByMealsBtn()}
-            </Link>
-        }
+        <Link to="/nearby-meals">
+          <RaisedButton style={style} label="Nearby Meals" />
+        </Link>
 
         <div>
           <SearchBar />
@@ -93,4 +62,4 @@ function mapStateToProps({ meals, auth: { user } }) {
   };
 }
 
-export default connect(mapStateToProps, { fetchMeals, getNearbyMeals, getUserDetails })(MealList);
+export default connect(mapStateToProps, { fetchMeals, getUserDetails })(MealList);
