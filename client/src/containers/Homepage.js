@@ -52,6 +52,7 @@ class Homepage extends Component {
   };
 };
 
+
 function mapStateToProps(state) {
   return {
     upcomingMeals: state.upcomingMeals
