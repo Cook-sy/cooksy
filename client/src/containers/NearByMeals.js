@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import { withGoogleMap, GoogleMap } from 'react-google-maps';
+import _ from 'lodash';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
 import './MealList.css';
@@ -35,6 +36,17 @@ class NearByMeals extends Component {
         </Link>
 
         <SearchBar />
+
+        <div>
+          { _.map(this.props.meals, meal => (
+              <div key={meal.id}>
+                <p>
+                  {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
+                </p>
+              </div>
+            ))
+          }
+        </div>
 
         <div style={{ width: 600, height: 600 }}>
           <GoogleMapWrapper
