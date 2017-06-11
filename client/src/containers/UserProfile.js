@@ -4,37 +4,42 @@ import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 import { Rating } from 'material-ui-rating';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import _ from 'lodash';
 
 import { getPurchases } from '../actions/purchaseActions';
+import './UserProfile.css';
 
 class UserProfile extends Component {
 
   componentDidMount() {
 
-    console.log(this.props.getPurchases());
+    this.props.getPurchases();
 
   }
 
   render() {
     return (
       <div>
-        <GridList
-          cellHeight={180}
-          className="grid-list"
-        >
-          <Subheader>Purchases</Subheader>
-          {_.map(this.props.purchase, (purchase) => (
-            <GridTile
-              key={purchase.id}
-              title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}<br/>${purchase.individualPrice}</Link>}
-              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
-              actionIcon={<Rating value={Math.ceil(purchase.meal.rating)} max={5} readOnly={true} />}
+        {_.map(this.props.purchase, (purchase) => (
+          <Card className="card">
+            <CardTitle
+              title={new Date(purchase.createdAt).toString().substr(4, 11)}
+              subtitle="Purchase Date"
+            />
+            <CardText>
+              <p>${purchase.individualPrice}</p>
+              <p>Quantity ordered: {purchase.num}</p>
+              <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
+            </CardText>
+            <CardMedia
+              overlay={<CardTitle title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}</Link>}
+              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>} />}
             >
-              <img src={purchase.meal.images} alt={purchase.meal.name}/>
-            </GridTile>
-          ))}
-        </GridList>
+              <img src={purchase.meal.images} alt={purchase.meal.name} />
+            </CardMedia>
+          </Card>
+        ))}
       </div>
     )
   }
