@@ -37,7 +37,6 @@ class NavBar extends Component {
           </li>
 =======
             <li className="no-cursor">
-              <Avatar src={user.image} size={30} style={style} />
               Welcome {user.user}!
             </li>}
           <li className="active"><Link to="/">Home</Link></li>
