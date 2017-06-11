@@ -26,8 +26,8 @@ class UserProfile extends Component {
             <CardTitle
               actAsExpander={true}
               showExpandableButton={true}
-              title={new Date(purchase.createdAt).toString().substr(4, 11)}
-              subtitle="Purchase Date"
+              title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'black', textDecoration: 'none'}}>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
+              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
             >
               <p>${purchase.individualPrice}</p>
               <p>Quantity ordered: {purchase.num}</p>
@@ -36,14 +36,8 @@ class UserProfile extends Component {
             <CardText expandable={true}>
               <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
               <p>{purchase.meal.address}<br/>{purchase.meal.city}, {purchase.meal.state} {purchase.meal.zipcode}</p>
-            </CardText>
-            <CardMedia
-              expandable={true}
-              overlay={<CardTitle title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}</Link>}
-              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>} />}
-            >
               <img className="purchase" src={purchase.meal.images} alt={purchase.meal.name} />
-            </CardMedia>
+            </CardText>
           </Card>
         ))}
       </div>
