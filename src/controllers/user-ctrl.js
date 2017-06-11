@@ -5,6 +5,7 @@ exports.createUser = function(body, username, password) {
   return db.User.create({
     username: username.trim(),
     password: password.trim(),
+    email: body.email.trim(),
     zipcode: body.zipcode.trim()
   });
 };
