@@ -5,6 +5,7 @@ exports.createChef = function(body, username, password) {
   return db.Chef.create({
     username: username.trim(),
     password: password.trim(),
+    email: body.email.trim(),
     image: body.image.trim(),
     address: body.address.trim(),
     city: body.city.trim(),
