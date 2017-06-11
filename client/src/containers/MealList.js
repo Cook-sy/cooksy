@@ -26,27 +26,45 @@ class MealList extends Component {
     this.props.getNearbyMeals(this.props.user.zipcode);
   }
 
+  renderNearByMealsBtn = () => {
+    const { user } = this.props;
+    const style = { marginRight: 8 };
+
+    return (
+      <RaisedButton
+        style={style}
+        label="Nearby Meals"
+        title={
+          user.user
+          ? "Look for nearby meals"
+          : "Please Signup/Login to view nearby meals"
+        } onClick={this.showNearbyMeals}
+        disabled={!user.user}
+      />
+    );
+  }
+
   render() {
     const { user } = this.props;
-    const style = {
-      marginRight: 8
-    }
+    const style = { marginRight: 8 };
+
     return (
       <div className="root">
-        <RaisedButton style={style} label="ALL Meals" onClick={this.props.fetchMeals} />
-        <RaisedButton
-          style={style}
-          label="Nearby Meals"
-          title={
-            user.user
-            ? "Look for nearby meals"
-            : "Please Signup/Login to view nearby meals"
-          } onClick={this.showNearbyMeals}
-          disabled={!user.user}
-        />
+        <Link to="/meals">
+          <RaisedButton style={style} label="ALL Meals" primary={true} />
+        </Link>
+
+        { !user.user
+          ? this.renderNearByMealsBtn()
+          : <Link to="/nearby-meals">
+              {this.renderNearByMealsBtn()}
+            </Link>
+        }
+
         <div>
           <SearchBar />
         </div>
+
         <GridList
           cellHeight={180}
           className="grid-list"
