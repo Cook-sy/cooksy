@@ -24,6 +24,8 @@ class UserProfile extends Component {
         {_.map(this.props.purchase, (purchase) => (
           <Card className="card">
             <CardTitle
+              actAsExpander={true}
+              showExpandableButton={true}
               title={new Date(purchase.createdAt).toString().substr(4, 11)}
               subtitle="Purchase Date"
             />
@@ -33,6 +35,7 @@ class UserProfile extends Component {
               <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
             </CardText>
             <CardMedia
+              expandable={true}
               overlay={<CardTitle title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'white', textDecoration: 'none'}}>{purchase.meal.name}</Link>}
               subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>} />}
             >
