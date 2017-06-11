@@ -9,6 +9,7 @@ var mealReviewCtrl = require('../controllers/meal-review-ctrl');
 var chefReviewCtrl = require('../controllers/chef-review-ctrl');
 var userRequestCtrl = require('../controllers/user-request-ctrl');
 var requestCtrl = require('../controllers/request-ctrl');
+var mail = require('../utils/send-mail');
 var router = express.Router();
 
 // Check if a review is owned by a user
@@ -181,8 +182,9 @@ router.get('/purchases', isUser, function(req, res, next) {
 // Allow user to purchase a meal
 router.post('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.createPurchase(req.body, req.userId)
-  .then(function(meal) {
-    return res.status(200).json(meal);
+  .then(function(purchase) {
+    mail.sendPurchase(purchase);
+    return res.status(200).json(purchase);
   })
   .catch(function(err) {
     return res.status(500).json({
@@ -364,6 +366,7 @@ router.post('/requests', isUser, function(req, res) {
         });
       }
 
+      mail.sendRequest(request);
       return res.status(201).json({
         success: true,
         request: request

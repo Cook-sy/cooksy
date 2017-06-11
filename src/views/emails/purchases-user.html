@@ -1,0 +1,84 @@
+<html>
+<head>
+  <title>Order from Cooksy</title>
+
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    td, th {
+      border: 1px solid #e0e0e0;
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #e0e0e0;
+    }
+
+    .heading {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <p>
+    Hi <%= username %>,
+  </p>
+  <p>
+    You recently bought a meal from <%= chefUsername %>. Below is a summary of your purchase.
+  </p>
+
+  <p>
+    <span class="heading">Date ordered:</span>
+    <%= dateOrdered %>
+  </p>
+
+  <table>
+    <tr>
+      <th>Description</th>
+      <th>Quanity</th>
+      <th>Rate</th>
+      <th>Amount</th>
+    </tr>
+
+    <tr>
+      <td><%= mealName %></td>
+      <td><%= quantity %></td>
+      <td><%= individualPrice %></td>
+      <td><%= amount %></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td></td>
+      <td><strong>Total</strong></td>
+      <td><%= totalAmount %></td>
+    </tr>
+  </table>
+
+  <p>
+    Please pay the chef upon pickup!
+  </p>
+
+  <p>
+    <span class="heading">Date and Time:</span>
+    <%= deliveryDateTime %>
+    <br>
+    <span class="heading">Pickup Info:</span>
+    <br>
+    <%= address %>
+    <br>
+    <%= city %>, <%= state %> <%= zipcode%>
+  </p>
+
+  <p>
+    Thank you,
+    <br>
+    Cooksy
+  </p>
+</body>
+
+</html>

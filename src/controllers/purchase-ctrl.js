@@ -13,6 +13,13 @@ var purchaseInclude = [
         }
       }
     ]
+  },
+  {
+    model: db.User,
+    as: 'user',
+    attributes: {
+      exclude: ['password']
+    }
   }
 ];
 
