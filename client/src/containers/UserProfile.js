@@ -20,28 +20,35 @@ class UserProfile extends Component {
 
   render() {
     return (
-      <div>
-        {_.map(this.props.purchase, (purchase) => (
-          <Card className="card">
-            <CardTitle
-              actAsExpander={true}
-              showExpandableButton={true}
-              title={<p>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
-              subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
-            >
-              <p>${purchase.individualPrice}</p>
-              <p>Quantity ordered: {purchase.num}</p>
-              <p>Total: ${purchase.individualPrice * purchase.num}</p>
-            </CardTitle>
-            <CardText expandable={true}>
-              <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
-              <p>{purchase.meal.address}<br/>{purchase.meal.city}, {purchase.meal.state} {purchase.meal.zipcode}</p>
-              <img className="purchase" src={purchase.meal.images} alt={purchase.meal.name} />
+      <div className="flex-grid">
+        <div className="col">
+          <h1>Purchase History</h1>
+          {_.map(this.props.purchase, (purchase) => (
+            <Card className="card">
               <CardTitle
-                title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>Veiw Meal Details</Link>}/>
-            </CardText>
-          </Card>
-        ))}
+                actAsExpander={true}
+                showExpandableButton={true}
+                title={<p>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
+                subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
+              >
+                <p>${purchase.individualPrice}<br/>
+                  Quantity ordered: {purchase.num}<br/>
+                  Total: ${purchase.individualPrice * purchase.num}
+                </p>
+                <img className="purchase-images" src={purchase.meal.images} alt={purchase.meal.name} />
+              </CardTitle>
+              <CardText expandable={true}>
+                <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
+                <p>{purchase.meal.address}<br/>{purchase.meal.city}, {purchase.meal.state} {purchase.meal.zipcode}</p>
+                <CardTitle
+                  title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>Veiw Meal Details</Link>}/>
+              </CardText>
+            </Card>
+          ))}
+        </div>
+        <div className="col">
+          <h1>Requests</h1>
+        </div>
       </div>
     )
   }

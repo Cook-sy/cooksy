@@ -1,9 +1,14 @@
 .card {
   width: 500px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
-.purchase {
-  width: 300px;
+.purchase-images {
+  width: 200px;
+}
+
+.flex-grid {
+  display: flex;
+}
+.col {
+  flex: 1;
 }
