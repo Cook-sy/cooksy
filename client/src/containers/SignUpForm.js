@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { RadioButton } from 'material-ui/RadioButton';
 
-import { signUpUser, signUpChef } from '../actions';
-import { successfulAuth } from '../utils/IsAuthenticated'
+import { signUpUser, signUpChef, selectUserRole } from '../actions';
+import { successfulAuth } from '../utils/IsAuthenticated';
 import {
   renderTextAreaField,
   renderTextField,
@@ -33,30 +33,33 @@ export class SignUpForm extends Component {
   }
 
   render() {
-    const { handleSubmit, pristine, submitting } = this.props;
-
+    const { handleSubmit, pristine, submitting, signUpAsUser } = this.props;
     return (
       <form onSubmit={handleSubmit(this.submitForm)}>
         <h1>Signup Form</h1>
         <div className="radio-button-group">
           <Field name="role" component={renderRadioGroup}>
-            <RadioButton value="user" label="user" />
-            <RadioButton value="chef" label="chef" />
+            <RadioButton
+              onClick={() => this.props.selectUserRole('user')}
+              value="user"
+              label="user"
+            />
+            <RadioButton
+              onClick={() => this.props.selectUserRole('chef')}
+              value="chef"
+              label="chef"
+            />
           </Field>
         </div>
         <div>
-          <Field
-            name="username" 
-            label="Username" 
-            component={renderTextField} 
-          />
+          <Field name="username" label="Username" component={renderTextField} />
         </div>
         <div>
           <Field
-            name="email" 
+            name="email"
             label="example@gmail.com"
             floatingLabelText="Email"
-            component={renderTextField} 
+            component={renderTextField}
             type="email"
           />
         </div>
@@ -68,27 +71,30 @@ export class SignUpForm extends Component {
             component={renderTextField}
           />
         </div>
-        <div>
-          <Field
-            name="image"
-            label="http://example.com/image.jpeg"
-            floatingLabelText="Image"
-            component={renderTextField}
-          />
-        </div>
-        <div>
-          <Field
-            name="address"
-            label="Address"
-            component={renderTextAreaField}
-            multiLine={true}
-            rows={2}
-          />
-        </div>
-        <div>
-          <Field name="city" label="City" component={renderTextField} />
-          <Field name="state" label="State" component={renderTextField} />
-        </div>
+        {signUpAsUser === 'chef' &&
+          <div>
+            <div>
+              <Field
+                name="image"
+                label="http://example.com/image.jpeg"
+                floatingLabelText="Image"
+                component={renderTextField}
+              />
+            </div>
+            <div>
+              <Field
+                name="address"
+                label="Address"
+                component={renderTextAreaField}
+                multiLine={true}
+                rows={2}
+              />
+            </div>
+            <div>
+              <Field name="city" label="City" component={renderTextField} />
+              <Field name="state" label="State" component={renderTextField} />
+            </div>
+          </div>}
         <div>
           <Field name="zipcode" label="Zipcode" component={renderTextField} />
         </div>
@@ -105,6 +111,7 @@ export class SignUpForm extends Component {
 
 export const validate = values => {
   const errors = {};
+
   if (!values.username) {
     errors.username = 'Required';
   }
@@ -128,7 +135,7 @@ export const validate = values => {
   if (!isEmail(values.email)) {
     errors.email = 'Add a valid Email address';
   }
-  
+
   if (!values.role) {
     errors.role = 'Required';
   }
@@ -148,12 +155,15 @@ export const validate = values => {
   return errors;
 };
 
-function mapStateToProps({auth}) {
-  return auth
+function mapStateToProps({ auth: signUpAsUser }) {
+  return signUpAsUser;
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ signUpUser, signUpChef }, dispatch);
+  return bindActionCreators(
+    { signUpUser, signUpChef, selectUserRole },
+    dispatch
+  );
 }
 
 export default reduxForm({
