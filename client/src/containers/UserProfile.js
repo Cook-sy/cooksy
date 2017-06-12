@@ -22,13 +22,13 @@ class UserProfile extends Component {
     return (
       <div className="flex-grid">
         <div className="col">
-          <h1>Purchase History</h1>
+          <h1 className="purchase-title">Purchase History</h1>
           {_.map(this.props.purchase, (purchase) => (
-            <Card className="card">
+            <Card className="purchase-card">
               <CardTitle
                 actAsExpander={true}
                 showExpandableButton={true}
-                title={<p>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
+                title={<p>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
                 subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
               >
                 <p>${purchase.individualPrice}<br/>
@@ -47,7 +47,7 @@ class UserProfile extends Component {
           ))}
         </div>
         <div className="col">
-          <h1>Requests</h1>
+          <h1 className="purchase-title">Requests</h1>
         </div>
       </div>
     )
