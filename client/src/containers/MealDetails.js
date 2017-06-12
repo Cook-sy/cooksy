@@ -51,37 +51,80 @@ class MealDetails extends Component {
     }
 
     return (
-      <div onLoad={this.didReview}>
-        <Card>
-          <CardHeader
-            title={currentMeal.chef.username}
-            subtitle="Chef"
-            avatar={currentMeal.chef.image}
-          />
-          <CardMedia
-            overlay={
-              <CardTitle
-                title={currentMeal.name}
-                subtitle={currentMeal.chef.username}
-              />
-            }
-          >
-            <img
-              src={currentMeal.images}
-              alt={currentMeal.name}
-              width="500"
-              height="500"
+      <div onLoad={this.didReview} className="flex-grid">
+        <div className="col">
+          <Card>
+            <CardHeader
+              title={currentMeal.chef.username}
+              subtitle="Chef"
+              avatar={currentMeal.chef.image}
             />
-          </CardMedia>
-          <CardTitle title="Meal Details" subtitle="Description" />
+            <CardMedia
+              className="details-image"
+              overlay={
+                <CardTitle
+                  title={currentMeal.name}
+                  subtitle={currentMeal.chef.username}
+                />
+              }
+            >
+              <img
+                src={currentMeal.images}
+                alt={currentMeal.name}
+                width="500"
+                height="500"
+              />
+            </CardMedia>
+            <CardActions>
+              <RaisedButton label="Purchase" />
+              <RaisedButton
+                label={
+                  <Link
+                    to={'/meals'}
+                    style={{ color: 'black', textDecoration: 'none' }}
+                  >
+                    Back To Meals
+                  </Link>
+                }
+              />
+              {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
+            </CardActions>
+          </Card>
+          <ReviewForm id={this.props.match.params.id} />
+          <div className="reviews">
+            {review.currentReviews.reverse().map(review =>
+              <div className="review" key={review.id}>
+                <div>
+                  <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
+                </div>
+                <p className="review-title">{review.title}</p>
+                <p className="review-text">{review.review}</p>
+                <p className="reviewer">{review.user.username}</p>
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="col">
           <CardText>
-            {currentMeal.description}
+            <p className="details-titles">Available On:</p>
+            <p className="delivery-date">{new Date(currentMeal.deliveryDateTime).toString().substr(4, 11)}
+            </p>
           </CardText>
-          <CardTitle subtitle="Pickup Information" />
           <CardText>
-            <p>{currentMeal.pickupInfo}</p>
-            <p>{`${currentMeal.address}, ${currentMeal.city}, ${currentMeal.state} ${currentMeal.zipcode}`}</p>
-            <div style={{width:300, height:300}}>
+            <p className="details-titles">Meal Description:</p>
+            <p className="details-text">{currentMeal.description}</p>
+          </CardText>
+          <CardText>
+            <p className="details-titles">Pickup information:</p>
+            <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
+              new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
+            </p>
+            <p className="details-text">{currentMeal.pickupInfo}</p>
+            <p className="details-text">
+              {currentMeal.address}<br/>
+              {currentMeal.city}, {currentMeal.state} {currentMeal.zipcode}
+            </p>
+            <div style={{width:400, height:400}}>
               <Map
                 address={currentMeal.address}
                 city={currentMeal.city}
@@ -91,33 +134,6 @@ class MealDetails extends Component {
               />
             </div>
           </CardText>
-          <CardActions>
-            <RaisedButton label="Purchase" />
-            <RaisedButton
-              label={
-                <Link
-                  to={'/meals'}
-                  style={{ color: 'black', textDecoration: 'none' }}
-                >
-                  Back To Meals
-                </Link>
-              }
-            />
-            {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
-          </CardActions>
-        </Card>
-        <ReviewForm id={this.props.match.params.id} />
-        <div className="reviews">
-          {review.currentReviews.reverse().map(review =>
-            <div className="review" key={review.id}>
-              <div>
-                <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
-              </div>
-              <p className="review-title">{review.title}</p>
-              <p className="review-text">{review.review}</p>
-              <p className="reviewer">{review.user.username}</p>
-            </div>
-          )}
         </div>
       </div>
     );
