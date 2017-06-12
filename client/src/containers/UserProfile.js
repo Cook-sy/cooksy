@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import Subheader from 'material-ui/Subheader';
 import { Rating } from 'material-ui-rating';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardTitle, CardText} from 'material-ui/Card';
 import _ from 'lodash';
 
 import { getPurchases } from '../actions/purchaseActions';
