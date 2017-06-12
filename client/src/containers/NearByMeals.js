@@ -88,6 +88,7 @@ class NearByMeals extends Component {
         .then(res => {
           markers = res.map(meal => (
             {
+              id: meal.id,
               position: meal.location,
               showInfo: false,
               infoContent: meal.name
@@ -130,7 +131,10 @@ class NearByMeals extends Component {
             showInfo: true,
           };
         }
-        return marker;
+        return {
+          ...marker,
+          showInfo: false,
+        };
       })
     });
   }
@@ -164,16 +168,17 @@ class NearByMeals extends Component {
 
         <SearchBar />
 
-        <div>
+        <ul>
           { _.map(this.props.meals, meal => (
-              <div key={meal.id}>
-                <p>
-                  {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
-                </p>
-              </div>
+              <li
+                key={meal.id}
+                onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
+              >
+                {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
+              </li>
             ))
           }
-        </div>
+        </ul>
 
         <div style={{ width: 600, height: 600 }}>
           <NearByMap
