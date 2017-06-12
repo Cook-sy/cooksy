@@ -16,10 +16,39 @@ const GoogleMapWrapper = withGoogleMap(props => (
   />
 ));
 
+// eslint-disable-next-line
+const geocoder = new google.maps.Geocoder();
+
 class NearByMeals extends Component {
   componentDidMount() {
     this.props.getUserDetails();
     this.props.getNearbyMeals(this.props.user.zipcode);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let markers = [];
+
+    if (!_.isEqual(this.props.meals, nextProps.meals) && _.size(nextProps.meals) !== 0) {
+      _.each(nextProps.meals, meal => {
+        const address = `${meal.address}, ${meal.city} ${meal.state}, ${meal.zipcode}`;
+        markers.push(this.geocodeAddress(address));
+      });
+
+      Promise.all(markers)
+        .then(markers => console.log(markers));
+    }
+  }
+
+  geocodeAddress = address => {
+    return new Promise((resolve, reject) => {
+      geocoder.geocode({address}, (results, status) => {
+        if (status === 'OK') {
+          resolve(results);
+        } else {
+          reject(status);
+        }
+      });
+    });
   }
 
   render() {
