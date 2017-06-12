@@ -11,6 +11,7 @@ import SearchBar from './SearchBar';
 
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
+    ref={props.onMapLoad}
     defaultZoom={14}
     defaultCenter={{ lat: 37.783697, lng: -122.408966 }}
   >
@@ -23,6 +24,34 @@ const GoogleMapWrapper = withGoogleMap(props => (
     }
   </GoogleMap>
 ));
+
+class NearByMap extends Component {
+  handleMapLoad = (map) => {
+    this._map = map;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this._map && nextProps.markers.length !== 0) {
+      // eslint-disable-next-line
+      let bounds = new google.maps.LatLngBounds();
+      nextProps.markers.forEach(function(marker) {
+        bounds.extend(marker.position);
+      });
+      this._map.fitBounds(bounds);
+    }
+  }
+
+  render() {
+    return (
+      <GoogleMapWrapper
+        containerElement={<div style={{ height: '100%' }} />}
+        mapElement={<div style={{ height: '100%' }} />}
+        onMapLoad={this.handleMapLoad}
+        { ...this.props }
+      />
+    );
+  }
+}
 
 // eslint-disable-next-line
 const geocoder = new google.maps.Geocoder();
@@ -107,9 +136,7 @@ class NearByMeals extends Component {
         </div>
 
         <div style={{ width: 600, height: 600 }}>
-          <GoogleMapWrapper
-            containerElement={<div style={{ height: '100%' }} />}
-            mapElement={<div style={{ height: '100%' }} />}
+          <NearByMap
             markers={this.state.markers}
           />
         </div>
