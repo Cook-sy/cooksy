@@ -50,7 +50,7 @@ export function fetchMealDetail(id) {
   };
 }
 
-export function getNearbyMeals(zipcode, radius = 36000) {
+export function getNearbyMeals(zipcode, radius = 29000) {
   const request = axios.get(`/api/meals/?zip=${zipcode}&radius=${radius}`);
 
   return {
