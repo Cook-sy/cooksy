@@ -11,7 +11,8 @@ import {
   renderTextAreaField,
   renderTextField,
   renderRadioGroup,
-  isZipcode
+  isZipcode,
+  isEmail
 } from '../utils/FormHelper';
 import './SignUpForm.css';
 import './NewMealForm.css';
@@ -44,7 +45,20 @@ export class SignUpForm extends Component {
           </Field>
         </div>
         <div>
-          <Field name="username" label="Username" component={renderTextField} />
+          <Field
+            name="username" 
+            label="Username" 
+            component={renderTextField} 
+          />
+        </div>
+        <div>
+          <Field
+            name="email" 
+            label="example@gmail.com"
+            floatingLabelText="Email"
+            component={renderTextField} 
+            type="email"
+          />
         </div>
         <div>
           <Field
@@ -105,6 +119,14 @@ export const validate = values => {
 
   if (!isZipcode(values.zipcode)) {
     errors.zipcode = 'Add a valid zipcode';
+  }
+
+  if (!values.email) {
+    errors.email = 'Required';
+  }
+
+  if (!isEmail(values.email)) {
+    errors.email = 'Add a valid Email address';
   }
   
   if (!values.role) {
