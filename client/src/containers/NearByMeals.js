@@ -45,7 +45,7 @@ class NearByMeals extends Component {
     let latLngs = [];
     let markers = [];
 
-    if (!_.isEqual(this.props.meals, nextProps.meals) && _.size(nextProps.meals) !== 0) {
+    if (this.props.meals !== nextProps.meals && _.size(nextProps.meals) !== 0) {
       _.each(nextProps.meals, meal => {
         const address = `${meal.address}, ${meal.city} ${meal.state}, ${meal.zipcode}`;
         latLngs.push(this.geocodeAddress(address));
@@ -55,8 +55,7 @@ class NearByMeals extends Component {
         .then(res => {
           markers = res.map(latLng => (
             {
-              // eslint-disable-next-line
-              position: new google.maps.LatLng(latLng.lat, latLng.lng),
+              position: { lat: latLng.lat, lng: latLng.lng },
               showInfo: false
             }
           ));
@@ -108,17 +107,11 @@ class NearByMeals extends Component {
         </div>
 
         <div style={{ width: 600, height: 600 }}>
-          { this.state.markers.length !== 0 &&
-            <GoogleMapWrapper
-              containerElement={
-                <div style={{ height: '100%' }} />
-              }
-              mapElement={
-                <div style={{ height: '100%' }} />
-              }
-              markers={this.state.markers}
-            />
-          }
+          <GoogleMapWrapper
+            containerElement={<div style={{ height: '100%' }} />}
+            mapElement={<div style={{ height: '100%' }} />}
+            markers={this.state.markers}
+          />
         </div>
       </div>
     );
