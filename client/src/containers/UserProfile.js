@@ -26,7 +26,7 @@ class UserProfile extends Component {
             <CardTitle
               actAsExpander={true}
               showExpandableButton={true}
-              title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'black', textDecoration: 'none'}}>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
+              title={<p style={{color:'black', textDecoration: 'none'}}>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
               subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
             >
               <p>${purchase.individualPrice}</p>
@@ -37,6 +37,8 @@ class UserProfile extends Component {
               <p><strong>Pick up info:</strong><br/>{new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>{new Date(purchase.meal.deliveryDateTime).toLocaleTimeString()}<br/>{purchase.meal.pickupInfo}</p>
               <p>{purchase.meal.address}<br/>{purchase.meal.city}, {purchase.meal.state} {purchase.meal.zipcode}</p>
               <img className="purchase" src={purchase.meal.images} alt={purchase.meal.name} />
+              <CardTitle
+                title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>Veiw Meal Details</Link>}/>
             </CardText>
           </Card>
         ))}
