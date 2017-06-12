@@ -3,11 +3,16 @@
 }
 
 .purchase-images {
-  width: 150px;
+  width: 125px;
 }
 
 .purchase-title {
-  color: rgb(0, 188, 212)
+  text-decoration: underline;
+  color: black;
+}
+
+.meal-title {
+  color: black;
 }
 
 .flex-grid {
