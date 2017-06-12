@@ -38,7 +38,8 @@ class NearByMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this._map && nextProps.markers.length !== 0) {
+    // Resize map to fit markers only if the number of markers has changed
+    if (this._map && this.props.markers.length !== nextProps.markers.length) {
       // eslint-disable-next-line
       let bounds = new google.maps.LatLngBounds();
       nextProps.markers.forEach(function(marker) {
