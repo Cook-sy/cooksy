@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-import { withGoogleMap, GoogleMap } from 'react-google-maps';
+import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps';
 import _ from 'lodash';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
@@ -13,29 +13,55 @@ const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
     defaultZoom={14}
     defaultCenter={{ lat: 37.783697, lng: -122.408966 }}
-  />
+  >
+    { props.markers.map((marker, index) => (
+        <Marker
+          key={index}
+          position={marker.position}
+        />
+      ))
+    }
+  </GoogleMap>
 ));
 
 // eslint-disable-next-line
 const geocoder = new google.maps.Geocoder();
 
 class NearByMeals extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      markers: []
+    };
+  }
+
   componentDidMount() {
     this.props.getUserDetails();
     this.props.getNearbyMeals(this.props.user.zipcode);
   }
 
   componentWillReceiveProps(nextProps) {
+    let latLngs = [];
     let markers = [];
 
     if (!_.isEqual(this.props.meals, nextProps.meals) && _.size(nextProps.meals) !== 0) {
       _.each(nextProps.meals, meal => {
         const address = `${meal.address}, ${meal.city} ${meal.state}, ${meal.zipcode}`;
-        markers.push(this.geocodeAddress(address));
+        latLngs.push(this.geocodeAddress(address));
       });
 
-      Promise.all(markers)
-        .then(markers => console.log(markers));
+      Promise.all(latLngs)
+        .then(res => {
+          markers = res.map(latLng => (
+            {
+              // eslint-disable-next-line
+              position: new google.maps.LatLng(latLng.lat, latLng.lng),
+              showInfo: false
+            }
+          ));
+          this.setState({markers});
+        });
     }
   }
 
@@ -43,7 +69,11 @@ class NearByMeals extends Component {
     return new Promise((resolve, reject) => {
       geocoder.geocode({address}, (results, status) => {
         if (status === 'OK') {
-          resolve(results);
+          const latLng = {
+            lat: results[0].geometry.location.lat(),
+            lng: results[0].geometry.location.lng(),
+          };
+          resolve(latLng);
         } else {
           reject(status);
         }
@@ -78,14 +108,17 @@ class NearByMeals extends Component {
         </div>
 
         <div style={{ width: 600, height: 600 }}>
-          <GoogleMapWrapper
-            containerElement={
-              <div style={{ height: '100%' }} />
-            }
-            mapElement={
-              <div style={{ height: '100%' }} />
-            }
-          />
+          { this.state.markers.length !== 0 &&
+            <GoogleMapWrapper
+              containerElement={
+                <div style={{ height: '100%' }} />
+              }
+              mapElement={
+                <div style={{ height: '100%' }} />
+              }
+              markers={this.state.markers}
+            />
+          }
         </div>
       </div>
     );
