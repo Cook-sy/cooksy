@@ -26,7 +26,7 @@ class UserProfile extends Component {
             <CardTitle
               actAsExpander={true}
               showExpandableButton={true}
-              title={<p style={{color:'black', textDecoration: 'none'}}>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
+              title={<p>{purchase.meal.name}<br/>{new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
               subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
             >
               <p>${purchase.individualPrice}</p>
