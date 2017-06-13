@@ -129,7 +129,7 @@ class MealDetails extends Component {
               open={this.state.open}
               onRequestClose={this.handleClose}
             >
-              Lebron sucks
+              Quantity: {currentMeal.servings} <span className="modal">Price: {currentMeal.price}</span>
             </Dialog>
             <RaisedButton
               label={

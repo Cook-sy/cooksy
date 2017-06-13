@@ -35,9 +35,6 @@ class ChefProfile extends Component {
             <RaisedButton className="request" label="Request a Meal" primary={true} />
           </div>
         </List>
-          <div className="griddiv">
-            <HorizontalGrid meals={this.props.meals}/>
-          </div>
       </div>
     );
   }
