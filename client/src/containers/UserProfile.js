@@ -14,9 +14,7 @@ import './UserProfile.css';
 class UserProfile extends Component {
 
   componentDidMount() {
-
     this.props.getPurchases();
-
   }
 
   render() {
