@@ -51,46 +51,81 @@ class MealDetails extends Component {
     }
 
     return (
-      <div onLoad={this.didReview} className="flex-grid">
-        <div className="col">
-          <Card>
-            <CardHeader
-              title={currentMeal.chef.username}
-              subtitle="Chef"
-              avatar={currentMeal.chef.image}
-            />
-            <CardMedia
-              className="details-image"
-              overlay={
-                <CardTitle
-                  title={currentMeal.name}
-                  subtitle={currentMeal.chef.username}
-                />
-              }
-            >
-              <img
-                src={currentMeal.images}
-                alt={currentMeal.name}
-                width="500"
-                height="500"
+      <div>
+        <div onLoad={this.didReview} className="flex-grid">
+          <div className="col">
+            <Card>
+              <CardHeader
+                title={currentMeal.chef.username}
+                subtitle="Chef"
+                avatar={currentMeal.chef.image}
               />
-            </CardMedia>
-            <CardActions>
-              <RaisedButton label="Purchase" />
-              <RaisedButton
-                label={
-                  <Link
-                    to={'/meals'}
-                    style={{ color: 'black', textDecoration: 'none' }}
-                  >
-                    Back To Meals
-                  </Link>
+              <CardMedia
+                className="details-image"
+                overlay={
+                  <CardTitle
+                    title={currentMeal.name}
+                    subtitle={currentMeal.chef.username}
+                  />
                 }
-              />
-              {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
-            </CardActions>
-          </Card>
-          <ReviewForm id={this.props.match.params.id} />
+              >
+                <img
+                  src={currentMeal.images}
+                  alt={currentMeal.name}
+                  width="500"
+                  height="500"
+                />
+              </CardMedia>
+              <CardText>
+                <p className="details-titles">Pickup information:</p>
+                <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
+                  new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
+                </p>
+                <p className="details-text">{currentMeal.pickupInfo}</p>
+                <p className="details-text">
+                  {currentMeal.address}<br/>
+                  {currentMeal.city}, {currentMeal.state}<br/>
+                  {currentMeal.zipcode}
+                </p>
+                <div style={{width:400, height:400}}>
+                  <Map
+                    address={currentMeal.address}
+                    city={currentMeal.city}
+                    state={currentMeal.state}
+                    containerElement={<div style={{height: `100%`}} />}
+                    mapElement={<div style={{height: `100%`}} />}
+                  />
+                </div>
+              </CardText>
+              <CardActions>
+                <RaisedButton label="Purchase" />
+                <RaisedButton
+                  label={
+                    <Link
+                      to={'/meals'}
+                      style={{ color: 'black', textDecoration: 'none' }}
+                    >
+                      Back To Meals
+                    </Link>
+                  }
+                />
+                {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
+              </CardActions>
+            </Card>
+          </div>
+          <div className="col">
+            <CardText>
+              <p className="details-titles">Available On:</p>
+              <p className="delivery-date">{new Date(currentMeal.deliveryDateTime).toString().substr(4, 11)}
+              </p>
+            </CardText>
+            <CardText>
+              <p className="details-titles">Meal Description:</p>
+              <p className="details-text">{currentMeal.description}</p>
+            </CardText>
+          </div>
+        </div>
+        <ReviewForm id={this.props.match.params.id} />
           <div className="reviews">
             {review.currentReviews.reverse().map(review =>
               <div className="review" key={review.id}>
@@ -103,38 +138,6 @@ class MealDetails extends Component {
               </div>
             )}
           </div>
-        </div>
-        <div className="col">
-          <CardText>
-            <p className="details-titles">Available On:</p>
-            <p className="delivery-date">{new Date(currentMeal.deliveryDateTime).toString().substr(4, 11)}
-            </p>
-          </CardText>
-          <CardText>
-            <p className="details-titles">Meal Description:</p>
-            <p className="details-text">{currentMeal.description}</p>
-          </CardText>
-          <CardText>
-            <p className="details-titles">Pickup information:</p>
-            <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
-              new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
-            </p>
-            <p className="details-text">{currentMeal.pickupInfo}</p>
-            <p className="details-text">
-              {currentMeal.address}<br/>
-              {currentMeal.city}, {currentMeal.state} {currentMeal.zipcode}
-            </p>
-            <div style={{width:400, height:400}}>
-              <Map
-                address={currentMeal.address}
-                city={currentMeal.city}
-                state={currentMeal.state}
-                containerElement={<div style={{height: `100%`}} />}
-                mapElement={<div style={{height: `100%`}} />}
-              />
-            </div>
-          </CardText>
-        </div>
       </div>
     );
   }
