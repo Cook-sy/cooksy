@@ -234,7 +234,14 @@ class NearByMeals extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     const { zipcode, radius } = this.state;
-    this.props.getNearbyMeals(zipcode, radius * 1609);
+    // Reset UI state for new search
+    this.setState({
+      markers: [],
+      currentMarkerId: null,
+      hoverId: null
+    }, () => {
+      this.props.getNearbyMeals(zipcode, radius * 1609);
+    });
   }
 
   highlightMeal = (mealId) => {
