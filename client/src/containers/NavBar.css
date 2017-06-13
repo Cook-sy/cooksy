@@ -3,7 +3,7 @@
 	left:0px;
 	position:absolute;
 	overflow:hidden;
-	height:65px;
+	height:40px;
 	background-color:rgb(0, 188, 212);
 	margin: 0;
 	padding: 0;
@@ -12,21 +12,18 @@
 	box-shadow:0px 2px 1px rgba(50, 50, 50, 0.22);
 }
 .nav li {
-	text-align:center;
-	color: white;
-	height:47.5px;
-	padding-left:20px;
-	padding-right:20px;
-	cursor:pointer;
-	padding-top:15px !important;
-	float: left;
-	list-style: none;
-	font-weight: 200;
-	transition:background-color ease-in-out .5s;
-	-moz-transition:background-color ease-in-out .5s;
-	-webkit-transition:background-color ease-in-out .5s;
-	-o-transition:background-color ease-in-out .5s;
-	text-shadow: 0px -3px 3px rgba(255, 255, 255, 0.2);
+  height: 37px;
+  text-align:center;
+  color: white;
+  cursor:pointer;
+  float: left;
+  list-style: none;
+  font-weight: 200;
+  transition:background-color ease-in-out .5s;
+  -moz-transition:background-color ease-in-out .5s;
+  -webkit-transition:background-color ease-in-out .5s;
+  -o-transition:background-color ease-in-out .5s;
+  text-shadow: 0px -3px 3px rgba(255, 255, 255, 0.2);
 }
 .nav li a,a:visited,a:hover {
 	color: white;
@@ -41,9 +38,10 @@
 	background-color:rgba(255,255,255,.2);
 	border-bottom: 3px solid orange;
 }
-.nav li.active {
-}
 
+selected {
+	background: red;
+}
 .nav-auth {
 	float: right !important;
 }
@@ -51,9 +49,30 @@
 li img {
 	vertical-align: -webkit-baseline-middle;
 	margin-right: 20px !important;
-	margin-top: 0 !important;
+	margin-top: 2.5px !important;
 }
 
-.no-cursor {
+.chef-welcome {
 	cursor: default !important;
+  padding-top: 4.5px !important;
+  padding-right: 10px;
+}
+
+.user-welcome {
+	cursor: default !important;
+	padding-top: 8px !important;
+	padding-right: 10px;
+}
+
+li a {
+  display: inline-block;
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 100%;
+  padding-top: 7.5px;
+  padding-bottom: 7px;
+}
+
+.selected {
+	background-color:rgba(255,255,255,.2);
 }
