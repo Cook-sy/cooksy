@@ -17,8 +17,9 @@ import {
   CardText
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import { Rating } from 'material-ui-rating';
-
+import Dialog from 'material-ui/Dialog';
 import ReviewForm from './ReviewForm';
 import './MealDetails.css';
 import Map from './GoogleMaps';
@@ -26,13 +27,27 @@ import Map from './GoogleMaps';
 class MealDetails extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      open: false
+    };
     this.addReview = this.addReview.bind(this);
     this.didReview = this.didReview.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchMealDetail(id);
+  }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false});
   }
 
   addReview() {
@@ -49,6 +64,20 @@ class MealDetails extends Component {
     if (Object.keys(currentMeal).length === 0) {
       return <div>Loading...</div>;
     }
+
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+      />,
+    ];
 
     return (
       <div onLoad={this.didReview}>
@@ -92,7 +121,16 @@ class MealDetails extends Component {
             </div>
           </CardText>
           <CardActions>
-            <RaisedButton label="Purchase" />
+            <RaisedButton label="Purchase" onTouchTap={this.handleOpen} />
+            <Dialog
+              title="Please confirm your purchase details"
+              actions={actions}
+              modal={false}
+              open={this.state.open}
+              onRequestClose={this.handleClose}
+            >
+              Lebron sucks
+            </Dialog>
             <RaisedButton
               label={
                 <Link
