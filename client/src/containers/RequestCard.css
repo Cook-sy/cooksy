@@ -5,7 +5,7 @@
 .request-card {
 	width: 350px;
 	padding: 15px;
-	border: 2px blue solid;
+	border: 2px rgb(0, 188, 212) solid;
 }
 
 .request-buttons div {
