@@ -52,12 +52,10 @@ class Homepage extends Component {
   };
 };
 
-
 function mapStateToProps(state) {
   return {
     upcomingMeals: state.upcomingMeals
   };
 };
-
 
 export default connect(mapStateToProps, { fetchUpcomingMeals })(Homepage);
