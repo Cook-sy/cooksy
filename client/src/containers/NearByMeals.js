@@ -9,6 +9,9 @@ import { getNearbyMeals, getUserDetails } from '../actions/index';
 import './MealList.css';
 import SearchBar from './SearchBar';
 
+// eslint-disable-next-line
+const geocoder = new google.maps.Geocoder();
+
 const GoogleMapWrapper = withGoogleMap(props => (
   <GoogleMap
     ref={props.onMapLoad}
@@ -109,8 +112,6 @@ class NearByMeals extends Component {
   }
 
   geocodeMeal = meal => {
-    // eslint-disable-next-line
-    const geocoder = new google.maps.Geocoder();
     const address = `${meal.address}, ${meal.city} ${meal.state}, ${meal.zipcode}`;
 
     return new Promise((resolve, reject) => {
@@ -129,6 +130,32 @@ class NearByMeals extends Component {
         }
       });
     });
+  }
+
+  getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        const currentLoc = { lat, lng };
+
+        geocoder.geocode({location: currentLoc}, (results, status) => {
+          if (status === 'OK') {
+            let postalCode = results[0].address_components.find((component) => {
+              return component.types[0] === 'postal_code';
+            });
+
+            this.props.getNearbyMeals(postalCode.short_name);
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+      });
+    }
+    else {
+      alert('This Browser doesn\'t support HTML5 geolocation');
+    }
   }
 
   handleMarkerClick = (targetMarker) => {
