@@ -76,27 +76,6 @@ class MealDetails extends Component {
                   height="500"
                 />
               </CardMedia>
-              <CardText>
-                <p className="details-titles">Pickup information:</p>
-                <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
-                  new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
-                </p>
-                <p className="details-text">{currentMeal.pickupInfo}</p>
-                <p className="details-text">
-                  {currentMeal.address}<br/>
-                  {currentMeal.city}, {currentMeal.state}<br/>
-                  {currentMeal.zipcode}
-                </p>
-                <div style={{width:400, height:400}}>
-                  <Map
-                    address={currentMeal.address}
-                    city={currentMeal.city}
-                    state={currentMeal.state}
-                    containerElement={<div style={{height: `100%`}} />}
-                    mapElement={<div style={{height: `100%`}} />}
-                  />
-                </div>
-              </CardText>
               <CardActions>
                 <RaisedButton label="Purchase" />
                 <RaisedButton
@@ -112,6 +91,27 @@ class MealDetails extends Component {
                 {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
               </CardActions>
             </Card>
+            <CardText>
+              <p className="details-titles">Pickup information:</p>
+              <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
+                new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
+              </p>
+              <p className="details-text">{currentMeal.pickupInfo}</p>
+              <p className="details-text">
+                {currentMeal.address}<br/>
+                {currentMeal.city}, {currentMeal.state}<br/>
+                {currentMeal.zipcode}
+              </p>
+              <div style={{width:400, height:400}}>
+                <Map
+                  address={currentMeal.address}
+                  city={currentMeal.city}
+                  state={currentMeal.state}
+                  containerElement={<div style={{height: `100%`}} />}
+                  mapElement={<div style={{height: `100%`}} />}
+                />
+              </div>
+            </CardText>
           </div>
           <div className="col">
             <CardText>
