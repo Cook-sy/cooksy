@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-  GridList,
-  GridTile
-} from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
-import { Rating } from 'material-ui-rating';
-import {
   Card,
   CardTitle,
   CardText
@@ -35,9 +29,8 @@ class UserProfile extends Component {
               key={purchase.id}
               className="purchase-card">
               <CardTitle
-                actAsExpander={true}
                 showExpandableButton={true}
-                title={<p className="meal-title">{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</p>}
+                title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
                 subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
               >
                 <p>${purchase.individualPrice}<br/>
@@ -46,6 +39,8 @@ class UserProfile extends Component {
                 </p>
                 <img className="purchase-images" src={purchase.meal.images} alt={purchase.meal.name} />
               </CardTitle>
+              <CardText actAsExpander={true}>
+              </CardText>
               <CardText expandable={true}>
                 <p><strong>Pick up info:</strong><br/>
                   {new Date(purchase.meal.deliveryDateTime).toString().substr(4, 11)}<br/>
