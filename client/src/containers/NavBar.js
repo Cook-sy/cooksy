@@ -34,11 +34,6 @@ class NavBar extends Component {
               Meals
             </NavLink>
           </li>
-            <li className="no-cursor">
-              Welcome {user.user}!
-            </li>}
-          <li className="active"><Link to="/">Home</Link></li>
-          <li><Link to="/meals">Meals</Link></li>
           {user.role === 'chef' &&
             <li>
               <NavLink activeClassName="selected" exact to="/post-new-meal">
@@ -51,9 +46,12 @@ class NavBar extends Component {
                 New Request
               </NavLink>
             </li>}
-            <li><Link to="/request-form">New Request</Link></li>}
           {user.role === 'user' &&
-            <li><Link to="/user-profile">My Profile</Link></li>}
+            <li>
+              <NavLink activeClassName="selected" exact to="/user-profile">
+                My Profile
+              </NavLink>
+            </li>}
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
             <NavLink activeClassName="selected" exact to="/signup">
               Signup
