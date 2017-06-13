@@ -44,8 +44,8 @@ class NearByMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    // Resize map to fit markers only if the number of markers has changed
-    if (this._map && this.props.markers.length !== nextProps.markers.length) {
+    // Resize map to fit markers only if the markers has changed
+    if (this._map && !_.isEqual(_.map(this.props.markers, 'id'), _.map(nextProps.markers, 'id'))) {
       // eslint-disable-next-line
       let bounds = new google.maps.LatLngBounds();
       nextProps.markers.forEach(function(marker) {
@@ -77,13 +77,15 @@ class NearByMeals extends Component {
     this.state = {
       markers: [],
       currentMarkerId: null,
-      hoverId: null
+      hoverId: null,
+      zipcode: this.props.user.zipcode || '',
+      radius: 20
     };
   }
 
   componentDidMount() {
     this.props.getUserDetails();
-    this.props.getNearbyMeals(this.props.user.zipcode);
+    this.props.getNearbyMeals(this.props.user.zipcode, this.state.radius * 1609);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -145,8 +147,7 @@ class NearByMeals extends Component {
             let postalCode = results[0].address_components.find((component) => {
               return component.types[0] === 'postal_code';
             });
-
-            this.props.getNearbyMeals(postalCode.short_name);
+            this.props.getNearbyMeals(postalCode.short_name, this.state.zipcode * 1609);
           } else {
             window.alert('Geocoder failed due to: ' + status);
           }
@@ -225,6 +226,17 @@ class NearByMeals extends Component {
     }));
   }
 
+  handleInputChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { zipcode, radius } = this.state;
+    this.props.getNearbyMeals(zipcode, radius * 1609);
+  }
+
   highlightMeal = (mealId) => {
     if (this.state.hoverId === mealId) {
       return { color: 'yellow' };
@@ -249,6 +261,24 @@ class NearByMeals extends Component {
         </Link>
 
         <SearchBar />
+
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            name="zipcode"
+            value={this.state.zipcode}
+            onChange={this.handleInputChange}
+            placeholder="Zipcode"
+          />
+          <input
+            type="text"
+            name="radius"
+            value={this.state.radius}
+            onChange={this.handleInputChange}
+            placeholder="Radius (miles)"
+          />
+          <button type="submit">Submit</button>
+        </form>
 
         <ul>
           { _.map(this.props.meals, meal => (
