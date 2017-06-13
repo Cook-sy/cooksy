@@ -5,6 +5,7 @@ import { decodeToken as userDetails, deleteToken } from '../utils/IsAuthenticate
 export const AUTHENTICATE = 'AUTHENTICATE';
 export const USER_DETAILS = 'USER_DETAILS';
 export const LOG_OUT = 'LOG_OUT';
+export const SELECT_USER_ROLE = 'SELECT_USER_ROLE';
 
 export function signUpUser(values, cb) {
   const request = axios
@@ -69,5 +70,12 @@ export function logout() {
   deleteToken('cooksy');
   return {
     type: LOG_OUT
+  };
+}
+
+export function selectUserRole(role) {
+  return {
+    type: SELECT_USER_ROLE,
+    payload: role
   };
 }
