@@ -26,3 +26,13 @@ form h1 {
 .error {
   color: red;
 }
+
+.material-icons.cyan {
+ color: rgb(0, 188, 212); 
+ font-size: inherit;
+}
+
+.material-icons.white {
+ color: rgba(255, 255, 255, 1); 
+ font-size: inherit;
+}
