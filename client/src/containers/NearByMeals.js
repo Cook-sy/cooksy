@@ -18,6 +18,7 @@ const GoogleMapWrapper = withGoogleMap(props => (
     { props.markers.map((marker, index) => (
         <Marker
           key={index}
+          icon={marker.icon}
           position={marker.position}
           onClick={() => props.onMarkerClick(marker)}
           onMouseOver={() => props.onMarkerOver(marker)}
@@ -63,13 +64,17 @@ class NearByMap extends Component {
   }
 }
 
+const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+const selectedIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+
 class NearByMeals extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       markers: [],
-      currentMarker: null
+      currentMarkerId: null,
+      hoverId: null
     };
   }
 
@@ -92,6 +97,7 @@ class NearByMeals extends Component {
           markers = res.map(meal => (
             {
               id: meal.id,
+              icon: defaultIcon,
               position: meal.location,
               showInfo: false,
               infoContent: meal.name
@@ -129,11 +135,19 @@ class NearByMeals extends Component {
     this.setState((prevState, props) => ({
       markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
-          return { ...marker, showInfo: true };
+          return {
+            ...marker,
+            icon: selectedIcon,
+            showInfo: true
+          };
         }
-        return { ...marker, showInfo: false };
+        return {
+          ...marker,
+          icon: defaultIcon,
+          showInfo: false
+        };
       }),
-      currentMarker: targetMarker
+      currentMarkerId: targetMarker.id
     }));
   }
 
@@ -141,11 +155,15 @@ class NearByMeals extends Component {
     this.setState((prevState, props) => ({
       markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
-          return { ...marker, showInfo: false };
+          return {
+            ...marker,
+            icon: defaultIcon,
+            showInfo: false
+          };
         }
         return marker;
       }),
-      currentMarker: null
+      currentMarkerId: null
     }));
   }
 
@@ -153,10 +171,14 @@ class NearByMeals extends Component {
     this.setState((prevState, props) => ({
       markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
-          return { ...marker, showInfo: true };
+          return {
+            ...marker,
+            showInfo: true
+          };
         }
         return marker;
-      })
+      }),
+      hoverId: targetMarker.id
     }));
   }
 
@@ -164,12 +186,26 @@ class NearByMeals extends Component {
     this.setState((prevState, props) => ({
       markers: prevState.markers.map(marker => {
         // Only remove the info window if it is not the current marker's info window
-        if (marker === targetMarker && !_.isEqual(targetMarker, prevState.currentMarker)) {
-          return { ...marker, showInfo: false };
+        if (marker === targetMarker && targetMarker.id !== prevState.currentMarkerId) {
+          return {
+            ...marker,
+            showInfo: false
+          };
         }
         return marker;
-      })
+      }),
+      hoverId: null
     }));
+  }
+
+  highlightMeal = (mealId) => {
+    if (this.state.hoverId === mealId) {
+      return { color: 'yellow' };
+    } else if (this.state.currentMarkerId === mealId) {
+      return { color: 'green' };
+    } else {
+      return {};
+    }
   }
 
   render() {
@@ -194,6 +230,7 @@ class NearByMeals extends Component {
                 onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
                 onMouseEnter={() => this.handleMarkerOver(this.state.markers.find(marker => marker.id === meal.id))}
                 onMouseLeave={() => this.handleMarkerOut(this.state.markers.find(marker => marker.id === meal.id))}
+                style={this.highlightMeal(meal.id)}
               >
                 {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
               </li>
