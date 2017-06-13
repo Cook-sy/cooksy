@@ -1,0 +1,18 @@
+.num-required {
+	float: right;
+}
+
+.request-card {
+	width: 350px;
+	padding: 15px;
+	border: 2px blue solid;
+}
+
+.request-buttons div {
+	text-align: center;
+	margin: 0 5px;
+}
+
+.request-stat {
+	padding-top: 10px;
+}
