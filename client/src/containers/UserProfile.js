@@ -21,7 +21,7 @@ class UserProfile extends Component {
 
   componentDidMount() {
 
-    console.log(this.props.getPurchases());
+    this.props.getPurchases();
 
   }
 
@@ -31,7 +31,9 @@ class UserProfile extends Component {
         <div className="col">
           <h1 className="purchase-title">Purchase History</h1>
           {_.map(this.props.purchase, (purchase) => (
-            <Card className="purchase-card">
+            <Card
+              key={purchase.id}
+              className="purchase-card">
               <CardTitle
                 actAsExpander={true}
                 showExpandableButton={true}
