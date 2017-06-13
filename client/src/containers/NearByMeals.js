@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import _ from 'lodash';
+import { Media } from 'react-bootstrap';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
-import './MealList.css';
+import './NearByMeals.css';
 import SearchBar from './SearchBar';
 
 // eslint-disable-next-line
@@ -287,31 +288,42 @@ class NearByMeals extends Component {
           <button type="submit">Submit</button>
         </form>
 
-        <ul>
-          { _.map(this.props.meals, meal => (
-              <li
-                key={meal.id}
-                onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
-                onMouseEnter={() => this.handleMarkerOver(this.state.markers.find(marker => marker.id === meal.id))}
-                onMouseLeave={() => this.handleMarkerOut(this.state.markers.find(marker => marker.id === meal.id))}
-                style={this.highlightMeal(meal.id)}
-              >
-                {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
-              </li>
-            ))
-          }
-        </ul>
+        <div className="NearByMeals-container">
+          <div className="NearByMeals-resultsContainer">
+            <Media.List>
+              { _.map(this.props.meals, meal => (
+                  <Media.ListItem key={meal.id}>
+                    <Media
+                      onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
+                      onMouseEnter={() => this.handleMarkerOver(this.state.markers.find(marker => marker.id === meal.id))}
+                      onMouseLeave={() => this.handleMarkerOut(this.state.markers.find(marker => marker.id === meal.id))}
+                      style={this.highlightMeal(meal.id)}
+                      >
+                      <Media.Right>
+                        <img width="64" src={meal.images} alt={meal.name} />
+                      </Media.Right>
+                      <Media.Body>
+                        <Media.Heading>{meal.name}</Media.Heading>
+                        {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
+                      </Media.Body>
+                    </Media>
+                  </Media.ListItem>
+                ))
+              }
+            </Media.List>
+        </div>
 
-        <div style={{ width: 600, height: 600 }}>
+        <div className="NearByMeals-mapView">
           <NearByMap
             markers={this.state.markers}
             onMarkerClick={this.handleMarkerClick}
             onMarkerClose={this.handleMarkerClose}
             onMarkerOver={this.handleMarkerOver}
             onMarkerOut={this.handleMarkerOut}
-          />
+            />
         </div>
       </div>
+        </div>
     );
   }
 }

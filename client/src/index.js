@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import promise from 'redux-promise';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import MealList from './containers/MealList';
 import MealDetails from './containers/MealDetails';
