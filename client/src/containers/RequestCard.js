@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import connect from 'react-redux';
+import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 
