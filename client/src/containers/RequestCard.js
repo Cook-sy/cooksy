@@ -4,7 +4,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 
 import { Link } from 'react-router-dom';
-import { differenceBetweenTwoDatesInDays } from '../utils/requestHelper';
+import { differenceBetweenTwoDatesInDays } from '../utils/FormHelper';
 import './RequestCard.css';
 
 export default function RequestCard(props)  {
