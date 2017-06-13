@@ -50,8 +50,6 @@ class UserProfile extends Component {
                 <p>{purchase.meal.address}<br/>
                   {purchase.meal.city}, {purchase.meal.state} {purchase.meal.zipcode}
                 </p>
-                <CardTitle
-                  title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>Veiw Meal Details</Link>}/>
               </CardText>
             </Card>
           ))}
