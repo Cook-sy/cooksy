@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 
 import { getUserDetails, logout } from '../actions';
@@ -18,26 +18,48 @@ class NavBar extends Component {
       <div>
         <ul className="nav">
           {user.role === 'chef' &&
-            <li className="no-cursor">
+            <li className="chef-welcome">
               <Avatar src={user.image} size={30} style={style} />
               {user.user}
             </li>}
           {user.role === 'user' &&
-            <li className="no-cursor">Welcome {user.user} !</li>}
-          <li className="active"><Link to="/">Home</Link></li>
-          <li><Link to="/meals">Meals</Link></li>
+            <li className="user-welcome">Welcome {user.user} !</li>}
+          <li>
+            <NavLink activeClassName="selected" exact to="/">
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink activeClassName="selected" exact to="/meals">
+              Meals
+            </NavLink>
+          </li>
           {user.role === 'chef' &&
-            <li><Link to="/post-new-meal">New Meal</Link></li>}
+            <li>
+              <NavLink activeClassName="selected" exact to="/post-new-meal">
+                New Meal
+              </NavLink>
+            </li>}
           {user.role === 'chef' &&
-            <li><Link to="/request-form">New Request</Link></li>}
+            <li>
+              <NavLink activeClassName="selected" exact to="/request-form">
+                New Request
+              </NavLink>
+            </li>}
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
-            <Link to="/signup">Signup</Link>
+            <NavLink activeClassName="selected" exact to="/signup">
+              Signup
+            </NavLink>
           </li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
-            <Link to="/login">Login</Link>
+            <NavLink activeClassName="selected" exact to="/login">
+              Login
+            </NavLink>
           </li>
           <li className={`nav-auth ${user.user ? null : 'hidden'}`}>
-            <a onClick={this.props.logout}>Logout</a>
+            <a onClick={this.props.logout}>
+              Logout
+            </a>
           </li>
         </ul>
       </div>
@@ -51,4 +73,6 @@ function mapStateToProps({ auth }) {
   };
 }
 
-export default connect(mapStateToProps, { getUserDetails, logout })(NavBar);
+export default withRouter(
+  connect(mapStateToProps, { getUserDetails, logout })(NavBar)
+);
