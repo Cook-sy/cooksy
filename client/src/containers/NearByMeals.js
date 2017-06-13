@@ -126,50 +126,50 @@ class NearByMeals extends Component {
   }
 
   handleMarkerClick = (targetMarker) => {
-    this.setState({
-      markers: this.state.markers.map(marker => {
+    this.setState((prevState, props) => ({
+      markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
           return { ...marker, showInfo: true };
         }
         return { ...marker, showInfo: false };
       }),
       currentMarker: targetMarker
-    });
+    }));
   }
 
   handleMarkerClose = (targetMarker) => {
-    this.setState({
-      markers: this.state.markers.map(marker => {
+    this.setState((prevState, props) => ({
+      markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
           return { ...marker, showInfo: false };
         }
         return marker;
       }),
       currentMarker: null
-    });
+    }));
   }
 
   handleMarkerOver = (targetMarker) => {
-    this.setState({
-      markers: this.state.markers.map(marker => {
+    this.setState((prevState, props) => ({
+      markers: prevState.markers.map(marker => {
         if (marker === targetMarker) {
           return { ...marker, showInfo: true };
         }
         return marker;
       })
-    });
+    }));
   }
 
   handleMarkerOut = (targetMarker) => {
-    this.setState({
-      markers: this.state.markers.map(marker => {
+    this.setState((prevState, props) => ({
+      markers: prevState.markers.map(marker => {
         // Only remove the info window if it is not the current marker's info window
-        if (marker === targetMarker && !_.isEqual(targetMarker, this.state.currentMarker)) {
+        if (marker === targetMarker && !_.isEqual(targetMarker, prevState.currentMarker)) {
           return { ...marker, showInfo: false };
         }
         return marker;
       })
-    });
+    }));
   }
 
   render() {
@@ -192,6 +192,8 @@ class NearByMeals extends Component {
               <li
                 key={meal.id}
                 onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
+                onMouseEnter={() => this.handleMarkerOver(this.state.markers.find(marker => marker.id === meal.id))}
+                onMouseLeave={() => this.handleMarkerOut(this.state.markers.find(marker => marker.id === meal.id))}
               >
                 {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
               </li>
