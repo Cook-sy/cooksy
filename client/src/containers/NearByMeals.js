@@ -20,6 +20,8 @@ const GoogleMapWrapper = withGoogleMap(props => (
           key={index}
           position={marker.position}
           onClick={() => props.onMarkerClick(marker)}
+          onMouseOver={() => props.onMarkerOver(marker)}
+          onMouseOut={() => props.onMarkerOut(marker)}
         >
         {marker.showInfo && (
           <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>
@@ -66,7 +68,8 @@ class NearByMeals extends Component {
     super(props);
 
     this.state = {
-      markers: []
+      markers: [],
+      currentMarker: null
     };
   }
 
@@ -126,16 +129,11 @@ class NearByMeals extends Component {
     this.setState({
       markers: this.state.markers.map(marker => {
         if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: true,
-          };
+          return { ...marker, showInfo: true };
         }
-        return {
-          ...marker,
-          showInfo: false,
-        };
-      })
+        return { ...marker, showInfo: false };
+      }),
+      currentMarker: targetMarker
     });
   }
 
@@ -143,10 +141,31 @@ class NearByMeals extends Component {
     this.setState({
       markers: this.state.markers.map(marker => {
         if (marker === targetMarker) {
-          return {
-            ...marker,
-            showInfo: false,
-          };
+          return { ...marker, showInfo: false };
+        }
+        return marker;
+      }),
+      currentMarker: null
+    });
+  }
+
+  handleMarkerOver = (targetMarker) => {
+    this.setState({
+      markers: this.state.markers.map(marker => {
+        if (marker === targetMarker) {
+          return { ...marker, showInfo: true };
+        }
+        return marker;
+      })
+    });
+  }
+
+  handleMarkerOut = (targetMarker) => {
+    this.setState({
+      markers: this.state.markers.map(marker => {
+        // Only remove the info window if it is not the current marker's info window
+        if (marker === targetMarker && !_.isEqual(targetMarker, this.state.currentMarker)) {
+          return { ...marker, showInfo: false };
         }
         return marker;
       })
@@ -185,6 +204,8 @@ class NearByMeals extends Component {
             markers={this.state.markers}
             onMarkerClick={this.handleMarkerClick}
             onMarkerClose={this.handleMarkerClose}
+            onMarkerOver={this.handleMarkerOver}
+            onMarkerOut={this.handleMarkerOut}
           />
         </div>
       </div>
