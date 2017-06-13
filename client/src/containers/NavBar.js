@@ -23,7 +23,6 @@ class NavBar extends Component {
               {user.user}
             </li>}
           {user.role === 'user' &&
-<<<<<<< HEAD
             <li className="user-welcome">Welcome {user.user} !</li>}
           <li>
             <NavLink activeClassName="selected" exact to="/">
@@ -35,13 +34,11 @@ class NavBar extends Component {
               Meals
             </NavLink>
           </li>
-=======
             <li className="no-cursor">
               Welcome {user.user}!
             </li>}
           <li className="active"><Link to="/">Home</Link></li>
           <li><Link to="/meals">Meals</Link></li>
->>>>>>> (feat) Add user avatar to nav bar
           {user.role === 'chef' &&
             <li>
               <NavLink activeClassName="selected" exact to="/post-new-meal">
