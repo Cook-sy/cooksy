@@ -17,7 +17,6 @@ const rootReducer = combineReducers({
   upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
   purchase: PurchaseReducer,
-  upcomingMeals: UpcomingMealReducer,
   requests: RequestReducer
 });
 
