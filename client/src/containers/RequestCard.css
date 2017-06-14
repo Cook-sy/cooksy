@@ -1,19 +1,31 @@
 .num-required {
-	float: right;
+  float: right;
+}
+
+.num-ordered {
+  float: left;
 }
 
 .request-card {
-	width: 350px;
-	padding: 15px;
-	border: 2px rgb(0, 188, 212) solid;
-	margin-bottom: 30px;
+  width: 350px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 .request-buttons div {
-	text-align: center;
-	margin: 0 5px;
+  text-align: center;
+  margin: 0 5px;
 }
 
 .request-stat {
-	padding-top: 10px;
+  padding-top: 10px;
+}
+
+.created-by {
+  color: rgba(0, 0, 0, 0.541176);
+}
+
+.meal-name {
+  font-size: 1.5em;
+  color: rgb(0, 188, 212);
 }
