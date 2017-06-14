@@ -111,7 +111,7 @@ class NearByMeals extends Component {
               icon: defaultIcon,
               position: meal.location,
               showInfo: false,
-              infoContent: meal.name
+              infoContent: this.renderInfoContent(meal)
             }
           ));
           this.setState({markers});
@@ -258,6 +258,43 @@ class NearByMeals extends Component {
     } else {
       return '';
     }
+  }
+
+  renderInfoContent = (meal) => {
+    const styles = {
+      smallIcon: {
+        width: 12,
+        height: 12
+      },
+      small: {
+        width: 24,
+        height: 24,
+        padding: 4
+      },
+    };
+    return (
+      <p>
+        <Link
+          to={`/meals/${meal.id}`}
+          className="NearByMeals-meal-heading"
+        >
+          {meal.name}
+        </Link>
+
+        <Rating
+          value={Math.ceil(meal.rating)}
+          max={5}
+          readOnly={true}
+          itemStyle={styles.small}
+          itemIconStyle={styles.smallIcon}
+        />
+
+        <span className="NearByMeals-meal-chef">{meal.chef.username}</span>
+        <p className="NearByMeals-meal-address">
+          {`${meal.address}, ${meal.city}`}
+        </p>
+      </p>
+    );
   }
 
   render() {
