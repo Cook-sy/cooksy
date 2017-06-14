@@ -29,28 +29,28 @@ export function orderRequestedMeal(values) {
 }
 
 export function getChefsRequests(chefId) {
-	const request = axios.get(`/api/chefs/${chefId}/requests`);
+  const request = axios.get(`/api/chefs/${chefId}/requests`);
 
-	return {
-	  type: GET_CHEF_REQUESTS,
-	  payload: request
-	};
+  return {
+    type: GET_CHEF_REQUESTS,
+    payload: request
+  };
 }
 
 export function getUsersRequests(userId) {
-	const request = axios.get(`/api/users/${userId}/requests`);
+  const request = axios.get(`/api/users/${userId}/requests`);
 
-	return {
-	  type: GET_USER_REQUESTS,
-	  payload: request
-	};
+  return {
+    type: GET_USER_REQUESTS,
+    payload: request
+  };
 }
 
 export function getRequestById(requestId) {
-	const request = axios.get(`/api/chefs/requests/${requestId}`);
+  const request = axios.get(`/api/chefs/requests/${requestId}`);
 
-	return {
-	  type: GET_REQUEST_BY_ID,
-	  payload: request
-	};
+  return {
+    type: GET_REQUEST_BY_ID,
+    payload: request
+  };
 }
