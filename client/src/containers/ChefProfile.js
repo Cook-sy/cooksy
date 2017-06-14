@@ -5,7 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Rating } from 'material-ui-rating';
-import { fetchMealsByChef } from '../actions/index';
+import { fetchMealsByChef, fetchChefDetails } from '../actions/index';
 import HorizontalGrid from '../components/HorizontalGrid';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -14,6 +14,9 @@ import './ChefProfile.css';
 
 class ChefProfile extends Component {
   componentDidMount() {
+    console.log(this.props)
+    const { id } = this.props.match.params;
+    this.props.fetchChefDetails(id);
     this.props.fetchMealsByChef();
   }
 
@@ -31,11 +34,11 @@ class ChefProfile extends Component {
         <List>
           <ListItem
             disabled={true}
-            leftAvatar={<Avatar src={'http://www.onegoodshare.com/wp-content/uploads/miley-cyrus-funny-face.jpeg'} size={300} />}
+            leftAvatar={<Avatar src={chef.image} size={300} />}
           />
           <div className="chef-info">
-            <h3>{'chef'}</h3>
-            <Rating value={Math.ceil(4)} max={5} readOnly={true} />
+            <h3>{chef.username}</h3>
+            <Rating value={Math.ceil(chef.rating)} max={5} readOnly={true} />
             <RaisedButton className="request" label="Request a Meal" primary={true} />
           </div>
         </List>
@@ -53,11 +56,11 @@ class ChefProfile extends Component {
   }
 }
 
-function mapStateToProps({ meals }) {
+function mapStateToProps({ meals, chef }) {
   return {
     meals: meals,
-    chef: meals[0] && meals[0].chef
+    chef: chef
   };
 }
 
-export default connect(mapStateToProps, { fetchMealsByChef })(ChefProfile);
+export default connect(mapStateToProps, { fetchMealsByChef, fetchChefDetails })(ChefProfile);
