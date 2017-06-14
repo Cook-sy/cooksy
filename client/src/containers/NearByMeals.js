@@ -6,11 +6,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
-import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 import { Media } from 'react-bootstrap';
 import NearByMealsListItem from './NearByMealsListItem';
+import NearByMap from './NearByMap';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -19,61 +19,6 @@ import './NearByMeals.css';
 
 // eslint-disable-next-line
 const geocoder = new google.maps.Geocoder();
-
-const GoogleMapWrapper = withGoogleMap(props => (
-  <GoogleMap
-    ref={props.onMapLoad}
-    defaultZoom={14}
-    defaultCenter={{ lat: 37.783697, lng: -122.408966 }}
-  >
-    { props.markers.map((marker, index) => (
-        <Marker
-          key={index}
-          icon={marker.icon}
-          position={marker.position}
-          onClick={() => props.onMarkerClick(marker)}
-          onMouseOver={() => props.onMarkerOver(marker)}
-          onMouseOut={() => props.onMarkerOut(marker)}
-        >
-        {marker.showInfo && (
-          <InfoWindow onCloseClick={() => props.onMarkerClose(marker)}>
-            <div>{marker.infoContent}</div>
-          </InfoWindow>
-        )}
-        </Marker>
-      ))
-    }
-  </GoogleMap>
-));
-
-class NearByMap extends Component {
-  componentWillReceiveProps(nextProps) {
-    // Resize map to fit markers only if the markers has changed
-    if (this._map && !_.isEqual(_.map(this.props.markers, 'id'), _.map(nextProps.markers, 'id'))) {
-      // eslint-disable-next-line
-      let bounds = new google.maps.LatLngBounds();
-      nextProps.markers.forEach(function(marker) {
-        bounds.extend(marker.position);
-      });
-      this._map.fitBounds(bounds);
-    }
-  }
-
-  handleMapLoad = (map) => {
-    this._map = map;
-  }
-
-  render() {
-    return (
-      <GoogleMapWrapper
-        containerElement={<div style={{ height: '100%' }} />}
-        mapElement={<div style={{ height: '100%' }} />}
-        onMapLoad={this.handleMapLoad}
-        { ...this.props }
-      />
-    );
-  }
-}
 
 const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
 const selectedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
@@ -184,7 +129,7 @@ class NearByMeals extends Component {
       });
     }
     else {
-      alert('This Browser doesn\'t support HTML5 geolocation');
+      alert('This browser doesn\'t support HTML5 geolocation');
     }
   }
 
@@ -342,7 +287,7 @@ class NearByMeals extends Component {
               floatingLabelText="Zipcode"
               value={this.state.zipcode}
               onChange={this.handleInputChange}
-              style={{width: 125, marginRight: 10}}
+              style={{ width: 125, marginRight: 10 }}
             />
             <TextField
               name="radius"
@@ -350,7 +295,7 @@ class NearByMeals extends Component {
               floatingLabelText="Radius (miles)"
               value={this.state.radius}
               onChange={this.handleInputChange}
-              style={{width: 125, marginRight: 10}}
+              style={{ width: 125, marginRight: 10 }}
             />
 
             <IconButton
