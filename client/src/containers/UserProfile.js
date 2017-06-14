@@ -9,20 +9,29 @@ import {
 import _ from 'lodash';
 
 import { getPurchases } from '../actions/purchaseActions';
+import { getUsersRequests, orderRequestedMeal } from '../actions/requestActions';
+import RequestCard from './RequestCard';
 import './UserProfile.css';
 
 class UserProfile extends Component {
 
   componentDidMount() {
     this.props.getPurchases();
+    this.props.getUsersRequests();
   }
 
   render() {
+    const { purchase, requests } = this.props;
+
+    if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
+      return <div>loadding....</div>;
+    }
+
     return (
       <div className="flex-grid">
         <div className="col">
           <h1 className="purchase-title">Purchase History</h1>
-          {_.map(this.props.purchase, (purchase) => (
+          {_.map(purchase, (purchase) => (
             <Card
               key={purchase.id}
               className="purchase-card">
@@ -54,16 +63,31 @@ class UserProfile extends Component {
         </div>
         <div className="col">
           <h1 className="purchase-title">Requests</h1>
+          <div>
+          <Card>
+          {_.map(requests, (request) => (
+            <RequestCard
+              key={request.requestId}
+              requestId={request.requestId}
+              numRequired={request.request.numRequired}
+              numOrdered={request.request.numOrdered}
+              orderRequestedMeal={this.props.orderRequestedMeal}
+              deadline={request.request.deadline}
+            />
+          ))}
+          </Card>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ purchase, requests }) {
   return {
-    purchase: state.purchase
+    purchase: purchase,
+    requests: requests
   };
 }
 
-export default connect(mapStateToProps, { getPurchases })(UserProfile);
+export default connect(mapStateToProps, { getPurchases, getUsersRequests, orderRequestedMeal })(UserProfile);
