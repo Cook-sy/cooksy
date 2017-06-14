@@ -1,4 +1,4 @@
-import { GET_PURCHASES } from '../actions/purchaseActions';
+import { GET_PURCHASES } from '../actions';
 import _ from 'lodash';
 
 export default function(state = {}, action) {
