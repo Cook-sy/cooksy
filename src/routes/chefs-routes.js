@@ -73,8 +73,8 @@ router.get('/', function(req, res) {
 // Get a specific chef
 router.get('/:id', function(req, res) {
   return chefCtrl.getChef(req.params.id)
-    .then(function(chefs) {
-      return res.json(chefs);
+    .then(function(chef) {
+      return res.json(chef);
     });
 });
 

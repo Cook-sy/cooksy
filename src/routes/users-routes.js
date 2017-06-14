@@ -94,6 +94,15 @@ router.get('/', function(req, res) {
     });
 });
 
+// GET /api/users/:id
+// Get a specific user
+router.get('/:id', function(req, res) {
+  return userCtrl.getUser(req.params.id)
+    .then(function(user) {
+      return res.json(user);
+    });
+});
+
 // /api/users/login
 // Login for users
 router.post('/login', function(req, res, next) {

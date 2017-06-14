@@ -10,18 +10,6 @@ exports.createUser = function(body, username, password) {
   });
 };
 
-exports.findUser = function(userId) {
-  return db.User.findById(userId);
-};
-
-exports.findUserByUsername = function(username) {
-  return db.User.findOne({
-    where: {
-      username: username
-    }
-  });
-};
-
 var userInclude = [
   {
     model: db.ChefReview,
@@ -52,6 +40,25 @@ var userInclude = [
     ]
   }
 ];
+
+exports.findUser = function(userId) {
+  return db.User.findById(userId);
+};
+
+exports.getUser = function(userId) {
+  return db.User.findById(userId, {
+    attributes: { exclude: ['password'] },
+    include: userInclude
+  });
+};
+
+exports.findUserByUsername = function(username) {
+  return db.User.findOne({
+    where: {
+      username: username
+    }
+  });
+};
 
 exports.getUsers = function() {
   return db.User.findAll({
