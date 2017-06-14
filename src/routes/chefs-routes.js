@@ -69,15 +69,6 @@ router.get('/', function(req, res) {
     });
 });
 
-// GET /api/chefs/:id
-// Get a specific chef
-router.get('/:id', function(req, res) {
-  return chefCtrl.getChef(req.params.id)
-    .then(function(chef) {
-      return res.json(chef);
-    });
-});
-
 // POST /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {
@@ -294,6 +285,15 @@ router.delete('/requests/:id', isChef, function(req, res) {
         });
       });
   });
+});
+
+// GET /api/chefs/:id
+// Get a specific chef
+router.get('/:id', function(req, res) {
+  return chefCtrl.getChef(req.params.id)
+    .then(function(chef) {
+      return res.json(chef);
+    });
 });
 
 module.exports = router;
