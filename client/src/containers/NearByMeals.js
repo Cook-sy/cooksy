@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import Avatar from 'material-ui/Avatar';
 import TextField from 'material-ui/TextField';
 import IconButton from 'material-ui/IconButton';
 import ActionSearch from 'material-ui/svg-icons/action/search';
@@ -416,7 +417,10 @@ class NearByMeals extends Component {
 
                         <Media className="NearByMeals-meal-aux">
                           <Media.Left>
-                            <img height="36" src={meal.chef.image} alt={meal.chef.username} />
+                            <Avatar
+                               src={meal.chef.image}
+                               size={30}
+                             />
                           </Media.Left>
 
                           <Media.Body>
