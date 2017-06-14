@@ -356,7 +356,12 @@ class NearByMeals extends Component {
         <div className="NearByMeals-container">
           <div className="NearByMeals-resultsContainer">
             <Media.List>
-              { _.map(this.props.meals, meal => (
+              { _.size(this.props.meals) === 0
+                ? <div style={{ margin: 20 }}>
+                    <p>Sorry, no meals found around here!</p>
+                    <p>Try searching a zipcode.</p>
+                  </div>
+                : _.map(this.props.meals, meal => (
                   <Media.ListItem
                     key={meal.id}
                     className={this.highlightMeal(meal.id)}
@@ -431,7 +436,7 @@ class NearByMeals extends Component {
             onMarkerClose={this.handleMarkerClose}
             onMarkerOver={this.handleMarkerOver}
             onMarkerOut={this.handleMarkerOut}
-            />
+          />
         </div>
       </div>
         </div>
