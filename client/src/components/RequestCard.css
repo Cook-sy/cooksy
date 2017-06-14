@@ -23,9 +23,15 @@
 
 .created-by {
   color: rgba(0, 0, 0, 0.541176);
+  padding-left: 20px;
+  vertical-align: super;
 }
 
 .meal-name {
   font-size: 1.5em;
   color: rgb(0, 188, 212);
+}
+
+.request-card img {
+  vertical-align: bottom;
 }

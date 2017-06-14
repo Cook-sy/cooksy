@@ -1,8 +1,9 @@
 import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router-dom';
+
 import { differenceBetweenTwoDatesInDays } from '../utils/FormHelper';
 import './RequestCard.css';
 
@@ -12,6 +13,10 @@ export default function RequestCard(props) {
   return (
     <div className="request-card">
       <p className="meal-name">{props.meal.name}</p>
+      <Avatar
+        src={props.meal.chef.image}
+        size={30}
+      />
       <span className="created-by">by <b>{props.meal.chef.username}</b></span>
       <p>${props.meal.price}</p>
       <LinearProgress mode="determinate" value={ordersLeft} />

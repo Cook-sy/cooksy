@@ -6,9 +6,7 @@ import Carousel from 'nuka-carousel';
 import { connect } from 'react-redux';
 import { fetchUpcomingMeals } from '../actions/index';
 import HorizontalGrid from '../components/HorizontalGrid'
-
 import './Homepage.css';
-
 
 class Homepage extends Component {
   componentDidMount() {
