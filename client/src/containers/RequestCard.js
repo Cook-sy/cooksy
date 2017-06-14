@@ -33,7 +33,7 @@ export default function RequestCard(props) {
           icon={<i className="material-icons white">favorite</i>}
         />
         <RaisedButton
-          containerElement={<Link to={`/meals/${props.mealId}`} />}
+          containerElement={<Link to={`/meals/${props.meal.id}`} />}
           label={'Meal Details'}
           backgroundColor="rgb(0, 188, 212)"
         />
