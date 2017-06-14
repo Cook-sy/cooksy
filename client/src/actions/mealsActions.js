@@ -32,8 +32,34 @@ export function fetchMeals() {
 
 export function fetchMealsByChef() {
   const headers = attachTokenToTheHeader();
-
-  const request = axios.get('/api/chefs/meals', { headers: headers });
+  let mealStorage = {};
+  let time = [];
+  let request = axios.get('/api/chefs/meals', { headers: headers })
+    .then(function(meals) {
+      _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
+        time.push([date.getTime(), meal.deliveryDateTime.substr(0, 10)]);
+      });
+      time.sort(function(a, b) {
+        return a[0] - b[0];
+      });
+      _.map(time, (tuple) => {
+        if (Object.keys(mealStorage).length === 3) {
+          return;
+        };
+        if (!mealStorage[tuple[1]]) {
+          mealStorage[tuple[1]] = [];
+        };
+      });
+      _.map(meals.data, (meal) => {
+        for (var key in mealStorage) {
+          if (key === meal.deliveryDateTime.substr(0, 10)) {
+            mealStorage[key].push(meal);
+          };
+        };
+      });
+      return mealStorage;
+    });
 
   return {
     type: FETCH_MEALS_BY_CHEF,
