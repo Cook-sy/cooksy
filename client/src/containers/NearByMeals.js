@@ -183,7 +183,7 @@ class NearByMeals extends Component {
           showInfo: false
         };
       }),
-      currentMarkerId: targetMarker.id
+      currentMarkerId: targetMarker ? targetMarker.id : null
     }));
   }
 
@@ -214,7 +214,7 @@ class NearByMeals extends Component {
         }
         return marker;
       }),
-      hoverId: targetMarker.id
+      hoverId: targetMarker ? targetMarker.id : null
     }));
   }
 
