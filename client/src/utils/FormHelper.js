@@ -117,3 +117,12 @@ export const renderAutoComplete = ({ ...custom }) => {
     />  
   );
 }
+
+export function differenceBetweenTwoDatesInDays(end, start) {
+  var endDate = new Date(end);
+  var startDate = start && new Date(start) || new Date();
+  var timeDiff = Math.abs(startDate.getTime() - endDate.getTime());
+  var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+  return diffDays;
+}
