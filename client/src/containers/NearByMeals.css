@@ -3,8 +3,10 @@
 }
 
 .NearByMeals-resultsContainer {
-  position: relative;
+  position: fixed;
   width: 646px;
+  overflow: auto;
+  height: calc(100% - 216px);
 }
 
 .NearByMeals-mapView {
