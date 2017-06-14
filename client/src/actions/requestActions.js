@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import { attachTokenToTheHeader } from '../utils/RequestHelper';
+import { decodeToken } from '../utils/IsAuthenticated';
 
 export const CREATE_REQUEST = 'CREATE_REQUEST';
 export const ORDER_REQUESTED_MEAL = 'ORDER_REQUESTED_MEAL';
@@ -38,7 +39,8 @@ export function getChefsRequests(chefId) {
 }
 
 export function getUsersRequests(userId) {
-	const request = axios.get(`/api/users/${userId}/requests`);
+	const id = userId || decodeToken().sub;
+	const request = axios.get(`/api/users/${id}/requests`);
 
 	return {
 	  type: GET_USER_REQUESTS,
