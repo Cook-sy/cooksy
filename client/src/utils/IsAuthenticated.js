@@ -14,5 +14,5 @@ export function successfulAuth(token) {
 }
 
 export function deleteToken(tokenKey) {
-	localStorage.removeItem(tokenKey);
+  localStorage.removeItem(tokenKey);
 }

@@ -7,6 +7,7 @@ import ReviewReducer from './reviewReducer';
 import UpcomingMealReducer from './upcomingMealsReducer';
 import CurrentMealReducer from './CurrentMealReducer';
 import PurchaseReducer from './purchaseReducer';
+import RequestReducer from './RequestReducer';
 
 const rootReducer = combineReducers({
   meals: MealReducer,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   review: ReviewReducer,
   upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
-  purchase: PurchaseReducer
+  purchase: PurchaseReducer,
+  requests: RequestReducer
 });
 
 export default rootReducer;

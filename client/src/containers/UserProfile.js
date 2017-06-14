@@ -9,23 +9,32 @@ import {
 import _ from 'lodash';
 
 import { getPurchases } from '../actions/purchaseActions';
+import { getUsersRequests, orderRequestedMeal } from '../actions/requestActions';
+import RequestCard from './RequestCard';
 import './UserProfile.css';
 
 class UserProfile extends Component {
 
   componentDidMount() {
     this.props.getPurchases();
+    this.props.getUsersRequests();
   }
 
   render() {
+    const { purchase, requests } = this.props;
+
+    if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
+      return <div>loadding....</div>;
+    }
+
     return (
       <div className="flex-grid">
         <div className="col">
           <h1 className="purchase-title">Purchase History</h1>
-          {_.map(this.props.purchase, (purchase) => (
+          {_.map(purchase, (purchase) => (
             <Card
               key={purchase.id}
-              className="purchase-card">
+              className="card">
               <CardTitle
                 showExpandableButton={true}
                 title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
@@ -54,16 +63,33 @@ class UserProfile extends Component {
         </div>
         <div className="col">
           <h1 className="purchase-title">Requests</h1>
+          <div>
+          <Card className="card">
+            {_.map(requests, (request) => (
+              <Card key={request.requestId} >
+                <RequestCard
+                  requestId={request.requestId}
+                  numRequired={request.request.numRequired}
+                  numOrdered={request.request.numOrdered}
+                  orderRequestedMeal={this.props.orderRequestedMeal}
+                  deadline={request.request.deadline}
+                  meal={request.request.meal}
+                />
+              </Card>
+            ))}
+          </Card>
+          </div>
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ purchase, requests }) {
   return {
-    purchase: state.purchase
+    purchase: purchase,
+    requests: requests
   };
 }
 
-export default connect(mapStateToProps, { getPurchases })(UserProfile);
+export default connect(mapStateToProps, { getPurchases, getUsersRequests, orderRequestedMeal })(UserProfile);

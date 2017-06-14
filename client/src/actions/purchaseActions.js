@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import { attachTokenToTheHeader } from '../utils/RequestHelper';
-import { decodeToken as userDetails } from '../utils/IsAuthenticated';
 
 export const GET_PURCHASES = 'GET_PURCHASES';
 
