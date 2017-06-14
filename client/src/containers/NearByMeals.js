@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import IconButton from 'material-ui/IconButton';
+import ActionSearch from 'material-ui/svg-icons/action/search';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
 import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
@@ -13,7 +16,6 @@ import { getNearbyMeals, getUserDetails } from '../actions/index';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './NearByMeals.css';
-import SearchBar from './SearchBar';
 
 // eslint-disable-next-line
 const geocoder = new google.maps.Geocoder();
@@ -313,33 +315,43 @@ class NearByMeals extends Component {
 
     return (
       <div className="root">
-        <Link to="/meals">
-          <RaisedButton style={style} label="ALL Meals" />
-        </Link>
+        <div style={{ marginLeft: 20 }}>
+          <Link to="/meals">
+            <RaisedButton style={style} label="ALL Meals" />
+          </Link>
 
-        <Link to="/nearby-meals">
-          <RaisedButton style={style} label="Nearby Meals" primary={true} />
-        </Link>
+          <Link to="/nearby-meals">
+            <RaisedButton style={style} label="Nearby Meals" primary={true} />
+          </Link>
+        </div>
 
-        <SearchBar />
+        <div className="NearByMeals-search">
+          <form onSubmit={this.handleSubmit}>
+            <TextField
+              name="zipcode"
+              hintText="Zipcode"
+              floatingLabelText="Zipcode"
+              value={this.state.zipcode}
+              onChange={this.handleInputChange}
+              style={{width: 125, marginRight: 10}}
+            />
+            <TextField
+              name="radius"
+              hintText="Radius"
+              floatingLabelText="Radius (miles)"
+              value={this.state.radius}
+              onChange={this.handleInputChange}
+              style={{width: 125, marginRight: 10}}
+            />
 
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="zipcode"
-            value={this.state.zipcode}
-            onChange={this.handleInputChange}
-            placeholder="Zipcode"
-          />
-          <input
-            type="text"
-            name="radius"
-            value={this.state.radius}
-            onChange={this.handleInputChange}
-            placeholder="Radius (miles)"
-          />
-          <button type="submit">Submit</button>
-        </form>
+            <IconButton
+              tooltip="Search meals nearby"
+              type="submit"
+            >
+              <ActionSearch />
+            </IconButton>
+          </form>
+        </div>
 
         <div className="NearByMeals-container">
           <div className="NearByMeals-resultsContainer">
@@ -382,7 +394,7 @@ class NearByMeals extends Component {
 
                         <Media className="NearByMeals-meal-aux">
                           <Media.Left>
-                            <img height="36" src={meal.chef.image} />
+                            <img height="36" src={meal.chef.image} alt={meal.chef.username} />
                           </Media.Left>
 
                           <Media.Body>

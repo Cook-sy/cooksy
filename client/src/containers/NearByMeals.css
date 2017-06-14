@@ -6,17 +6,23 @@
   position: fixed;
   width: 646px;
   overflow: auto;
-  height: calc(100% - 216px);
+  height: calc(100% - 160px);
 }
 
 .NearByMeals-mapView {
   position: fixed;
-  top: 216px;
+  top: 40px;
   right: 0;
   bottom: 0;
   left: 646px;
   width: calc(100% - 646px);
-  height: calc(100% - 216px);
+  height: calc(100% - 40px);
+}
+
+.NearByMeals-search form {
+  text-align: left;
+  margin-left: 20px;
+  padding: 0;
 }
 
 .NearByMeals-hover-meal {
