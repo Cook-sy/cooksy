@@ -12,7 +12,9 @@ export default function RequestCard(props) {
   const countdown = differenceBetweenTwoDatesInDays(props.deadline);
   return (
     <div className="request-card">
-      <p className="meal-name">{props.meal.name}</p>
+      <div className="meal-name">
+        <Link to={`/meals/${props.meal.id}`} target="#" >{props.meal.name}</Link>
+      </div>
       <Avatar
         src={props.meal.chef.image}
         size={30}
@@ -36,11 +38,6 @@ export default function RequestCard(props) {
           label={'Request'}
           backgroundColor="rgb(0, 188, 212)"
           icon={<i className="material-icons white">favorite</i>}
-        />
-        <RaisedButton
-          containerElement={<Link to={`/meals/${props.meal.id}`} />}
-          label={'Meal Details'}
-          backgroundColor="rgb(0, 188, 212)"
         />
       </div>
     </div>

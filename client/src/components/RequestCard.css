@@ -27,11 +27,15 @@
   vertical-align: super;
 }
 
-.meal-name {
+.request-card a {
   font-size: 1.5em;
   color: rgb(0, 188, 212);
 }
 
 .request-card img {
   vertical-align: bottom;
+}
+
+.meal-name {
+  padding-bottom: 15px;
 }
