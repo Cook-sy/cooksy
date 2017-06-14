@@ -69,6 +69,15 @@ router.get('/', function(req, res) {
     });
 });
 
+// GET /api/chefs/:id
+// Get a specific chef
+router.get('/:id', function(req, res) {
+  return chefCtrl.getChef(req.params.id)
+    .then(function(chefs) {
+      return res.json(chefs);
+    });
+});
+
 // POST /api/chefs/login
 // Login for chefs
 router.post('/login', function(req, res, next) {

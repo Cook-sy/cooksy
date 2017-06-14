@@ -14,18 +14,6 @@ exports.createChef = function(body, username, password) {
   });
 };
 
-exports.findChef = function(userId) {
-  return db.Chef.findById(userId);
-};
-
-exports.findChefByUsername = function(username) {
-  return db.Chef.findOne({
-    where: {
-      username: username
-    }
-  });
-};
-
 var chefInclude = [
   {
     model: db.ChefReview,
@@ -56,6 +44,25 @@ var chefInclude = [
     ]
   }
 ];
+
+exports.findChef = function(userId) {
+  return db.Chef.findById(userId);
+};
+
+exports.getChef = function(userId) {
+  return db.Chef.findById(userId, {
+    attributes: { exclude: ['password'] },
+    include: chefInclude
+  });
+};
+
+exports.findChefByUsername = function(username) {
+  return db.Chef.findOne({
+    where: {
+      username: username
+    }
+  });
+};
 
 exports.getChefs = function() {
   return db.Chef.findAll({
