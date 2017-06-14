@@ -34,7 +34,7 @@ class UserProfile extends Component {
           {_.map(purchase, (purchase) => (
             <Card
               key={purchase.id}
-              className="purchase-card">
+              className="card">
               <CardTitle
                 showExpandableButton={true}
                 title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
@@ -64,17 +64,20 @@ class UserProfile extends Component {
         <div className="col">
           <h1 className="purchase-title">Requests</h1>
           <div>
-          <Card>
-          {_.map(requests, (request) => (
-            <RequestCard
-              key={request.requestId}
-              requestId={request.requestId}
-              numRequired={request.request.numRequired}
-              numOrdered={request.request.numOrdered}
-              orderRequestedMeal={this.props.orderRequestedMeal}
-              deadline={request.request.deadline}
-            />
-          ))}
+          <Card className="card">
+            {_.map(requests, (request) => (
+              <Card>
+                <RequestCard
+                  key={request.requestId}
+                  requestId={request.requestId}
+                  numRequired={request.request.numRequired}
+                  numOrdered={request.request.numOrdered}
+                  orderRequestedMeal={this.props.orderRequestedMeal}
+                  deadline={request.request.deadline}
+                  meal={request.request.meal}
+                />
+              </Card>
+            ))}
           </Card>
           </div>
         </div>
