@@ -18,7 +18,7 @@ export default function(state = {}, action) {
     case CREATE_REQUEST:
       return state;
     case ORDER_REQUESTED_MEAL:
-      return state;
+      return { ...state, [action.payload.data.request.requestId]: action.payload.data.request };
     default:
       return state;
   }
