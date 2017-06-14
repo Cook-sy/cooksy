@@ -94,15 +94,6 @@ router.get('/', function(req, res) {
     });
 });
 
-// GET /api/users/:id
-// Get a specific user
-router.get('/:id', function(req, res) {
-  return userCtrl.getUser(req.params.id)
-    .then(function(user) {
-      return res.json(user);
-    });
-});
-
 // /api/users/login
 // Login for users
 router.post('/login', function(req, res, next) {
@@ -175,33 +166,33 @@ router.post('/signup', function(req, res, next) {
 // Get all meals the user has purchased
 router.get('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.getPurchases(req.userId)
-  .then(function(meals) {
-    return res.json(meals);
-  })
-  .catch(function(err) {
-    return res.status(500).json({
-      success: false,
-      message: 'Please try again later',
-      error: err.message
+    .then(function(meals) {
+      return res.json(meals);
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
     });
-  });
 });
 
 // POST /api/users/purchases
 // Allow user to purchase a meal
 router.post('/purchases', isUser, function(req, res, next) {
   return purchaseCtrl.createPurchase(req.body, req.userId)
-  .then(function(purchase) {
-    mail.sendPurchase(purchase);
-    return res.status(200).json(purchase);
-  })
-  .catch(function(err) {
-    return res.status(500).json({
-      success: false,
-      message: 'Please try again later',
-      error: err.message
+    .then(function(purchase) {
+      mail.sendPurchase(purchase);
+      return res.status(200).json(purchase);
+    })
+    .catch(function(err) {
+      return res.status(500).json({
+        success: false,
+        message: 'Please try again later',
+        error: err.message
+      });
     });
-  });
 });
 
 // GET /api/users/purchases/:id
@@ -421,6 +412,15 @@ router.delete('/requests/:id', isUser, function(req, res) {
         });
       });
   });
+});
+
+// GET /api/users/:id
+// Get a specific user
+router.get('/:id', function(req, res) {
+  return userCtrl.getUser(req.params.id)
+    .then(function(user) {
+      return res.json(user);
+    });
 });
 
 module.exports = router;
