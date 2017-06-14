@@ -33,7 +33,7 @@ exports.getRequest = function(id) {
 
 exports.getUserRequests = function(userId) {
   return db.UserRequest.findAll({
-    where: { id: userId },
+    where: { userId: userId },
     include: userRequestInclude
   });
 };
