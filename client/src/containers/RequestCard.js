@@ -11,9 +11,12 @@ export default function RequestCard(props) {
   const countdown = differenceBetweenTwoDatesInDays(props.deadline);
   return (
     <div className="request-card">
+      <p className="meal-name">{props.meal.name}</p>
+      <span className="created-by">by <b>{props.meal.chef.username}</b></span>
+      <p>${props.meal.price}</p>
       <LinearProgress mode="determinate" value={ordersLeft} />
       <div className="request-stat">
-        <span>
+        <span className="num-ordered">
           {props.numOrdered} <i className="material-icons cyan">favorite</i>
         </span>
         <span className="num-required">
