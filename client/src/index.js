@@ -19,6 +19,7 @@ import ChefProfile from './containers/ChefProfile';
 import NavBar from './containers/NavBar.js';
 import RequestForm from './containers/RequestForm.js';
 import registerServiceWorker from './registerServiceWorker';
+import UserProfile from './containers/UserProfile';
 import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
@@ -38,6 +39,7 @@ ReactDOM.render(
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/login" component={LogInForm} />
             <Route exact path="/chef-profile" component={ChefProfile}/>
+            <PrivateRoute exact user='user'path="/user-profile" component={UserProfile}/>
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <PrivateRoute exact user='chef' path="/request-form" component={RequestForm}/>
           </Switch>

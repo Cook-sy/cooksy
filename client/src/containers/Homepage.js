@@ -58,5 +58,4 @@ function mapStateToProps(state) {
   };
 };
 
-
 export default connect(mapStateToProps, { fetchUpcomingMeals })(Homepage);

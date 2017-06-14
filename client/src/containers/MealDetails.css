@@ -31,3 +31,22 @@
 .hidden {
 	display: none;
 }
+
+.details-image {
+	width: 700px;
+}
+
+.delivery-date {
+	color: black;
+	font-size: 60px;
+	line-height: 0px;
+}
+
+.details-text {
+	font-size: 17px;
+}
+
+.details-titles {
+	color: rgb(0, 188, 212);
+	font-size: 2em;
+}
