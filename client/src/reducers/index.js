@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   review: ReviewReducer,
   upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
-  purchase: PurchaseReducer
+  purchase: PurchaseReducer,
   upcomingMeals: UpcomingMealReducer,
   requests: RequestReducer
 });
