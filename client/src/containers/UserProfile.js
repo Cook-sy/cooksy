@@ -66,9 +66,8 @@ class UserProfile extends Component {
           <div>
           <Card className="card">
             {_.map(requests, (request) => (
-              <Card>
+              <Card key={request.requestId} >
                 <RequestCard
-                  key={request.requestId}
                   requestId={request.requestId}
                   numRequired={request.request.numRequired}
                   numOrdered={request.request.numOrdered}
