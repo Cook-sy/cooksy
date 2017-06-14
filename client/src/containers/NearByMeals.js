@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -118,6 +119,12 @@ class NearByMeals extends Component {
           ));
           this.setState({markers});
         });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.currentMarkerId != this.state.currentMarkerId) {
+      ReactDOM.findDOMNode(this._node).scrollIntoView({block: "start", behavior: "smooth"});
     }
   }
 
@@ -313,6 +320,15 @@ class NearByMeals extends Component {
       },
     };
 
+    const createRef = (mealId) => {
+      const selected = mealId === this.state.currentMarkerId;
+      let ref = null;
+      if (selected) {
+        ref = el => this._node = el;
+      }
+      return ref;
+    };
+
     return (
       <div className="root">
         <div style={{ marginLeft: 20 }}>
@@ -365,6 +381,7 @@ class NearByMeals extends Component {
                   <Media.ListItem
                     key={meal.id}
                     className={this.highlightMeal(meal.id)}
+                    ref={createRef(meal.id)}
                   >
                     <Media
                       onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
