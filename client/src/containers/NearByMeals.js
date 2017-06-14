@@ -3,10 +3,15 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import { withGoogleMap, GoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 import { Media } from 'react-bootstrap';
+import moment from 'moment';
+import Truncate from 'react-truncate';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import './NearByMeals.css';
 import SearchBar from './SearchBar';
 
@@ -69,7 +74,7 @@ class NearByMap extends Component {
 }
 
 const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-const selectedIcon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+const selectedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
 class NearByMeals extends Component {
   constructor(props) {
@@ -246,17 +251,28 @@ class NearByMeals extends Component {
   }
 
   highlightMeal = (mealId) => {
-    if (this.state.hoverId === mealId) {
-      return { color: 'yellow' };
+    if (this.state.hoverId === mealId && this.state.currentMarkerId !== mealId) {
+      return 'NearByMeals-hover-meal';
     } else if (this.state.currentMarkerId === mealId) {
-      return { color: 'green' };
+      return 'NearByMeals-select-meal';
     } else {
-      return {};
+      return '';
     }
   }
 
   render() {
     const style = { marginRight: 8 };
+    const styles = {
+      smallIcon: {
+        width: 12,
+        height: 12
+      },
+      small: {
+        width: 24,
+        height: 24,
+        padding: 4
+      },
+    };
 
     return (
       <div className="root">
@@ -292,20 +308,66 @@ class NearByMeals extends Component {
           <div className="NearByMeals-resultsContainer">
             <Media.List>
               { _.map(this.props.meals, meal => (
-                  <Media.ListItem key={meal.id}>
+                  <Media.ListItem
+                    key={meal.id}
+                    className={this.highlightMeal(meal.id)}
+                  >
                     <Media
                       onClick={() => this.handleMarkerClick(this.state.markers.find(marker => marker.id === meal.id))}
                       onMouseEnter={() => this.handleMarkerOver(this.state.markers.find(marker => marker.id === meal.id))}
                       onMouseLeave={() => this.handleMarkerOut(this.state.markers.find(marker => marker.id === meal.id))}
-                      style={this.highlightMeal(meal.id)}
                       >
-                      <Media.Right>
-                        <img width="64" src={meal.images} alt={meal.name} />
-                      </Media.Right>
                       <Media.Body>
-                        <Media.Heading>{meal.name}</Media.Heading>
-                        {`${meal.name} - ${meal.chef.username} - ${meal.deliveryDateTime} - ${meal.distance}`}
+                        <Media.Heading>
+                          <Link
+                            to={`/meals/${meal.id}`}
+                            className="NearByMeals-meal-heading"
+                          >
+                            {meal.name}
+                          </Link>
+
+                          <span className="pull-right NearByMeals-meal-date">
+                            {moment(meal.deliveryDateTime).format('MMMM D, YYYY')}
+                          </span>
+                        </Media.Heading>
+
+                        <span>
+                          <Rating
+                            value={Math.ceil(meal.rating)}
+                            max={5}
+                            readOnly={true}
+                            itemStyle={styles.small}
+                            itemIconStyle={styles.smallIcon}
+                            style={{ display: 'inline' }}
+                            />
+                          <span className="pull-right NearByMeals-meal-price">${meal.price}</span>
+                        </span>
+
+                        <Media className="NearByMeals-meal-aux">
+                          <Media.Left>
+                            <img height="36" src={meal.chef.image} />
+                          </Media.Left>
+
+                          <Media.Body>
+                            <span className="NearByMeals-meal-chef">{meal.chef.username}</span>
+                            <p className="NearByMeals-meal-address">
+                              {`${meal.address}, ${meal.city}`}
+                            </p>
+                          </Media.Body>
+                        </Media>
+
+                        <Truncate
+                          className="NearByMeals-meal-desc"
+                          lines={2}
+                          ellipsis={<span>... <Link to={`/meals/${meal.id}`}>Read more</Link></span>}
+                        >
+                          {meal.description}
+                        </Truncate>
                       </Media.Body>
+
+                      <Media.Right>
+                        <img width="96" src={meal.images} alt={meal.name} className="img-rounded" />
+                      </Media.Right>
                     </Media>
                   </Media.ListItem>
                 ))

@@ -16,3 +16,66 @@
   width: calc(100% - 646px);
   height: calc(100% - 216px);
 }
+
+.NearByMeals-hover-meal {
+  background-color: #e0f7fa;
+}
+
+.NearByMeals-select-meal {
+  background-color: #b2ebf2;
+}
+
+li.media {
+  margin: 0;
+  border-top: 1px solid #ddd;
+}
+
+li.media:first-child {
+  border-top: none;
+}
+
+div.media {
+  padding: 10px 20px 10px 20px;
+}
+
+a.NearByMeals-meal-heading {
+  padding: 0;
+  color: #00bcd4;
+  font-size: 1.3em;
+}
+
+.NearByMeals-meal-date {
+  color: #e91e63;
+}
+
+.NearByMeals-select-meal a.NearByMeals-meal-heading {
+  color: #006064;
+}
+
+.NearByMeals-meal-chef {
+  padding-left: 0;
+}
+
+.NearByMeals-meal-chef, .NearByMeals-meal-address {
+  color: #a2a2a2;
+  font-size: 0.9em;
+}
+
+.NearByMeals-meal-desc a {
+  color: #e91e63;
+  padding-left: 0;
+  padding-bottom: 0;
+}
+
+div.media-right img {
+  margin-right: 0 !important;
+}
+
+.NearByMeals-meal-aux.media {
+  margin: 0;
+  padding: 0;
+}
+
+.NearByMeals-meal-aux.media img {
+  margin-right: 0 !important;
+}
