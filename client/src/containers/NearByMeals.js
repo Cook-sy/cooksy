@@ -3,14 +3,12 @@ import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import IconButton from 'material-ui/IconButton';
-import ActionSearch from 'material-ui/svg-icons/action/search';
 import { Rating } from 'material-ui-rating';
 import _ from 'lodash';
 import { Media } from 'react-bootstrap';
+import NearByMap from './NearByMap'
 import NearByMealsListItem from './NearByMealsListItem';
-import NearByMap from './NearByMap';
+import NearBySearch from './NearBySearch';
 
 import { getNearbyMeals, getUserDetails } from '../actions/index';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -279,33 +277,12 @@ class NearByMeals extends Component {
           </Link>
         </div>
 
-        <div className="NearByMeals-search">
-          <form onSubmit={this.handleSubmit}>
-            <TextField
-              name="zipcode"
-              hintText="Zipcode"
-              floatingLabelText="Zipcode"
-              value={this.state.zipcode}
-              onChange={this.handleInputChange}
-              style={{ width: 125, marginRight: 10 }}
-            />
-            <TextField
-              name="radius"
-              hintText="Radius"
-              floatingLabelText="Radius (miles)"
-              value={this.state.radius}
-              onChange={this.handleInputChange}
-              style={{ width: 125, marginRight: 10 }}
-            />
-
-            <IconButton
-              tooltip="Search meals nearby"
-              type="submit"
-            >
-              <ActionSearch />
-            </IconButton>
-          </form>
-        </div>
+        <NearBySearch
+          radius={this.state.radius}
+          zipcode={this.state.zipcode}
+          handleSubmit={this.handleSubmit}
+          handleInputChange={this.handleInputChange}
+        />
 
         <div className="NearByMeals-container">
           <div className="NearByMeals-resultsContainer">
