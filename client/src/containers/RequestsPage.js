@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
-import RaisedButton from 'material-ui/RaisedButton';
+import { GridList } from 'material-ui/GridList';
 import _ from 'lodash';
 
 import RequestCard from '../components/RequestCard';
-import SearchBar from './SearchBar';
 import { getUsersRequests, orderRequestedMeal } from '../actions';
 import './MealList.css';
 
@@ -17,7 +13,6 @@ class MealList extends Component {
   }
 
   render() {
-    const style = { marginRight: 8 };
 
     return (
       <div className="root">

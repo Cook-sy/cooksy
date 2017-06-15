@@ -1,7 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
-import { Rating } from 'material-ui-rating';
 
 import RequestCard from './RequestCard';
 

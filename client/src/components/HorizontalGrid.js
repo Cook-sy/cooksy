@@ -1,8 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
-import { Rating } from 'material-ui-rating';
+import { GridList } from 'material-ui/GridList';
 
 const HorizontalGrid = ({ gridObject, GridComponent, ...rest }) => {
   return (
