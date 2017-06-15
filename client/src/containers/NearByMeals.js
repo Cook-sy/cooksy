@@ -254,7 +254,6 @@ class NearByMeals extends Component {
 
   render() {
     const style = { marginRight: 8 };
-
     // Get a reference to the node of the meal in the list that is currently selected
     const createRef = (mealId) => {
       const selected = mealId === this.state.currentMarkerId;
@@ -292,7 +291,7 @@ class NearByMeals extends Component {
                     <p>Sorry, no meals found around here!</p>
                     <p>Try searching a zipcode.</p>
                   </div>
-                : _.map(this.props.meals, meal => (
+                : _.map(_.sortBy(this.props.meals, ['deliveryDateTime']), meal => (
                     <NearByMealsListItem
                       key={meal.id}
                       ref={createRef(meal.id)}
