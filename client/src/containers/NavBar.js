@@ -28,7 +28,7 @@ class NavBar extends Component {
         <ul className="navibar">
           <li>
             <NavLink activeClassName="selected" exact to="/">
-              CookSY
+              <span className="navibar-logo">Cooksy</span>
             </NavLink>
           </li>
           <li>

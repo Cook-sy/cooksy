@@ -11,6 +11,13 @@
   -moz-box-shadow:0px 2px 1px rgba(50, 50, 50, 0.22);
   box-shadow:0px 2px 1px rgba(50, 50, 50, 0.22);
 }
+
+.navibar-logo {
+  font-family: "Rochester";
+  font-size: 24px;
+  line-height: 16px;
+}
+
 .navibar li {
   height: 37px;
   text-align:center;
