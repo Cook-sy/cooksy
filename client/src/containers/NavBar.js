@@ -6,8 +6,18 @@ import Avatar from 'material-ui/Avatar';
 import { getUserDetails, logout } from '../actions';
 import './NavBar.css';
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
+  }
   componentWillMount() {
     this.props.getUserDetails();
+  }
+
+  logout() {
+    this.props.history.push('/login');
+    this.props.logout();
   }
 
   render() {
@@ -63,7 +73,7 @@ class NavBar extends Component {
             </NavLink>
           </li>
           <li className={`nav-auth ${user.user ? null : 'hidden'}`}>
-            <a onClick={this.props.logout}>
+            <a onClick={this.logout}>
               Logout
             </a>
           </li>
