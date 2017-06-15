@@ -7,10 +7,8 @@ import {
   toggleReview,
   didReview
 } from '../actions';
-import { Link } from 'react-router-dom';
 import {
   Card,
-  CardActions,
   CardHeader,
   CardMedia,
   CardTitle,
@@ -18,7 +16,6 @@ import {
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
-import Carousel from 'nuka-carousel';
 import moment from 'moment';
 
 import ReviewForm from './ReviewForm';
