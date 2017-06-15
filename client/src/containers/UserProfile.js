@@ -38,7 +38,7 @@ class UserProfile extends Component {
               <CardTitle
                 showExpandableButton={true}
                 title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
-                subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
+                subtitle={<Link to={`/chefs-profile/${purchase.meal.chef.id}`} style={{color:'blue', textDecoration: 'none'}} target="#" >by <b>{purchase.meal.chef.username}</b></Link>}
               >
                 <p>${purchase.individualPrice}<br/>
                   Quantity ordered: {purchase.num}<br/>

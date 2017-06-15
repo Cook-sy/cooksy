@@ -46,7 +46,9 @@ export default class RequestCard extends Component {
         <div className="meal-name">
           <Link to={`/meals/${meal.id}`} target="#">{meal.name}</Link>
         </div>
-        <Avatar src={meal.chef.image} size={30} />
+        <Link to={`/chefs-profile/${meal.chef.id}`} target="#" >
+          <Avatar src={meal.chef.image} size={30} />
+        </Link>
         <span className="created-by">by <b>{meal.chef.username}</b></span>
         <p>${meal.price}</p>
         <LinearProgress mode="determinate" value={ordersLeft} />
