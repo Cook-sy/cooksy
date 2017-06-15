@@ -16,8 +16,9 @@ import SignUpForm from './containers/SignUpForm';
 import PrivateRoute from './utils/PrivateRoute'
 import LogInForm from './containers/LogInForm';
 import ChefProfile from './containers/ChefProfile';
-import NavBar from './containers/NavBar.js';
-import RequestForm from './containers/RequestForm.js';
+import NavBar from './containers/NavBar';
+import NearByMeals from './containers/NearByMeals';
+import RequestForm from './containers/RequestForm';
 import registerServiceWorker from './registerServiceWorker';
 import UserProfile from './containers/UserProfile';
 import './index.css';
@@ -35,6 +36,7 @@ ReactDOM.render(
           <Switch>
             <Route exact path="/" component={Homepage} />
             <Route exact path="/meals" component={MealList} />
+            <Route exact path="/nearby-meals" component={NearByMeals} />
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/login" component={LogInForm} />

@@ -50,13 +50,13 @@ export function fetchMealDetail(id) {
   };
 }
 
-export function getNearbyMeals(zipcode) {
-  const request = axios.get(`/api/meals/?zip=${zipcode}&radius=36`);
+export function getNearbyMeals(zipcode, radius = 29000) {
+  const request = axios.get(`/api/meals/?zip=${zipcode}&radius=${radius}`);
 
   return {
     type: GET_NEAR_BY_MEALS,
     payload: request
-  }
+  };
 }
 
 export function fetchMealsByDate(date) {
@@ -108,4 +108,3 @@ export function fetchUpcomingMeals() {
     payload: request
   };
 };
-

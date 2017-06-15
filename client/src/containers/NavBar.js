@@ -16,7 +16,7 @@ class NavBar extends Component {
 
     return (
       <div>
-        <ul className="nav">
+        <ul className="navibar">
           {user.role === 'chef' &&
             <li className="chef-welcome">
               <Avatar src={user.image} size={30} style={style} />
