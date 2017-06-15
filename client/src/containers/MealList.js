@@ -43,7 +43,7 @@ class MealList extends Component {
             <GridTile
               key={meal.id}
               title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
-              subtitle={<span>by <b>{meal.chef.username}</b></span>}
+              subtitle={<Link to={`/chefs-profile/${meal.chef.id}`} target="#" >by <b>{meal.chef.username}</b></Link>}
               actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
               <div className="date-wrapper">
