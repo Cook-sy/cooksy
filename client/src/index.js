@@ -16,6 +16,7 @@ import SignUpForm from './containers/SignUpForm';
 import PrivateRoute from './utils/PrivateRoute'
 import LogInForm from './containers/LogInForm';
 import ChefProfile from './containers/ChefProfile';
+import RequestsPage from './containers/RequestsPage';
 import NavBar from './containers/NavBar';
 import NearByMeals from './containers/NearByMeals';
 import RequestForm from './containers/RequestForm';
@@ -41,6 +42,7 @@ ReactDOM.render(
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/login" component={LogInForm} />
             <Route exact path="/chef-profile" component={ChefProfile}/>
+            <Route exact path="/requests-page" component={RequestsPage}/>
             <PrivateRoute exact user='user'path="/user-profile" component={UserProfile}/>
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />
             <PrivateRoute exact user='chef' path="/request-form" component={RequestForm}/>
