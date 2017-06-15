@@ -27,16 +27,9 @@ class NavBar extends Component {
     return (
       <div>
         <ul className="navibar">
-          {user.role === 'chef' &&
-            <li className="chef-welcome">
-              <Avatar src={user.image} size={30} style={style} />
-              {user.user}
-            </li>}
-          {user.role === 'user' &&
-            <li className="user-welcome">Welcome {user.user} !</li>}
           <li>
             <NavLink activeClassName="selected" exact to="/">
-              Home
+              Coo
             </NavLink>
           </li>
           <li>
@@ -77,6 +70,13 @@ class NavBar extends Component {
               Logout
             </a>
           </li>
+          {user.role === 'chef' &&
+            <li className="chef-welcome">
+              <Avatar src={user.image} size={30} style={style} />
+              {user.user}
+            </li>}
+          {user.role === 'user' &&
+            <li className="user-welcome">Welcome {user.user} !</li>}
         </ul>
       </div>
     );
