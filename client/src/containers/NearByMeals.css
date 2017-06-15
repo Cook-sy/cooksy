@@ -1,3 +1,7 @@
+.NearByMeals-root {
+  margin-top: 20px;
+}
+
 .NearByMeals-container {
   width: 100%;
 }
@@ -12,7 +16,7 @@
 
 .NearByMeals-mapView {
   position: fixed;
-  top: 40px;
+  top: 37px;
   right: 0;
   bottom: 0;
   left: 646px;

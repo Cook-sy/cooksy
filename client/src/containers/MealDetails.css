@@ -30,7 +30,7 @@
 }
 
 .reviewer {
-  color: #AD1457;
+  color: #ad1457;
 }
 
 .review-time {
@@ -39,7 +39,7 @@
 
 .review-rating button:first-child {
   padding-left: 0 !important;
-  width: 24px !important;
+  width: 30px !important;
 }
 
 .show {

@@ -110,14 +110,16 @@ class MealDetails extends Component {
 
               <div className="col-sm-4">
                 <table className="pull-right">
-                  <tr>
-                    <td className="text-right details-info-label">Price:</td>
-                    <td className="details-price details-info">${currentMeal.price}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-right details-info-label">Remaining:</td>
-                    <td className="details-info">{currentMeal.servings - currentMeal.numOrdered <= 0 ? 0 : currentMeal.servings - currentMeal.numOrdered}</td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td className="text-right details-info-label">Price:</td>
+                      <td className="details-price details-info">${currentMeal.price}</td>
+                    </tr>
+                    <tr>
+                      <td className="text-right details-info-label">Remaining:</td>
+                      <td className="details-info">{currentMeal.servings - currentMeal.numOrdered <= 0 ? 0 : currentMeal.servings - currentMeal.numOrdered}</td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -132,20 +134,22 @@ class MealDetails extends Component {
             <div className="row">
               <div className="col-sm-7">
                 <table>
-                  <tr>
-                    <td className="text-right details-info-label">Time:</td>
-                    <td className="details-datetime">{moment(currentMeal.deliveryDateTime).format('h:mm a')}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-right details-info-label">Date:</td>
-                    <td className="details-datetime">{moment(currentMeal.deliveryDateTime).format('dddd, MMMM D, YYYY')}</td>
-                  </tr>
-                  <tr>
-                    <td className="text-right details-info-label">Address:</td>
-                    <td className="details-datetime">
-                      {`${currentMeal.address}, ${currentMeal.city}, ${currentMeal.state} ${currentMeal.zipcode}`}
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td className="text-right details-info-label">Time:</td>
+                      <td className="details-datetime">{moment(currentMeal.deliveryDateTime).format('h:mm a')}</td>
+                    </tr>
+                    <tr>
+                      <td className="text-right details-info-label">Date:</td>
+                      <td className="details-datetime">{moment(currentMeal.deliveryDateTime).format('dddd, MMMM D, YYYY')}</td>
+                    </tr>
+                    <tr>
+                      <td className="text-right details-info-label">Address:</td>
+                      <td className="details-datetime">
+                        {`${currentMeal.address}, ${currentMeal.city}, ${currentMeal.state} ${currentMeal.zipcode}`}
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
 
                 <p className="details-pickup-extra">

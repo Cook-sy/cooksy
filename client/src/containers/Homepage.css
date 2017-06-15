@@ -5,25 +5,20 @@
     src: url('https://fonts.google.com/specimen/Rochester?selection.family=Rochester'); /*URL to font*/
 }
 
-h2 {
-  font-family: "Rochester";
-  font-size: 68px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  line-height: 19px;
+.homepage-upcoming {
+  color: #00bcd4;
+  text-align: center;
+  margin-top: 40px;
 }
 
-#date {
-  color: rgb(0, 188, 212);
-  margin-right: auto;
-  margin-left: 20px;
-  font-family: "Rochester";
-  font-size: 40px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: bold;
-  line-height: 19px;
+.homepage-requests {
+  display: flex;
+  justify-content: space-around;
+}
+
+.homepage-date {
+  color: #e91e63;
+  font-size: 24px;
 }
 
 .root-homepage {
@@ -86,4 +81,62 @@ h2 {
   font-variant: normal;
   font-weight: bold;
   line-height: 19px;
+}
+
+.homepage-hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('https://greatist.com/sites/default/files/SlowCooker-Pork-Ramen_0.jpg');
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 610px;
+  top: 0;
+  z-index: -10;
+}
+
+.homepage-hero-inner {
+  text-align: center;
+  position: absolute;
+  top: 325px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.homepage-name {
+  font-family: "Rochester";
+  color: #fff;
+  font-size: 84px;
+  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.4);
+}
+
+.homepage-hero-btn {
+  margin-top: 60px;
+}
+
+.homepage-meals {
+  width: 960px;
+  margin: 40px auto;
+  top: 650px;
+}
+
+.homepage-meal-upcoming {
+  display: flex;
+  /*flex-wrap: wrap;*/
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.homepage-meal-item {
+  width: 300px;
+  min-width: 300px;
+  margin: 10px;
+}
+
+.homepage-meal-item-image {
+  height: 150px;
+  object-fit: cover;
+}
+
+a.homepage-meal-item-name {
+  color: #00bcd4 !important;
 }
