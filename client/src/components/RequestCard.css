@@ -29,7 +29,7 @@
 
 .request-card a {
   font-size: 1.5em;
-  color: rgb(0, 188, 212);
+  color: rgb(0, 188, 212) !important;
 }
 
 .request-card img {
