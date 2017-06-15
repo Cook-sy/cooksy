@@ -22,6 +22,7 @@ class MealList extends Component {
         >
           {_.map(this.props.requests, (request) => (
             <RequestCard
+              key={request.requestId}
               requestId={request.requestId}
               numRequired={request.request.numRequired}
               numOrdered={request.request.numOrdered}
