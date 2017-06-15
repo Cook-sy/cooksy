@@ -1,45 +1,81 @@
-import React from 'react';
+import React, { Component } from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 import RaisedButton from 'material-ui/RaisedButton';
 import Avatar from 'material-ui/Avatar';
 import { Link } from 'react-router-dom';
 
+import MaterialUIDialog from '../components/Dialog';
 import { differenceBetweenTwoDatesInDays } from '../utils/FormHelper';
 import './RequestCard.css';
 
-export default function RequestCard(props) {
-  const ordersLeft = props.numOrdered / props.numRequired * 100;
-  const countdown = differenceBetweenTwoDatesInDays(props.deadline);
-  return (
-    <div className="request-card">
-      <div className="meal-name">
-        <Link to={`/meals/${props.meal.id}`} target="#" >{props.meal.name}</Link>
+export default class RequestCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false
+    };
+
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  handleOpen() {
+    this.setState({ open: true });
+  }
+
+  handleClose() {
+    const num = document.getElementById('quantity').value || 1;
+    const requestId = this.props.requestId;
+    this.props.orderRequestedMeal({ num, requestId });
+    this.setState({ open: false });
+  }
+
+  handleCancel() {
+    this.setState({ open: false });
+  }
+
+  render() {
+    const { numOrdered, numRequired, deadline, meal } = this.props;
+    const ordersLeft = numOrdered / numRequired * 100;
+    const countdown = differenceBetweenTwoDatesInDays(deadline);
+
+    return (
+      <div className="request-card">
+        <div className="meal-name">
+          <Link to={`/meals/${meal.id}`} target="#">{meal.name}</Link>
+        </div>
+        <Avatar src={meal.chef.image} size={30} />
+        <span className="created-by">by <b>{meal.chef.username}</b></span>
+        <p>${meal.price}</p>
+        <LinearProgress mode="determinate" value={ordersLeft} />
+        <div className="request-stat">
+          <span className="num-ordered">
+            {numOrdered} <i className="material-icons cyan">favorite</i>
+          </span>
+          <span className="num-required">
+            {numRequired} <i className="material-icons cyan">restaurant</i>
+          </span>
+        </div>
+        <p>Countdown: {countdown} Days</p>
+        <div className="request-buttons">
+          <RaisedButton
+            onTouchTap={this.handleOpen}
+            label={'Request'}
+            backgroundColor="rgb(0, 188, 212)"
+            icon={<i className="material-icons white">favorite</i>}
+          />
+          <MaterialUIDialog
+            handleCancel={this.handleCancel}
+            handleOpen={this.handleOpen}
+            handleClose={this.handleClose}
+            title="Please confirm your purchase"
+            isOpen={this.state.open}
+            price={meal.price}
+          />
+        </div>
       </div>
-      <Avatar
-        src={props.meal.chef.image}
-        size={30}
-      />
-      <span className="created-by">by <b>{props.meal.chef.username}</b></span>
-      <p>${props.meal.price}</p>
-      <LinearProgress mode="determinate" value={ordersLeft} />
-      <div className="request-stat">
-        <span className="num-ordered">
-          {props.numOrdered} <i className="material-icons cyan">favorite</i>
-        </span>
-        <span className="num-required">
-          {props.numRequired} <i className="material-icons cyan">restaurant</i>
-        </span>
-      </div>
-      <p>Countdown: {countdown} Days</p>
-      <div className="request-buttons">
-        <RaisedButton
-          onClick={() =>
-            props.orderRequestedMeal({ num: 1, requestId: props.requestId })}
-          label={'Request'}
-          backgroundColor="rgb(0, 188, 212)"
-          icon={<i className="material-icons white">favorite</i>}
-        />
-      </div>
-    </div>
-  );
+    );
+  }
 }
