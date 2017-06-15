@@ -21,7 +21,6 @@ class MealList extends Component {
   }
 
   render() {
-    //const style = { marginRight: 8 };
 
     return (
       <div>
