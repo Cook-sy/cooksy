@@ -4,7 +4,7 @@ import _ from 'lodash';
 import Carousel from 'nuka-carousel';
 
 import { connect } from 'react-redux';
-import { fetchUpcomingMeals, getUsersRequests } from '../actions';
+import { fetchUpcomingMeals, getUsersRequests, orderRequestedMeal } from '../actions';
 import HorizontalGrid from '../components/HorizontalGrid';
 import MealGridElement from '../components/MealGridElement';
 import RequestGridElement from '../components/RequestGridElement';
@@ -45,7 +45,7 @@ class Homepage extends Component {
           <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg" alt="Tacos"/>
         </Carousel>
         {Object.keys(topRequests).length > 0 && 
-          <HorizontalGrid gridObject={topRequests} GridComponent={RequestGridElement}/>
+          <HorizontalGrid orderRequestedMeal={this.props.orderRequestedMeal} gridObject={topRequests} GridComponent={RequestGridElement}/>
         }
         <br />
         {dates.length !== 0 && _.map(dates, (date) => (
@@ -66,4 +66,4 @@ function mapStateToProps({ requests, upcomingMeals }) {
   };
 };
 
-export default connect(mapStateToProps, { fetchUpcomingMeals, getUsersRequests })(Homepage);
+export default connect(mapStateToProps, { fetchUpcomingMeals, getUsersRequests, orderRequestedMeal })(Homepage);
