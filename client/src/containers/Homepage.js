@@ -8,6 +8,7 @@ import { fetchUpcomingMeals, getUsersRequests } from '../actions';
 import HorizontalGrid from '../components/HorizontalGrid';
 import MealGridElement from '../components/MealGridElement';
 import RequestGridElement from '../components/RequestGridElement';
+import { getTopRequests } from '../utils/RequestHelper';
 import './Homepage.css';
 
 class Homepage extends Component {
@@ -18,7 +19,8 @@ class Homepage extends Component {
 
   render() {
     const { upcomingMeals, requests } = this.props;
-    console.log(requests)
+    const topRequests = requests && getTopRequests(requests, 3);
+    
     let dates = Object.keys(upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
@@ -42,8 +44,8 @@ class Homepage extends Component {
           <img src="https://halfoff.adspayusa.com/wp-content/uploads/2017/04/sushi_and_sashimi_for_two.0.jpg" alt="Sushi"/>
           <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg" alt="Tacos"/>
         </Carousel>
-        {Object.keys(requests).length > 0 && 
-            <HorizontalGrid gridObject={requests} GridComponent={RequestGridElement}/>
+        {Object.keys(topRequests).length > 0 && 
+          <HorizontalGrid gridObject={topRequests} GridComponent={RequestGridElement}/>
         }
         <br />
         {dates.length !== 0 && _.map(dates, (date) => (
