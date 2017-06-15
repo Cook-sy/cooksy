@@ -3,6 +3,7 @@
 }
 
 .NearByMeals-resultsContainer {
+  background-color: #fff;
   position: fixed;
   width: 646px;
   overflow: auto;

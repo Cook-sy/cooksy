@@ -76,12 +76,11 @@ class MealDetails extends Component {
             </p>
           </CardHeader>
 
-          <CardMedia className="details-image">
+          <CardMedia>
             <img
+              className="details-image"
               src={currentMeal.images}
               alt={currentMeal.name}
-              width="500"
-              height="500"
             />
           </CardMedia>
 
@@ -201,7 +200,7 @@ class MealDetails extends Component {
                     <p>
                       <span className="review-title">{review.title}</span>
                       <span className="pull-right review-time">
-                        <time title={moment(review.createdAt).format('lll')} datetime={review.createdAt}>
+                        <time title={moment(review.createdAt).format('lll')} dateTime={review.createdAt}>
                           {moment(review.createdAt).fromNow()}
                         </time>
                       </span>
