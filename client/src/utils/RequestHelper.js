@@ -6,7 +6,7 @@ export function attachTokenToTheHeader() {
   return {'x-access-token': `Bearer ${token}`};
 }
 
-export function getTopRequests(requests, num = 3) {
-  return _.orderBy(requests, ['request.deadline'], ['asc'])
+export function getTopRequests(requests, num = 3, category = 'request.deadline') {
+  return _.orderBy(requests, [category], ['asc'])
   .slice(0, num);
 } 
