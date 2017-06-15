@@ -14,7 +14,6 @@ class Map extends Component {
 
   componentDidMount() {
     this.getCoordinates(`${this.props.address}, ${this.props.city}, ${this.props.state}`)
-    this.setState({zoom: 16})
   }
 
 
@@ -23,25 +22,22 @@ class Map extends Component {
     geocoder.geocode({address: address}, function (results, status) {
       if (status === "OK") {
         let coordObj = results[0].geometry.location;
-        coordinates = ({lat:coordObj.lat(), lng:coordObj.lng()})
+        coordinates = ({ lat: coordObj.lat(), lng: coordObj.lng() })
         this.setState({location: coordinates})
       }
     }.bind(this))
   }
 
   render() {
-    const markers = this.props.markers || []
     if (this.state.location === null) {
       return <div>Loading...</div>
     }
     return (
       <GoogleMap
         defaultZoom={this.state.zoom}
-        defaultCenter={ this.state.location }>
-        {markers.map((marker, index) => (
-            <Marker />
-          )
-        )}
+        defaultCenter={this.state.location}
+      >
+        { this.state.location && <Marker position={this.state.location} /> }
       </GoogleMap>
     )
   }

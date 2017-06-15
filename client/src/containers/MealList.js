@@ -35,7 +35,7 @@ class MealList extends Component {
         </div>
 
         <GridList
-          cellHeight={180}
+          cellHeight={305}
           className="grid-list"
         >
           <Subheader>List of Meals</Subheader>
@@ -46,7 +46,12 @@ class MealList extends Component {
               subtitle={<span>by <b>{meal.chef.username}</b></span>}
               actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
-              <img src={meal.images} alt="meal list"/>
+              <div className="date-wrapper">
+                <img src={meal.images} alt="meal list"/>
+                <div className="date-description">
+                  <p className="date-content">{new Date(meal.deliveryDateTime).toString().substr(0, 15)}</p>
+                </div>
+              </div>
             </GridTile>
           ))}
         </GridList>
