@@ -9,3 +9,29 @@
   height: 450px;
   overflow-y: 'auto';
 }
+
+.date-wrapper {
+  float: left;
+  position: relative;
+}
+
+.date-description {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background-color: rgb(0, 188, 212);
+  color: white;
+  opacity: 0.8;
+  filter: alpha(opacity=60);
+}
+
+.date-content {
+  padding: 10px;
+  margin: 0px;
+  color: black;
+  font-family: "Rochester";
+  font-size: 30px;
+  font-weight: normal;
+  line-height: 10px;
+}

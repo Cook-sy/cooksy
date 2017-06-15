@@ -18,6 +18,7 @@ import {
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
+import Carousel from 'nuka-carousel';
 
 import ReviewForm from './ReviewForm';
 import './MealDetails.css';
@@ -32,7 +33,7 @@ class MealDetails extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.props.fetchMealDetail(id);
+    console.log(this.props.fetchMealDetail(id));
   }
 
   addReview() {
@@ -52,13 +53,14 @@ class MealDetails extends Component {
 
     return (
       <div onLoad={this.didReview}>
-        <Card>
+        <Card className="details-card">
           <CardHeader
             title={currentMeal.chef.username}
             subtitle="Chef"
             avatar={currentMeal.chef.image}
           />
           <CardMedia
+            className="details-image"
             overlay={
               <CardTitle
                 title={currentMeal.name}
@@ -73,24 +75,6 @@ class MealDetails extends Component {
               height="500"
             />
           </CardMedia>
-          <CardTitle title="Meal Details" subtitle="Description" />
-          <CardText>
-            {currentMeal.description}
-          </CardText>
-          <CardTitle subtitle="Pickup Information" />
-          <CardText>
-            <p>{currentMeal.pickupInfo}</p>
-            <p>{`${currentMeal.address}, ${currentMeal.city}, ${currentMeal.state} ${currentMeal.zipcode}`}</p>
-            <div style={{width:300, height:300}}>
-              <Map
-                address={currentMeal.address}
-                city={currentMeal.city}
-                state={currentMeal.state}
-                containerElement={<div style={{height: `100%`}} />}
-                mapElement={<div style={{height: `100%`}} />}
-              />
-            </div>
-          </CardText>
           <CardActions>
             <RaisedButton label="Purchase" />
             <RaisedButton
@@ -103,22 +87,62 @@ class MealDetails extends Component {
                 </Link>
               }
             />
-            {!review.didReview && <RaisedButton  label="Add a review" onClick={this.addReview} /> }
           </CardActions>
         </Card>
-        <ReviewForm id={this.props.match.params.id} />
-        <div className="reviews">
-          {review.currentReviews.reverse().map(review =>
-            <div className="review" key={review.id}>
-              <div>
-                <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
+        <div className="flex-grid">
+          <div className="col">
+            <CardText>
+              <p className="details-titles">Pickup information:</p>
+              <p className="details-text">Food will be availabe for pick up at {new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(0, 5) +
+                new Date(currentMeal.deliveryDateTime).toLocaleTimeString().substr(8, 10)}
+              </p>
+              <p className="details-text">{currentMeal.pickupInfo}</p>
+              <p className="details-text">
+                {currentMeal.address}<br/>
+                {currentMeal.city}, {currentMeal.state}<br/>
+                {currentMeal.zipcode}
+              </p>
+              <div style={{width:400, height:400}}>
+                <Map
+                  address={currentMeal.address}
+                  city={currentMeal.city}
+                  state={currentMeal.state}
+                  containerElement={<div style={{height: `100%`}} />}
+                  mapElement={<div style={{height: `100%`}} />}
+                />
               </div>
-              <p className="review-title">{review.title}</p>
-              <p className="review-text">{review.review}</p>
-              <p className="reviewer">{review.user.username}</p>
-            </div>
-          )}
+            </CardText>
+          </div>
+          <div className="col">
+            <Rating className="review" value={currentMeal && Math.ceil(currentMeal.rating)} max={5} readOnly={true} />
+            <CardText>
+              <p className="details-titles">Available On:</p>
+              <p className="delivery-date">{new Date(currentMeal.deliveryDateTime).toString().substr(4, 11)}
+              </p>
+            </CardText>
+            <CardText>
+              <p className="details-titles">Meal Description:</p>
+              <p className="details-text">{currentMeal.description}</p>
+            </CardText>
+          </div>
         </div>
+        <div>
+          <RaisedButton className="details-button" label="Purchase" />
+          {!review.didReview && <RaisedButton label="Add a review" onClick={this.addReview} /> }
+        </div>
+        <ReviewForm id={this.props.match.params.id} />
+          <div className="reviews">
+            {review.currentReviews.reverse().map(review =>
+              <div className="review" key={review.id}>
+                <div>
+                  <Rating value={Math.ceil(review.rating)} max={5} readOnly={true} />
+                </div>
+                <p className="review-title">{review.title}</p>
+                <p className="review-text">{review.review}</p>
+                <p className="reviewer">{review.user.username}</p>
+              </div>
+            )}
+          </div>
       </div>
     );
   }

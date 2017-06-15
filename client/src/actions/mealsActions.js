@@ -80,7 +80,7 @@ export function fetchUpcomingMeals() {
     .then(function(meals) {
       _.map(meals.data, (meal) => {
         let date = new Date(meal.deliveryDateTime);
-        time.push([date.getTime(), meal.deliveryDateTime.substr(0, 10)]);
+        time.push([date.getTime(), date.toString().substr(0, 10)]);
       });
       time.sort(function(a, b) {
         return a[0] - b[0];
@@ -94,8 +94,9 @@ export function fetchUpcomingMeals() {
         };
       });
       _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
         for (var key in mealStorage) {
-          if (key === meal.deliveryDateTime.substr(0, 10)) {
+          if (key === date.toString().substr(0, 10)) {
             mealStorage[key].push(meal);
           };
         };
