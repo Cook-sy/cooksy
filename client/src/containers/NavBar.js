@@ -1,36 +1,38 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 
 import { getUserDetails, logout } from '../actions';
 import './NavBar.css';
 class NavBar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.logout = this.logout.bind(this);
+  }
   componentWillMount() {
     this.props.getUserDetails();
+  }
+
+  logout() {
+    this.props.history.push('/login');
+    this.props.logout();
   }
 
   render() {
     const { auth: { user } } = this.props;
     const style = { margin: 5 };
-
     return (
       <div>
         <ul className="navibar">
-          {user.role === 'chef' &&
-            <li className="chef-welcome">
-              <Avatar src={user.image} size={30} style={style} />
-              {user.user}
-            </li>}
-          {user.role === 'user' &&
-            <li className="user-welcome">Welcome {user.user} !</li>}
           <li>
             <NavLink activeClassName="selected" exact to="/">
-              Home
+              CookSY
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="selected" exact to="/meals">
+            <NavLink activeClassName="selected" exact to="/nearby-meals">
               Meals
             </NavLink>
           </li>
@@ -63,10 +65,19 @@ class NavBar extends Component {
             </NavLink>
           </li>
           <li className={`nav-auth ${user.user ? null : 'hidden'}`}>
-            <a onClick={this.props.logout}>
+            <a onClick={this.logout}>
               Logout
             </a>
           </li>
+          {user.role === 'chef' &&
+            <li className="chef-welcome">
+              <Link to={`/chefs-profile/${user.sub}`} >
+                <Avatar src={user.image} size={30} style={style} />
+              </Link>
+              {user.user}
+            </li>}
+          {user.role === 'user' &&
+            <li className="user-welcome">Welcome {user.user} !</li>}
         </ul>
       </div>
     );
