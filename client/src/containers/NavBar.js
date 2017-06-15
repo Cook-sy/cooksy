@@ -29,7 +29,7 @@ class NavBar extends Component {
         <ul className="navibar">
           <li>
             <NavLink activeClassName="selected" exact to="/">
-              Coo
+              CookSY
             </NavLink>
           </li>
           <li>

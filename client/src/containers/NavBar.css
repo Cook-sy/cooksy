@@ -49,7 +49,7 @@ selected {
 li img {
   vertical-align: -webkit-baseline-middle;
   margin-right: 20px !important;
-  margin-top: 2.5px !important;
+  margin-top: -0.5px !important;
 }
 
 .chef-welcome {
