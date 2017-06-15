@@ -4,19 +4,22 @@ import _ from 'lodash';
 import Carousel from 'nuka-carousel';
 
 import { connect } from 'react-redux';
-import { fetchUpcomingMeals } from '../actions/index';
-import HorizontalGrid from '../components/HorizontalGrid'
+import { fetchUpcomingMeals, getUsersRequests } from '../actions';
+import HorizontalGrid from '../components/HorizontalGrid';
+import MealGridElement from '../components/MealGridElement';
+import RequestGridElement from '../components/RequestGridElement';
 import './Homepage.css';
 
 class Homepage extends Component {
   componentDidMount() {
-
+    this.props.getUsersRequests(1)
     this.props.fetchUpcomingMeals();
-
   }
 
   render() {
-    let dates = Object.keys(this.props.upcomingMeals).sort(function(a, b) {
+    const { upcomingMeals, requests } = this.props;
+    console.log(requests)
+    let dates = Object.keys(upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
     return (
@@ -39,10 +42,14 @@ class Homepage extends Component {
           <img src="https://halfoff.adspayusa.com/wp-content/uploads/2017/04/sushi_and_sashimi_for_two.0.jpg" alt="Sushi"/>
           <img src="https://static1.squarespace.com/static/53f3f136e4b0124220e8333e/t/54110606e4b0e5bb93d5efa6/1410401799249/tacos+on+a+tray.jpg" alt="Tacos"/>
         </Carousel>
+        {Object.keys(requests).length > 0 && 
+            <HorizontalGrid gridObject={requests} GridComponent={RequestGridElement}/>
+        }
+        <br />
         {dates.length !== 0 && _.map(dates, (date) => (
           <div>
             <p id="date">{new Date(date).toString().substr(0, 15)}</p>
-            <HorizontalGrid key={date} meals={this.props.upcomingMeals[date]}/>
+            <HorizontalGrid key={date} gridObject={upcomingMeals[date]} GridComponent={MealGridElement}/>
           </div>
         ))}
       </div>
@@ -50,10 +57,11 @@ class Homepage extends Component {
   };
 };
 
-function mapStateToProps(state) {
+function mapStateToProps({ requests, upcomingMeals }) {
   return {
-    upcomingMeals: state.upcomingMeals
+    upcomingMeals,
+    requests
   };
 };
 
-export default connect(mapStateToProps, { fetchUpcomingMeals })(Homepage);
+export default connect(mapStateToProps, { fetchUpcomingMeals, getUsersRequests })(Homepage);
