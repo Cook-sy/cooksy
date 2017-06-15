@@ -35,3 +35,8 @@
   font-weight: normal;
   line-height: 10px;
 }
+
+.un-linkify {
+  color: white; 
+  textDecoration: none;
+}

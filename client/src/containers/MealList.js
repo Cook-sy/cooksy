@@ -42,8 +42,8 @@ class MealList extends Component {
           {_.map(this.props.meals, (meal) => (
             <GridTile
               key={meal.id}
-              title={<Link to={`/meals/${meal.id}`} style={{color:'white', textDecoration: 'none'}}>{meal.name}</Link>}
-              subtitle={<Link to={`/chefs-profile/${meal.chef.id}`} target="#" >by <b>{meal.chef.username}</b></Link>}
+              title={<Link to={`/meals/${meal.id}`} className="un-linkify" >{meal.name}</Link>}
+              subtitle={<Link to={`/chefs-profile/${meal.chef.id}`} target="#" className="un-linkify" >by <b>{meal.chef.username}</b></Link>}
               actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
               <div className="date-wrapper">
