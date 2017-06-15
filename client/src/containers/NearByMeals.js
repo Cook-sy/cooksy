@@ -265,7 +265,7 @@ class NearByMeals extends Component {
     };
 
     return (
-      <div className="root">
+      <div className="NearByMeals-root">
         <div style={{ marginLeft: 20 }}>
           <Link to="/meals">
             <RaisedButton style={style} label="ALL Meals" />
