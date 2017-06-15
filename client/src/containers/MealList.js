@@ -34,6 +34,7 @@ class MealList extends Component {
                 <RaisedButton label="Nearby Meals" />
               </Link>
           </div>
+
           <div className="pull-right col-md-3">
             <SearchBar />
           </div>
@@ -52,9 +53,11 @@ class MealList extends Component {
             >
                 <div className="date-wrapper">
                   <img src={meal.images} alt="meal list"/>
+
                   <div className="pull-right date-description">
                     <Badge className="date-badge" pill>{moment(meal.deliveryDateTime).format('MMMM D, YYYY')}</Badge>
                   </div>
+
                   <div className="city-description">
                     <Badge className="city-badge" pill>{meal.city}, {meal.state}</Badge>
                   </div>
