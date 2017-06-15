@@ -78,3 +78,7 @@ li a {
 .selected {
   background-color:rgba(255,255,255,.2);
 }
+
+.chef-welcome a {
+  padding: 0;
+}

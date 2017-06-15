@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Link } from 'react-router-dom';
 import Avatar from 'material-ui/Avatar';
 
 import { getUserDetails, logout } from '../actions';
@@ -23,7 +23,6 @@ class NavBar extends Component {
   render() {
     const { auth: { user } } = this.props;
     const style = { margin: 5 };
-
     return (
       <div>
         <ul className="navibar">
@@ -72,7 +71,9 @@ class NavBar extends Component {
           </li>
           {user.role === 'chef' &&
             <li className="chef-welcome">
-              <Avatar src={user.image} size={30} style={style} />
+              <Link to={`/chefs-profile/${user.sub}`} >
+                <Avatar src={user.image} size={30} style={style} />
+              </Link>
               {user.user}
             </li>}
           {user.role === 'user' &&
