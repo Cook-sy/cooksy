@@ -7,6 +7,7 @@ export default function(state = {}, action) {
     case GET_PURCHASES:
       return _.mapKeys(action.payload.data, 'id');
     case POST_PURCHASE:
+    console.log(action.payload)
       return _.mapKeys(action.payload)
     default:
       return state;

@@ -17,6 +17,7 @@ export function getPurchases() {
 }
 
 export function postPurchaseDetails(values) {
+  const headers = attachTokenToTheHeader();
   const request = axios.post('/api/users/purchases', values, { headers: headers });
 
   return {
