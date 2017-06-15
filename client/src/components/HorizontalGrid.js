@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
 import { Rating } from 'material-ui-rating';
 
-const HorizontalGrid = ({ gridObject, GridComponent }) => {
+const HorizontalGrid = ({ gridObject, GridComponent, ...rest }) => {
   return (
     <GridList
       cellHeight={200}
@@ -12,7 +12,7 @@ const HorizontalGrid = ({ gridObject, GridComponent }) => {
       cols={2.2}
     >
       {_.map(gridObject, (gridItem) => (
-        <GridComponent gridItem={gridItem} />
+        <GridComponent gridItem={gridItem} {...rest} />
       ))}
     </GridList>
   );
