@@ -62,11 +62,21 @@ class Homepage extends Component {
         </div>
 
         <div className="homepage-meals">
-          { Object.keys(topRequests).length > 0 &&
-            <HorizontalGrid orderRequestedMeal={this.props.orderRequestedMeal} gridObject={topRequests} GridComponent={RequestGridElement}/>
-          }
+          <h2 className="homepage-upcoming">Hot Requests</h2>
+
+          <div className="homepage-requests">
+            { Object.keys(topRequests).length > 0 && _.map(topRequests, (req) => (
+                <RequestGridElement
+                  gridItem={req}
+                  orderRequestedMeal={this.props.orderRequestedMeal}
+                />
+              ))
+            }
+          </div>
 
           <br />
+
+          <h2 className="homepage-upcoming">Upcoming Meals</h2>
 
           { dates.length !== 0 && _.map(dates, (date) => (
             <div key={date}>
