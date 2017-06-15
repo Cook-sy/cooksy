@@ -49,9 +49,9 @@ class Homepage extends Component {
         }
         <br />
         {dates.length !== 0 && _.map(dates, (date) => (
-          <div>
+          <div key={date}>
             <p id="date">{new Date(date).toString().substr(0, 15)}</p>
-            <HorizontalGrid key={date} gridObject={upcomingMeals[date]} GridComponent={MealGridElement}/>
+            <HorizontalGrid gridObject={upcomingMeals[date]} GridComponent={MealGridElement}/>
           </div>
         ))}
       </div>
