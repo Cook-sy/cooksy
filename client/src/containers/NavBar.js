@@ -40,7 +40,7 @@ class NavBar extends Component {
             </NavLink>
           </li>
           <li>
-            <NavLink activeClassName="selected" exact to="/meals">
+            <NavLink activeClassName="selected" exact to="/nearby-meals">
               Meals
             </NavLink>
           </li>
