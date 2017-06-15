@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
+import { Badge } from 'reactstrap';
+import moment from 'moment';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import _ from 'lodash';
 
 import { fetchMeals, getUserDetails } from '../actions/index';
@@ -18,27 +21,29 @@ class MealList extends Component {
   }
 
   render() {
-    const style = { marginRight: 8 };
+    //const style = { marginRight: 8 };
 
     return (
-      <div className="root">
-        <Link to="/meals">
-          <RaisedButton style={style} label="ALL Meals" primary={true} />
-        </Link>
+      <div>
+        <div className="row">
+          <div className="col-md-9 meals-buttons">
+            <Link to="/meals">
+              <RaisedButton label="ALL Meals" primary={true} />
+            </Link>
 
-        <Link to="/nearby-meals">
-          <RaisedButton style={style} label="Nearby Meals" />
-        </Link>
-
-        <div>
-          <SearchBar />
+              <Link className="nearby-button" to="/nearby-meals">
+                <RaisedButton label="Nearby Meals" />
+              </Link>
+          </div>
+          <div className="pull-right col-md-3">
+            <SearchBar />
+          </div>
         </div>
 
         <GridList
-          cellHeight={305}
-          className="grid-list"
+          cellHeight={325}
+          className="meal-grid-list"
         >
-          <Subheader>List of Meals</Subheader>
           {_.map(this.props.meals, (meal) => (
             <GridTile
               key={meal.id}
@@ -46,12 +51,15 @@ class MealList extends Component {
               subtitle={<Link to={`/chefs-profile/${meal.chef.id}`} target="#" className="un-linkify" >by <b>{meal.chef.username}</b></Link>}
               actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
             >
-              <div className="date-wrapper">
-                <img src={meal.images} alt="meal list"/>
-                <div className="date-description">
-                  <p className="date-content">{new Date(meal.deliveryDateTime).toString().substr(0, 15)}</p>
+                <div className="date-wrapper">
+                  <img src={meal.images} alt="meal list"/>
+                  <div className="pull-right date-description">
+                    <Badge className="date-badge" pill>{moment(meal.deliveryDateTime).format('MMMM D, YYYY')}</Badge>
+                  </div>
+                  <div className="city-description">
+                    <Badge className="city-badge" pill>{meal.city}, {meal.state}</Badge>
+                  </div>
                 </div>
-              </div>
             </GridTile>
           ))}
         </GridList>

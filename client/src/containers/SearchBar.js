@@ -39,7 +39,7 @@ class SearchBar extends Component {
           onChange={this.handleChange}
         />
         <span>
-          <RaisedButton onClick={this.onFormSubmit}>Submit</RaisedButton>
+          <RaisedButton className="submit-date" onClick={this.onFormSubmit} label="Submit"></RaisedButton>
         </span>
       </div>
     )
