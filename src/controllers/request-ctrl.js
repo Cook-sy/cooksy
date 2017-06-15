@@ -20,6 +20,12 @@ exports.getRequest = function(id) {
   });
 };
 
+exports.getRequests = function() {
+  return db.Request.findAll({
+    include: requestInclude
+  });
+};
+
 exports.getChefRequests = function(chefId) {
   return db.Request.findAll({
     include: [

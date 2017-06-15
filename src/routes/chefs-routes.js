@@ -233,6 +233,15 @@ router.get('/:id/requests', function(req, res) {
     });
 });
 
+// GET /api/chefs/requests
+// Get all requests created by all chefs
+router.get('/requests', function(req, res) {
+  return requestCtrl.getRequests()
+    .then(function(requests) {
+      return res.status(200).json(requests);
+    });
+});
+
 // POST /api/chefs/requests
 // Create a request for a specific chef
 router.post('/requests', isChef, function(req, res) {
