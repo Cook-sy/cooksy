@@ -78,10 +78,12 @@ class NearByMealsListItem extends Component {
 
             <Media className="NearByMeals-meal-aux">
               <Media.Left>
-                <Avatar
-                   src={meal.chef.image}
-                   size={30}
-                 />
+                 <Link to={`/chefs-profile/${meal.chef.id}`} target="#" >
+                    <Avatar
+                       src={meal.chef.image}
+                       size={30}
+                    />
+                 </Link>
               </Media.Left>
 
               <Media.Body>

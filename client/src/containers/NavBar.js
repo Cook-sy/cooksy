@@ -71,7 +71,7 @@ class NavBar extends Component {
           </li>
           {user.role === 'chef' &&
             <li className="chef-welcome">
-              <Link to={`/chefs-profile/${user.sub}`} >
+              <Link to={`/chefs-profile/${user.sub}`} target="#" >
                 <Avatar src={user.image} size={30} style={style} />
               </Link>
               {user.user}
