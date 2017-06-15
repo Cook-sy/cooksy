@@ -10,7 +10,7 @@ import _ from 'lodash';
 
 import { getPurchases } from '../actions/purchaseActions';
 import { getUsersRequests, orderRequestedMeal } from '../actions/requestActions';
-import RequestCard from './RequestCard';
+import RequestCard from '../components/RequestCard';
 import './UserProfile.css';
 
 class UserProfile extends Component {
