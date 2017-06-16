@@ -22,9 +22,9 @@ class UserProfile extends Component {
 
   render() {
     const { purchase, requests } = this.props;
-
+    
     if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
-      return <div>loadding....</div>;
+      return <div>loading....</div>;
     }
 
     return (
@@ -38,7 +38,7 @@ class UserProfile extends Component {
               <CardTitle
                 showExpandableButton={true}
                 title={<Link to={`/meals/${purchase.meal.id}`} style={{color:'blue', textDecoration: 'none'}}>{purchase.meal.name}, {new Date(purchase.createdAt).toString().substr(4, 11)}</Link>}
-                subtitle={<span>by <b>{purchase.meal.chef.username}</b></span>}
+                subtitle={<Link to={`/chefs-profile/${purchase.meal.chef.id}`} style={{color:'blue', textDecoration: 'none'}} target="#" >by <b>{purchase.meal.chef.username}</b></Link>}
               >
                 <p>${purchase.individualPrice}<br/>
                   Quantity ordered: {purchase.num}<br/>
@@ -69,11 +69,11 @@ class UserProfile extends Component {
               <Card key={request.requestId} >
                 <RequestCard
                   requestId={request.requestId}
-                  numRequired={request.request.numRequired}
-                  numOrdered={request.request.numOrdered}
+                  numRequired={request.numRequired || request.request.numRequired}
+                  numOrdered={request.numOrdered || request.request.numOrdered}
                   orderRequestedMeal={this.props.orderRequestedMeal}
-                  deadline={request.request.deadline}
-                  meal={request.request.meal}
+                  deadline={request.deadline || request.request.deadline}
+                  meal={request.meal || request.request.meal}
                 />
               </Card>
             ))}
