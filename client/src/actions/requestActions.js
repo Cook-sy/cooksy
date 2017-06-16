@@ -8,6 +8,7 @@ export const ORDER_REQUESTED_MEAL = 'ORDER_REQUESTED_MEAL';
 export const GET_CHEF_REQUESTS = 'GET_CHEF_REQUESTS';
 export const GET_USER_REQUESTS = 'GET_USER_REQUESTS';
 export const GET_REQUEST_BY_ID = 'GET_REQUEST_BY_ID';
+export const GET_ALL_REQUESTS = 'GET_ALL_REQUESTS';
 
 export function createRequest(values) {
   const headers = attachTokenToTheHeader();
@@ -53,6 +54,15 @@ export function getRequestById(requestId) {
 
   return {
     type: GET_REQUEST_BY_ID,
+    payload: request
+  };
+}
+
+export function getAllRequests() {
+  const request = axios.get('/api/chefs/requests');
+
+  return {
+    type: GET_ALL_REQUESTS,
     payload: request
   };
 }

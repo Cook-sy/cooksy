@@ -41,6 +41,7 @@ class MealDetails extends Component {
     super(props);
     this.addReview = this.addReview.bind(this);
     this.didReview = this.didReview.bind(this);
+    this.visitChefProfile = this.visitChefProfile.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +57,11 @@ class MealDetails extends Component {
     this.props.didReview(this.props.currentMeal);
   }
 
+  visitChefProfile() {
+    const chefId = this.props.currentMeal.chef.id;
+    this.props.history.push(`/chefs-profile/${chefId}`)
+  }
+
   render() {
     const { currentMeal, review } = this.props;
 
@@ -66,10 +72,12 @@ class MealDetails extends Component {
     return (
       <div onLoad={this.didReview} className="details-root">
         <Card className="details-card">
-          <CardHeader
+          <CardHeader 
+            onClick={this.visitChefProfile}
             title={currentMeal.chef.username}
             subtitle="Chef"
             avatar={currentMeal.chef.image}
+            style={{cursor: 'pointer'}}
           >
             <p className="details-date-heading pull-right">
               {moment(currentMeal.deliveryDateTime).format('dddd, MMMM D, YYYY')}

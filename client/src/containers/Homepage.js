@@ -12,7 +12,7 @@ import {
 } from 'material-ui/Card';
 
 import { connect } from 'react-redux';
-import { fetchUpcomingMeals, getUsersRequests, orderRequestedMeal } from '../actions';
+import { fetchUpcomingMeals, getAllRequests, orderRequestedMeal } from '../actions';
 import RequestGridElement from '../components/RequestGridElement';
 import { getTopRequests } from '../utils/RequestHelper';
 import './Homepage.css';
@@ -31,14 +31,14 @@ const styles = {
 
 class Homepage extends Component {
   componentDidMount() {
-    this.props.getUsersRequests(1)
+    this.props.getAllRequests();
     this.props.fetchUpcomingMeals();
   }
 
   render() {
     const { upcomingMeals, requests } = this.props;
     const topRequests = requests && getTopRequests(requests, 3);
-
+    console.log(topRequests)
     let dates = Object.keys(upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
@@ -142,4 +142,4 @@ function mapStateToProps({ requests, upcomingMeals }) {
   };
 };
 
-export default connect(mapStateToProps, { fetchUpcomingMeals, getUsersRequests, orderRequestedMeal })(Homepage);
+export default connect(mapStateToProps, { fetchUpcomingMeals, getAllRequests, orderRequestedMeal })(Homepage);

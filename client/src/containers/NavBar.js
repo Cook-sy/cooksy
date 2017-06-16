@@ -54,6 +54,11 @@ class NavBar extends Component {
                 My Profile
               </NavLink>
             </li>}
+          <li>
+            <NavLink activeClassName="selected" exact to="/requests-page">
+              Requests
+            </NavLink>
+          </li>
           <li className={`nav-auth ${!user.user ? null : 'hidden'}`}>
             <NavLink activeClassName="selected" exact to="/signup">
               Signup

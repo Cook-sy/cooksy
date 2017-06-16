@@ -9,7 +9,7 @@ const MealGridElement = function({ gridItem }) {
     className="tile"
     key={gridItem.name}
     title={<Link to={`/meals/${gridItem.id}`} style={{color:'white', textDecoration: 'none'}}>{gridItem.name}</Link>}
-    subtitle={<span>by <b>{gridItem.chef.username}</b></span>}
+    subtitle={<Link to={`/chefs-profile/${gridItem.chef.id}`} target="#" className="un-linkify" >by <b>{gridItem.chef.username}</b></Link>}
     actionIcon={<Rating value={Math.ceil(gridItem.rating)} max={5} readOnly={true} />}
   >
     <img src={gridItem.images} alt={gridItem.name}/>

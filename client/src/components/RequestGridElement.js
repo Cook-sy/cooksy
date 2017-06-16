@@ -5,12 +5,12 @@ import RequestCard from './RequestCard';
 const RequestGridElement = function({ gridItem, orderRequestedMeal }) {
   return (
     <RequestCard
-      requestId={gridItem.requestId}
-      numRequired={gridItem.request.numRequired}
-      numOrdered={gridItem.request.numOrdered}
+      requestId={gridItem.id}
+      numRequired={gridItem.numRequired}
+      numOrdered={gridItem.numOrdered}
       orderRequestedMeal={orderRequestedMeal}
-      deadline={gridItem.request.deadline}
-      meal={gridItem.request.meal}
+      deadline={gridItem.deadline}
+      meal={gridItem.meal}
     />
   );
 }
