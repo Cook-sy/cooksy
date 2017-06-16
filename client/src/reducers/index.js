@@ -8,6 +8,7 @@ import UpcomingMealReducer from './upcomingMealsReducer';
 import CurrentMealReducer from './CurrentMealReducer';
 import PurchaseReducer from './purchaseReducer';
 import RequestReducer from './RequestReducer';
+import ChefReducer from './chefReducer';
 
 const rootReducer = combineReducers({
   meals: MealReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   upcomingMeals: UpcomingMealReducer,
   currentMeal: CurrentMealReducer,
   purchase: PurchaseReducer,
-  requests: RequestReducer
+  requests: RequestReducer,
+  chef: ChefReducer
 });
 
 export default rootReducer;
