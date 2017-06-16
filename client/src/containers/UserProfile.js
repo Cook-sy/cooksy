@@ -22,9 +22,9 @@ class UserProfile extends Component {
 
   render() {
     const { purchase, requests } = this.props;
-
+    
     if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
-      return <div>loadding....</div>;
+      return <div>loading....</div>;
     }
 
     return (
@@ -69,11 +69,11 @@ class UserProfile extends Component {
               <Card key={request.requestId} >
                 <RequestCard
                   requestId={request.requestId}
-                  numRequired={request.request.numRequired}
-                  numOrdered={request.request.numOrdered}
+                  numRequired={request.numRequired || request.request.numRequired}
+                  numOrdered={request.numOrdered || request.request.numOrdered}
                   orderRequestedMeal={this.props.orderRequestedMeal}
-                  deadline={request.request.deadline}
-                  meal={request.request.meal}
+                  deadline={request.deadline || request.request.deadline}
+                  meal={request.meal || request.request.meal}
                 />
               </Card>
             ))}

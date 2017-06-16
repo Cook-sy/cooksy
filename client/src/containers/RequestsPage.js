@@ -4,12 +4,12 @@ import { GridList } from 'material-ui/GridList';
 import _ from 'lodash';
 
 import RequestCard from '../components/RequestCard';
-import { getUsersRequests, orderRequestedMeal } from '../actions';
+import { getAllRequests, orderRequestedMeal } from '../actions';
 import './MealList.css';
 
 class MealList extends Component {
   componentDidMount() {
-    this.props.getUsersRequests(1);
+    this.props.getAllRequests();
   }
 
   render() {
@@ -24,11 +24,11 @@ class MealList extends Component {
             <RequestCard
               key={request.requestId}
               requestId={request.requestId}
-              numRequired={request.request.numRequired}
-              numOrdered={request.request.numOrdered}
+              numRequired={request.numRequired}
+              numOrdered={request.numOrdered}
               orderRequestedMeal={this.props.orderRequestedMeal}
-              deadline={request.request.deadline}
-              meal={request.request.meal}
+              deadline={request.deadline}
+              meal={request.meal}
             />
           ))}
         </GridList>
@@ -43,4 +43,4 @@ function mapStateToProps({ requests }) {
   };
 }
 
-export default connect(mapStateToProps, { getUsersRequests, orderRequestedMeal })(MealList);
+export default connect(mapStateToProps, { getAllRequests, orderRequestedMeal })(MealList);
