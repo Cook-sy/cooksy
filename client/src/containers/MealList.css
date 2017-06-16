@@ -56,6 +56,30 @@
 }
 
 .un-linkify {
-  color: white; 
-  textDecoration: none;
+  color: white;
+  text-decoration: none;
+}
+
+.meals-card {
+  width: 300px;
+}
+
+.meals-date {
+  padding-top: 15px;
+  padding-bottom: 0px;
+  font-size: 14px;
+  color: #e91e63;
+}
+
+.meals-name {
+  font-size: 20px;
+  color: rgb(0, 188, 212);
+}
+
+.all-meals {
+  padding-top: 38px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  overflow-x: auto;
 }

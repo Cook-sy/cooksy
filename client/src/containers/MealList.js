@@ -2,6 +2,14 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { GridList, GridTile } from 'material-ui/GridList';
+import {
+  Card,
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText
+} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 import { Badge } from 'reactstrap';
@@ -14,9 +22,21 @@ import { fetchMeals, getUserDetails } from '../actions/index';
 import './MealList.css';
 import SearchBar from './SearchBar';
 
+const styles = {
+  smallIcon: {
+    width: 20,
+    height: 20
+  },
+  small: {
+    width: 30,
+    height: 30,
+    padding: 6
+  },
+};
+
 class MealList extends Component {
   componentDidMount() {
-    this.props.fetchMeals();
+    console.log(this.props.fetchMeals());
     this.props.getUserDetails();
   }
 
@@ -39,8 +59,42 @@ class MealList extends Component {
             <SearchBar />
           </div>
         </div>
+        <div className="all-meals">
+          {_.map(this.props.meals, (meal) => (
+            <Card
+              key={meal.id}
+              className="meals-card"
+            >
+              <CardHeader
+                title={meal.chef.username}
+                subtitle={<span>{meal.city}, {meal.state}</span>}
+                avatar={meal.chef.image}
+              />
+              <CardMedia>
+                <img src={meal.images} alt={meal.name} />
+              </CardMedia>
 
-        <GridList
+              <CardText>
+                <p className="meals-name">{meal.name}</p>
+                <Rating
+                  value={Math.ceil(meal.rating)}
+                  max={5}
+                  readOnly={true}
+                  itemStyle={styles.small}
+                  itemIconStyle={styles.smallIcon}
+                />
+                <p className="meals-date">{moment(meal.deliveryDateTime).format('dddd, MMMM D, YYYY')}</p>
+              </CardText>
+            </Card>
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
+
+/*
+<GridList
           cellHeight={325}
           className="meal-grid-list"
         >
@@ -65,10 +119,7 @@ class MealList extends Component {
             </GridTile>
           ))}
         </GridList>
-      </div>
-    );
-  }
-}
+*/
 
 function mapStateToProps({ meals, auth: { user } }) {
   return {
