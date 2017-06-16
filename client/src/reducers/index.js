@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import { reducer as ReduxFormReducer } from 'redux-form';
 
-import MealReducer from './mealsReducer';
 import AuthenticationReducer from './authenticationReducer';
-import ReviewReducer from './reviewReducer';
 import UpcomingMealReducer from './upcomingMealsReducer';
 import CurrentMealReducer from './CurrentMealReducer';
 import PurchaseReducer from './purchaseReducer';
 import RequestReducer from './RequestReducer';
+import ReviewReducer from './reviewReducer';
+import MealReducer from './mealsReducer';
 import ChefReducer from './chefReducer';
 
 const rootReducer = combineReducers({
