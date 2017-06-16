@@ -45,14 +45,16 @@ class MealList extends Component {
     return (
       <div>
         <div className="row">
-          <div className="col-md-9 meals-buttons">
-            <Link to="/meals">
-              <RaisedButton label="ALL Meals" primary={true} />
-            </Link>
+          <div className="col-md-9">
+            <div className="meals-buttons">
+              <Link to="/meals">
+                <RaisedButton label="ALL Meals" primary={true} />
+              </Link>
 
               <Link className="nearby-button" to="/nearby-meals">
                 <RaisedButton label="Nearby Meals" />
               </Link>
+            </div>
           </div>
 
           <div className="pull-right col-md-3">
