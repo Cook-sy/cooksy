@@ -12,14 +12,15 @@
 }
 
 .homepage-upcoming-list {
-  width: 960px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 .homepage-requests {
   display: flex;
   justify-content: space-around;
-  width: 1110px;
+  flex-wrap: wrap;
+  max-width: 1110px;
   margin: 0 auto;
 }
 
