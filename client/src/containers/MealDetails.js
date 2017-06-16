@@ -5,7 +5,8 @@ import {
   reviewMeal,
   rateMeal,
   toggleReview,
-  didReview
+  didReview,
+  postPurchaseDetails
 } from '../actions';
 import {
   Card,
@@ -19,6 +20,7 @@ import { Rating } from 'material-ui-rating';
 import moment from 'moment';
 
 import ReviewForm from './ReviewForm';
+import MaterialUIDialog from '../components/Dialog';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import './MealDetails.css';
@@ -39,9 +41,17 @@ const styles = {
 class MealDetails extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      open: false
+    };
+
     this.addReview = this.addReview.bind(this);
     this.didReview = this.didReview.bind(this);
     this.visitChefProfile = this.visitChefProfile.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +65,21 @@ class MealDetails extends Component {
 
   didReview() {
     this.props.didReview(this.props.currentMeal);
+  }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    const quantity = document.getElementById('quantity').value || 1;
+    const { id } = this.props.match.params;
+    this.setState({open: false});
+    this.props.postPurchaseDetails({num: quantity, mealId: id});
+  }
+
+  handleCancel() {
+    this.setState({open: false});
   }
 
   visitChefProfile() {
@@ -72,7 +97,7 @@ class MealDetails extends Component {
     return (
       <div onLoad={this.didReview}>
         <Card className="details-card">
-          <CardHeader 
+          <CardHeader
             onClick={this.visitChefProfile}
             title={currentMeal.chef.username}
             subtitle="Chef"
@@ -98,7 +123,15 @@ class MealDetails extends Component {
               <div>
                 {currentMeal.name}
                 <span className="pull-right">
-                  <RaisedButton label="Purchase" primary={true} />
+                  <RaisedButton label="Purchase" primary={true} onTouchTap={this.handleOpen} />
+                  <MaterialUIDialog
+                    handleCancel={this.handleCancel}
+                    handleOpen={this.handleOpen}
+                    handleClose={this.handleClose}
+                    title="Please confirm your purchase"
+                    isOpen= {this.state.open}
+                    price={currentMeal.price}
+                  />
                 </span>
               </div>
             }
@@ -242,5 +275,6 @@ export default connect(mapStateToProps, {
   reviewMeal,
   rateMeal,
   toggleReview,
-  didReview
+  didReview,
+  postPurchaseDetails
 })(MealDetails);
