@@ -26,10 +26,6 @@ class UserProfile extends Component {
 
   render() {
     const { purchases, requests } = this.props;
-    
-    if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
-      return <div>loading....</div>;
-    }
 
     return (
       <div className="user-root">
