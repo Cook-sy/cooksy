@@ -16,6 +16,10 @@
   justify-content: space-around;
 }
 
+.homepage-requests-card {
+  margin: 10px;
+}
+
 .homepage-date {
   color: #e91e63;
   font-size: 24px;
