@@ -58,7 +58,7 @@ class MealList extends Component {
           </div>
         </div>
         <div className="all-meals">
-          {_.map(this.props.meals, (meal) => (
+          {_.map(_.sortBy(this.props.meals, ['deliveryDateTime']), (meal) => (
             <Card
               key={meal.id}
               className="meals-card"
@@ -73,7 +73,10 @@ class MealList extends Component {
               </CardMedia>
 
               <CardText>
-                <p className="meals-name">{meal.name}</p>
+                <Link to={`/meals/${meal.id}`} className="meals-name">
+                  {meal.name}
+                </Link>
+
                 <Rating
                   value={Math.ceil(meal.rating)}
                   max={5}

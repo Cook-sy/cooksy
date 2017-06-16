@@ -11,9 +11,21 @@
   margin-top: 40px;
 }
 
+.homepage-upcoming-list {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
 .homepage-requests {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1110px;
+  margin: 0 auto;
+}
+
+.homepage-requests-card {
+  margin: 10px;
 }
 
 .homepage-date {
@@ -114,7 +126,7 @@
 }
 
 .homepage-meals {
-  width: 960px;
+  width: 100%;
   margin: 40px auto;
   top: 650px;
 }
