@@ -38,7 +38,7 @@ class Homepage extends Component {
   render() {
     const { upcomingMeals, requests } = this.props;
     const topRequests = requests && getTopRequests(requests, 3);
-    console.log(topRequests)
+
     let dates = Object.keys(upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
