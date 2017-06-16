@@ -75,58 +75,60 @@ class Homepage extends Component {
 
           <h2 className="homepage-upcoming">Upcoming Meals</h2>
 
-          { dates.length !== 0 && _.map(dates, (date) => (
-            <div key={date}>
-              <span className="homepage-date">
-                {moment(new Date(date).toISOString()).format('dddd, MMMM D')}
-              </span>
+          <div className="homepage-upcoming-list">
+            { dates.length !== 0 && _.map(dates, (date) => (
+              <div key={date}>
+                <span className="homepage-date">
+                  {moment(new Date(date).toISOString()).format('dddd, MMMM D')}
+                </span>
 
-              <div className="homepage-meal-upcoming">
-                { _.map(upcomingMeals[date], (meal) => (
-                    <Card
-                      key={meal.id}
-                      className="homepage-meal-item"
-                    >
-                      <CardHeader
-                        title={meal.chef.username}
-                        subtitle={`${meal.city}, ${meal.state}`}
-                        avatar={meal.chef.image}
-                      />
-
-                      <CardMedia>
-                        <img
-                          className="homepage-meal-item-image"
-                          src={meal.images}
-                          alt={meal.name}
-                          />
-                      </CardMedia>
-
-                      <CardTitle
-                        title={
-                          <Link to={`/meals/${meal.id}`} className="homepage-meal-item-name">
-                            {meal.name}
-                          </Link>
-                        }
-                        titleColor="#00bcd4"
-                        titleStyle={{ fontSize: 20 }}
+                <div className="homepage-meal-upcoming">
+                  { _.map(upcomingMeals[date], (meal) => (
+                      <Card
+                        key={meal.id}
+                        className="homepage-meal-item"
                       >
-                        <span className="review-rating">
-                          <Rating
-                            value={Math.ceil(meal.rating)}
-                            max={5}
-                            readOnly={true}
-                            itemStyle={styles.small}
-                            itemIconStyle={styles.smallIcon}
+                        <CardHeader
+                          title={meal.chef.username}
+                          subtitle={`${meal.city}, ${meal.state}`}
+                          avatar={meal.chef.image}
+                        />
+
+                        <CardMedia>
+                          <img
+                            className="homepage-meal-item-image"
+                            src={meal.images}
+                            alt={meal.name}
                             />
-                        </span>
-                      </CardTitle>
-                    </Card>
-                  ))
-                }
+                        </CardMedia>
+
+                        <CardTitle
+                          title={
+                            <Link to={`/meals/${meal.id}`} className="homepage-meal-item-name">
+                              {meal.name}
+                            </Link>
+                          }
+                          titleColor="#00bcd4"
+                          titleStyle={{ fontSize: 20 }}
+                        >
+                          <span className="review-rating">
+                            <Rating
+                              value={Math.ceil(meal.rating)}
+                              max={5}
+                              readOnly={true}
+                              itemStyle={styles.small}
+                              itemIconStyle={styles.smallIcon}
+                              />
+                          </span>
+                        </CardTitle>
+                      </Card>
+                    ))
+                  }
+                </div>
               </div>
-            </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
       </div>
     );
