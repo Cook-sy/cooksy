@@ -95,34 +95,6 @@ class MealList extends Component {
   }
 }
 
-/*
-<GridList
-          cellHeight={325}
-          className="meal-grid-list"
-        >
-          {_.map(this.props.meals, (meal) => (
-            <GridTile
-              key={meal.id}
-              title={<Link to={`/meals/${meal.id}`} className="un-linkify" >{meal.name}</Link>}
-              subtitle={<Link to={`/chefs-profile/${meal.chef.id}`} target="#" className="un-linkify" >by <b>{meal.chef.username}</b></Link>}
-              actionIcon={<Rating value={Math.ceil(meal.rating)} max={5} readOnly={true} />}
-            >
-                <div className="date-wrapper">
-                  <img src={meal.images} alt="meal list"/>
-
-                  <div className="pull-right date-description">
-                    <Badge className="date-badge" pill>{moment(meal.deliveryDateTime).format('MMMM D, YYYY')}</Badge>
-                  </div>
-
-                  <div className="city-description">
-                    <Badge className="city-badge" pill>{meal.city}, {meal.state}</Badge>
-                  </div>
-                </div>
-            </GridTile>
-          ))}
-        </GridList>
-*/
-
 function mapStateToProps({ meals, auth: { user } }) {
   return {
     meals: meals,

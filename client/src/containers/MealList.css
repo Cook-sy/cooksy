@@ -4,31 +4,6 @@
   justify-content: 'space-around';
 }
 
-.meal-grid-list {
-  width: 900px;
-  height: 450px;
-  overflow-y: 'auto';
-  margin-right: auto !important;
-  margin-left: auto !important;
-  padding-top: 38px;
-}
-
-.date-wrapper {
-  position: relative;
-}
-
-.date-description {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-}
-
-.city-description {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-}
-
 .meals-buttons {
   margin-top: 20px;
   margin-left: 20px;
@@ -36,19 +11,6 @@
 
 .nearby-button {
   padding-left: 10px;
-}
-
-.date-badge {
-  font-size: 16px;
-  font-weight: normal;
-  background-color: #e91e63;
-}
-
-.city-badge {
-  font-size: 16px;
-  font-weight: normal;
-  color: white;
-  background-color: rgb(0, 188, 212);
 }
 
 .submit-date {
