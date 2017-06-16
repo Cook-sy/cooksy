@@ -83,7 +83,7 @@ export default class RequestCard extends Component {
             backgroundColor="rgb(0, 188, 212)"
             icon={<i className="material-icons white">favorite</i>}
             disabled={!this.state.loggedIn || this.state.role === 'chef'}
-            title={!this.state.loggedIn && "Please login/signup"}
+            title={(this.state.role !=='user' && "Please login/signup as a user") || ''}
           />
           <MaterialUIDialog
             handleCancel={this.handleCancel}
