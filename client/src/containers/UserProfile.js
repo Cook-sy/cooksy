@@ -37,6 +37,22 @@ class UserProfile extends Component {
         <div className="user-requests">
           <h2 className="user-heading">My Requests</h2>
 
+          <div className="user-requests-list">
+            { _.map(requests, (request) => (
+                <div className="user-request-card">
+                  <RequestCard
+                    requestId={request.requestId}
+                    numRequired={request.request.numRequired}
+                    numOrdered={request.request.numOrdered}
+                    orderRequestedMeal={this.props.orderRequestedMeal}
+                    deadline={request.request.deadline}
+                    meal={request.request.meal}
+                  />
+                </div>
+              ))
+            }
+          </div>
+
         </div>
 
         <div className="user-purchases">
@@ -62,16 +78,11 @@ class UserProfile extends Component {
                     />
                   </CardMedia>
 
-                  <CardTitle
-                    title={
-                      <Link to={`/meals/${purchase.meal.id}`} className="user-purchase-item-name">
-                        {purchase.meal.name}
-                      </Link>
-                    }
-                    titleStyle={{ fontSize: 20 }}
-                  />
-
                   <CardText>
+                    <Link to={`/meals/${purchase.meal.id}`} className="user-purchase-item-name">
+                      {purchase.meal.name}
+                    </Link>
+
                     <table>
                       <tbody>
                         <tr>

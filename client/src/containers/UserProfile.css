@@ -25,6 +25,15 @@
   color: #00bcd4;
 }
 
+.user-requests, .user-purchases {
+  margin-bottom: 40px;
+}
+
+.user-requests-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .user-purchases-list {
   display: flex;
   flex-wrap: wrap;
@@ -42,6 +51,7 @@
 
 a.user-purchase-item-name {
   color: #00bcd4 !important;
+  font-size: 20px;
 }
 
 .user-purchase-details-info-label {
@@ -54,4 +64,8 @@ a.user-purchase-item-name {
 
 .user-purchase-highlight {
   color: #e91e63;
+}
+
+.user-request-card {
+  margin: 10px;
 }
