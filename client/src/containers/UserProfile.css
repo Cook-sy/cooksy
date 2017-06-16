@@ -15,10 +15,43 @@
   color: black;
 }
 
-.flex-grid {
-  display: flex;
+
+.user-root {
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
-.col {
-  flex: 1;
+.user-heading {
+  color: #00bcd4;
+}
+
+.user-purchases-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-purchase-item {
+  width: 300px;
+  margin: 10px;
+}
+
+.user-purchase-item-image {
+  height: 150px;
+  object-fit: cover;
+}
+
+a.user-purchase-item-name {
+  color: #00bcd4 !important;
+}
+
+.user-purchase-details-info-label {
+  font-weight: bold;
+}
+
+.user-purchase-details-info {
+  padding-left: 5px;
+}
+
+.user-purchase-highlight {
+  color: #e91e63;
 }
