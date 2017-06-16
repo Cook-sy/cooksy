@@ -1,8 +1,17 @@
+.chef-root {
+	margin-top: 20px;
+	margin-left: 20px;
+}
+
 .chef-info {
 	padding-left: 400px;
 }
 
-.homepage-requests {
-  display: flex;
-  justify-content: space-around;
+.chef-requests {
+	color: #00bcd4;
+}
+
+.chef-upcoming {
+  color: #00bcd4;
+  margin-top: 40px;
 }

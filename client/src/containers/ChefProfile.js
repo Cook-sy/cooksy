@@ -1,9 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Avatar from 'material-ui/Avatar';
-import List from 'material-ui/List/List';
-import ListItem from 'material-ui/List/ListItem';
 import { Rating } from 'material-ui-rating';
 import {
   fetchChefDetails,
@@ -11,7 +8,6 @@ import {
   orderRequestedMeal,
   fetchOrderedMealsByChef
 } from '../actions';
-import HorizontalGrid from '../components/HorizontalGrid';
 import RaisedButton from 'material-ui/RaisedButton';
 import {
   Card,
@@ -21,11 +17,13 @@ import {
 } from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 import RequestCard from '../components/RequestCard';
-import MealGridElement from '../components/MealGridElement';
-import RequestGridElement from '../components/RequestGridElement';
+import { Media } from 'react-bootstrap';
 import moment from 'moment';
 
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 import './ChefProfile.css';
+import './UserProfile.css';
 
 const styles = {
   smallIcon: {
@@ -48,40 +46,50 @@ class ChefProfile extends Component {
   }
 
   render() {
-    const { meals, chef, requests, upcomingMeals } = this.props;
+    const { chef, requests, upcomingMeals } = this.props;
     let dates = Object.keys(upcomingMeals).sort(function(a, b) {
       return new Date(a).getTime() - new Date(b).getTime();
     });
     return (
-      <div>
-        <List>
-          <ListItem
-            disabled={true}
-            leftAvatar={<Avatar src={chef.image} size={200} />}
-          />
-          <div className="chef-info">
-            <h3 id="chef-username">{chef.username}</h3>
+      <div className="chef-root">
+        <Media>
+          <Media.Left>
+            <img className="img-circle" src={chef.image} width="128" alt={chef.username} />
+          </Media.Left>
+
+          <Media.Body>
+            <Media.Heading>
+              {chef.username}
+            </Media.Heading>
+
             <Rating value={Math.ceil(chef.rating)} max={5} readOnly={true} />
             <a href={`mailto:${chef.email}`}>
               <RaisedButton className="request" label="Contact" primary={true} />
             </a>
-          </div>
-        </List>
-        <div className="requestcontainer">
-          <h2>Requests</h2>
-          <div className="homepage-requests">
-            { Object.keys(requests).length > 0 && _.map(requests, (req) => (
-                <RequestGridElement
-                  key={req.id}
-                  gridItem={req}
-                  orderRequestedMeal={this.props.orderRequestedMeal}
-                />
+          </Media.Body>
+        </Media>
+
+        <div className="user-requests">
+          <h2 className="user-heading">Requests</h2>
+
+          <div className="user-requests-list">
+            { _.map(requests, (request) => (
+                <div key={request.id} className="user-request-card">
+                  <RequestCard
+                    requestId={request.requestId}
+                    numRequired={request.numRequired}
+                    numOrdered={request.numOrdered}
+                    orderRequestedMeal={this.props.orderRequestedMeal}
+                    deadline={request.deadline}
+                    meal={request.meal}
+                  />
+                </div>
               ))
             }
           </div>
         </div>
-        <h2 className="homepage-upcoming">Upcoming Meals</h2>
 
+        <h2 className="chef-upcoming">Upcoming Meals</h2>
           { dates.length !== 0 && _.map(dates, (date) => (
             <div key={date}>
               <span className="homepage-date">
@@ -98,14 +106,14 @@ class ChefProfile extends Component {
                         title={meal.chef.username}
                         subtitle={`${meal.city}, ${meal.state}`}
                         avatar={meal.chef.image}
-                      />
+                    />
 
                       <CardMedia>
                         <img
                           className="homepage-meal-item-image"
                           src={meal.images}
                           alt={meal.name}
-                          />
+                        />
                       </CardMedia>
 
                       <CardTitle
@@ -124,7 +132,7 @@ class ChefProfile extends Component {
                             readOnly={true}
                             itemStyle={styles.small}
                             itemIconStyle={styles.smallIcon}
-                            />
+                          />
                         </span>
                       </CardTitle>
                     </Card>
