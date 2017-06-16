@@ -64,7 +64,7 @@ class MealDetails extends Component {
     }
 
     return (
-      <div onLoad={this.didReview}>
+      <div onLoad={this.didReview} className="details-root">
         <Card className="details-card">
           <CardHeader
             title={currentMeal.chef.username}
