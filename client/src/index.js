@@ -41,7 +41,7 @@ ReactDOM.render(
             <Route exact path="/meals/:id" component={MealDetails} />
             <Route exact path="/signup" component={SignUpForm} />
             <Route exact path="/login" component={LogInForm} />
-            <Route exact path="/chef-profile" component={ChefProfile}/>
+            <Route exact path="/chefs-profile/:id" component={ChefProfile}/>
             <Route exact path="/requests-page" component={RequestsPage}/>
             <PrivateRoute exact user='user'path="/user-profile" component={UserProfile}/>
             <PrivateRoute exact user='chef' path="/post-new-meal" component={NewMealForm} />

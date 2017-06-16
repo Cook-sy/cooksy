@@ -10,6 +10,7 @@ export const FETCH_MEALS_BY_CHEF = 'FETCH_MEALS_BY_CHEF';
 export const GET_NEAR_BY_MEALS = 'GET_NEAR_BY_MEALS';
 export const FETCH_MEALS_BY_DATE = 'FETCH_MEALS_BY_DATE';
 export const FETCH_UPCOMING_MEALS = 'FETCH_UPCOMING_MEALS';
+export const FETCH_ORDERED_MEALS_BY_CHEF = 'FETCH_ORDERED_MEALS_BY_CHEF';
 
 export function createMeal(values, cb) {
   const headers = attachTokenToTheHeader();
@@ -109,3 +110,40 @@ export function fetchUpcomingMeals() {
     payload: request
   };
 };
+
+export function fetchOrderedMealsByChef(id) {
+  let mealStorage = {};
+  let time = [];
+  let request = axios.get(`/api/chefs/${id}/meals`)
+    .then(function(meals) {
+      _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
+        time.push([date.getTime(), date.toString().substr(0, 10)]);
+      });
+      time.sort(function(a, b) {
+        return a[0] - b[0];
+      });
+      _.map(time, (tuple) => {
+        if (Object.keys(mealStorage).length === 3) {
+          return;
+        };
+        if (!mealStorage[tuple[1]]) {
+          mealStorage[tuple[1]] = [];
+        };
+      });
+      _.map(meals.data, (meal) => {
+        let date = new Date(meal.deliveryDateTime);
+        for (var key in mealStorage) {
+          if (key === date.toString().substr(0, 10)) {
+            mealStorage[key].push(meal);
+          };
+        };
+      });
+      return mealStorage;
+    });
+
+  return {
+    type: FETCH_ORDERED_MEALS_BY_CHEF,
+    payload: request
+  };
+}
