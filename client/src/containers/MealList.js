@@ -71,7 +71,7 @@ class MealList extends Component {
                 avatar={meal.chef.image}
               />
               <CardMedia>
-                <img src={meal.images} alt={meal.name} />
+                <img className="meals-image" src={meal.images} alt={meal.name} />
               </CardMedia>
 
               <CardText>

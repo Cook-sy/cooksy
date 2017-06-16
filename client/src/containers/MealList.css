@@ -62,6 +62,8 @@
 
 .meals-card {
   width: 300px;
+  min-width: 300px;
+  margin: 10px;
 }
 
 .meals-date {
@@ -76,8 +78,14 @@
   color: rgb(0, 188, 212);
 }
 
+.meals-image {
+  height: 200px;
+  size: 100%;
+}
+
 .all-meals {
   padding-top: 38px;
+  padding-left: 15px;
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 20px;
