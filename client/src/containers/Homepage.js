@@ -63,6 +63,7 @@ class Homepage extends Component {
             { Object.keys(topRequests).length > 0 && _.map(topRequests, (req) => (
               <div key={req.id} className="homepage-requests-card">
                 <RequestGridElement
+                  key={req.id}
                   gridItem={req}
                   orderRequestedMeal={this.props.orderRequestedMeal}
                 />
