@@ -47,7 +47,6 @@ class UserProfile extends Component {
               ))
             }
           </div>
-
         </div>
 
         <div className="user-purchases">

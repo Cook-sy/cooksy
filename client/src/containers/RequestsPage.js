@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { GridList } from 'material-ui/GridList';
 import _ from 'lodash';
 
 import RequestCard from '../components/RequestCard';
 import { getAllRequests, orderRequestedMeal } from '../actions';
-import './MealList.css';
+import './UserProfile.css';
 
 class MealList extends Component {
   componentDidMount() {
@@ -14,23 +13,26 @@ class MealList extends Component {
 
   render() {
     return (
-      <div className="root">
-        <GridList
-          cellHeight={180}
-          className="grid-list"
-        >
-          {_.map(this.props.requests, (request) => (
-            <RequestCard
-              key={request.id}
-              requestId={request.id}
-              numRequired={request.numRequired}
-              numOrdered={request.numOrdered}
-              orderRequestedMeal={this.props.orderRequestedMeal}
-              deadline={request.deadline}
-              meal={request.meal}
-            />
-          ))}
-        </GridList>
+      <div className="user-root">
+        <div className="user-requests">
+          <h2 className="user-heading">All Requests</h2>
+
+          <div className="user-requests-list">
+            { _.map(this.props.requests, (request) => (
+                <div key={request.id} className="user-request-card">
+                  <RequestCard
+                    requestId={request.id}
+                    numRequired={request.numRequired}
+                    numOrdered={request.numOrdered}
+                    orderRequestedMeal={this.props.orderRequestedMeal}
+                    deadline={request.deadline}
+                    meal={request.meal}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
       </div>
     );
   }
