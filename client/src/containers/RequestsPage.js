@@ -7,7 +7,7 @@ import RequestCard from '../components/RequestCard';
 import { getAllRequests, orderRequestedMeal } from '../actions';
 import './MealList.css';
 
-class MealList extends Component {
+class RequestsPage extends Component {
   componentDidMount() {
     this.props.getAllRequests();
   }
@@ -42,4 +42,4 @@ function mapStateToProps({ requests }) {
   };
 }
 
-export default connect(mapStateToProps, { getAllRequests, orderRequestedMeal })(MealList);
+export default connect(mapStateToProps, { getAllRequests, orderRequestedMeal })(RequestsPage);
