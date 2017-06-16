@@ -34,14 +34,14 @@ class UserProfile extends Component {
 
           <div className="user-requests-list">
             { _.map(requests, (request) => (
-                <div className="user-request-card">
+                <div key={request.requestId} className="user-request-card">
                   <RequestCard
                     requestId={request.requestId}
-                    numRequired={request.request.numRequired}
-                    numOrdered={request.request.numOrdered}
+                    numRequired={request.numRequired || request.request.numRequired}
+                    numOrdered={request.numOrdered || request.request.numOrdered}
                     orderRequestedMeal={this.props.orderRequestedMeal}
-                    deadline={request.request.deadline}
-                    meal={request.request.meal}
+                    deadline={request.deadline || request.request.deadline}
+                    meal={request.meal || request.request.meal}
                   />
                 </div>
               ))
