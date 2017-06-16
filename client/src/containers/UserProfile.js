@@ -22,7 +22,7 @@ class UserProfile extends Component {
 
   render() {
     const { purchase, requests } = this.props;
-    
+
     if ( Object.keys(requests).length === 0 || Object.keys(requests).length === 0) {
       return <div>loading....</div>;
     }
