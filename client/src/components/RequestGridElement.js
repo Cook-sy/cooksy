@@ -6,11 +6,11 @@ const RequestGridElement = function({ gridItem, orderRequestedMeal }) {
   return (
     <RequestCard
       requestId={gridItem.requestId}
-      numRequired={gridItem.request.numRequired}
-      numOrdered={gridItem.request.numOrdered}
+      numRequired={gridItem.numRequired}
+      numOrdered={gridItem.numOrdered}
       orderRequestedMeal={orderRequestedMeal}
-      deadline={gridItem.request.deadline}
-      meal={gridItem.request.meal}
+      deadline={gridItem.deadline}
+      meal={gridItem.meal}
     />
   );
 }
