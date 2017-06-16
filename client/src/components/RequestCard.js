@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 import MaterialUIDialog from '../components/Dialog';
 import { differenceBetweenTwoDatesInDays } from '../utils/FormHelper';
+import { decodeToken } from '../utils/IsAuthenticated';
 import './RequestCard.css';
 
 export default class RequestCard extends Component {
@@ -13,12 +14,19 @@ export default class RequestCard extends Component {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      loggedIn: false
     };
 
     this.handleOpen = this.handleOpen.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  componentDidMount() {
+    if (decodeToken()) {
+      this.setState({ loggedIn: true })
+    }
   }
 
   handleOpen() {
@@ -28,6 +36,7 @@ export default class RequestCard extends Component {
   handleClose() {
     const num = document.getElementById('quantity').value || 1;
     const requestId = this.props.requestId;
+
     this.props.orderRequestedMeal({ num, requestId });
     this.setState({ open: false });
   }
@@ -41,7 +50,7 @@ export default class RequestCard extends Component {
     const ordersLeft = numOrdered / numRequired * 100;
     const countdown = differenceBetweenTwoDatesInDays(deadline);
 
-    if (! meal) {
+    if (!meal) {
       return <div>Loading...</div>;
     }
 
@@ -71,6 +80,8 @@ export default class RequestCard extends Component {
             label={'Request'}
             backgroundColor="rgb(0, 188, 212)"
             icon={<i className="material-icons white">favorite</i>}
+            disabled={!this.state.loggedIn}
+            title={!this.state.loggedIn && "Please login/signup"}
           />
           <MaterialUIDialog
             handleCancel={this.handleCancel}
