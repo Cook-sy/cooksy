@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { GridList, GridTile } from 'material-ui/GridList';
 import {
   Card,
-  CardActions,
   CardHeader,
   CardMedia,
-  CardTitle,
   CardText
 } from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
-import { Badge } from 'reactstrap';
 import moment from 'moment';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
@@ -36,7 +32,7 @@ const styles = {
 
 class MealList extends Component {
   componentDidMount() {
-    console.log(this.props.fetchMeals());
+    this.props.fetchMeals();
     this.props.getUserDetails();
   }
 
