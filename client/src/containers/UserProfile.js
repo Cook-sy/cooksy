@@ -34,7 +34,7 @@ class UserProfile extends Component {
 
           <div className="user-requests-list">
             { _.map(requests, (request) => (
-                <div key={request.requestId} className="user-request-card">
+                <div key={request.id} className="user-request-card">
                   <RequestCard
                     requestId={request.requestId}
                     numRequired={request.numRequired || request.request.numRequired}
