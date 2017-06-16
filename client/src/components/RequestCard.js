@@ -41,6 +41,10 @@ export default class RequestCard extends Component {
     const ordersLeft = numOrdered / numRequired * 100;
     const countdown = differenceBetweenTwoDatesInDays(deadline);
 
+    if (! meal) {
+      return <div>Loading...</div>;
+    }
+
     return (
       <div className="request-card">
         <div className="meal-name">
