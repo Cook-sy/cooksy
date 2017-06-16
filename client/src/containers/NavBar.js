@@ -77,7 +77,7 @@ class NavBar extends Component {
               {user.user}
             </li>}
           {user.role === 'user' &&
-            <li className="user-welcome">Welcome {user.user} !</li>}
+            <li className="user-welcome">Welcome {user.user}!</li>}
         </ul>
       </div>
     );
