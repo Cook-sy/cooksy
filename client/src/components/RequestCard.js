@@ -15,7 +15,8 @@ export default class RequestCard extends Component {
 
     this.state = {
       open: false,
-      loggedIn: false
+      loggedIn: false,
+      role: ""
     };
 
     this.handleOpen = this.handleOpen.bind(this);
@@ -24,8 +25,9 @@ export default class RequestCard extends Component {
   }
 
   componentDidMount() {
-    if (decodeToken()) {
-      this.setState({ loggedIn: true })
+    const isLoggedIn = decodeToken();
+    if (isLoggedIn) {
+      this.setState({ loggedIn: true, role: isLoggedIn.role })
     }
   }
 
@@ -80,7 +82,7 @@ export default class RequestCard extends Component {
             label={'Request'}
             backgroundColor="rgb(0, 188, 212)"
             icon={<i className="material-icons white">favorite</i>}
-            disabled={!this.state.loggedIn}
+            disabled={!this.state.loggedIn || this.state.role === 'chef'}
             title={!this.state.loggedIn && "Please login/signup"}
           />
           <MaterialUIDialog
