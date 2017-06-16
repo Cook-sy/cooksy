@@ -21,7 +21,11 @@ export default function(state = {}, action) {
     case CREATE_REQUEST:
       return state;
     case ORDER_REQUESTED_MEAL:
-      return { ...state, [action.payload.data.request.requestId]: action.payload.data.request };
+      if (!action.payload.data.success) {
+        return state;
+      }
+
+      return { ...state, [action.payload.data.request.requestId]: action.payload.data.request.request };
     default:
       return state;
   }

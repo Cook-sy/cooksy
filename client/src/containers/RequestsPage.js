@@ -13,7 +13,6 @@ class MealList extends Component {
   }
 
   render() {
-
     return (
       <div className="root">
         <GridList
@@ -22,8 +21,8 @@ class MealList extends Component {
         >
           {_.map(this.props.requests, (request) => (
             <RequestCard
-              key={request.requestId}
-              requestId={request.requestId}
+              key={request.id}
+              requestId={request.id}
               numRequired={request.numRequired}
               numOrdered={request.numOrdered}
               orderRequestedMeal={this.props.orderRequestedMeal}
