@@ -7,6 +7,20 @@
 - __Scrum Master__: [Obay Mardini](https://github.com/obay-mardini)
 - __Development Team Members__: [Vicki Alden](https://github.com/vicalden23), [John Cheng](https://github.com/gzeegz)
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Getting started](#getting-started)
+  - [Installing PostgreSQL and PostGIS](#installing-postgresql-and-postgis)
+  - [Configuring environment variables](#configuring-environment-variables)
+  - [Creating table of zipcodes](#creating-table-of-zipcodes)
+  - [Installing dependencies](#installing-dependencies)
+  - [Seeding database](#seeding-database)
+- [Tests](#tests)
+- [Deployment on Heroku](#deployment-on-heroku)
+- [Contributing](#contributing)
+  - [Roadmap](#roadmap)
+
 ## Requirements
 
 - Node v7.9.0
@@ -74,11 +88,20 @@ For testing, you'll have to seed your test database. Run the command
 $ NODE_ENV=test node src/seedDB.js
 ```
 
-### Tests on the server side
+## Tests
 
-The provided tests utilize the Mocha, Chai, supertest and Sinon testing libraries, and may be run with the `npm run test:server` command from within the `cooksy` directory. This command will also generate and display a coverage report, provided by the Istanbul/nyc utility.
+The provided tests utilize the Mocha, Chai, supertest and Sinon testing libraries. From within the `cooksy` directory, run
+```
+$ npm run test:server
+```
+This command will also generate and display a coverage report, provided by the Istanbul/nyc utility.
 
 If you would prefer to generate an HTML coverage view, you may run the `npm run test:html` command. After the script has executed, navigate to the `cooksy/coverage` directory and open the `index.html` file in your browser.
+
+For client side tests, run
+```
+$ npm run test:client
+```
 
 ## Deployment on Heroku
 To deploy on Heroku, run
