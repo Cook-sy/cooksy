@@ -19,6 +19,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { Rating } from 'material-ui-rating';
 import moment from 'moment';
 
+import { decodeToken } from '../utils/IsAuthenticated';
 import ReviewForm from './ReviewForm';
 import MaterialUIDialog from '../components/Dialog';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -43,7 +44,9 @@ class MealDetails extends Component {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      loggedIn: false,
+      role: ''
     };
 
     this.addReview = this.addReview.bind(this);
@@ -56,6 +59,12 @@ class MealDetails extends Component {
 
   componentDidMount() {
     const { id } = this.props.match.params;
+    const isLoggedIn = decodeToken();
+
+    if (isLoggedIn) {
+      this.setState({ loggedIn: true, role: isLoggedIn.role })
+    }
+
     this.props.fetchMealDetail(id);
   }
 
@@ -123,7 +132,12 @@ class MealDetails extends Component {
               <div>
                 {currentMeal.name}
                 <span className="pull-right">
-                  <RaisedButton label="Purchase" primary={true} onTouchTap={this.handleOpen} />
+                  <RaisedButton 
+                    label="Purchase" 
+                    primary={true} 
+                    onTouchTap={this.handleOpen}
+                    disabled={!this.state.loggedIn || this.state.role === 'chef'}
+                  />
                   <MaterialUIDialog
                     handleCancel={this.handleCancel}
                     handleOpen={this.handleOpen}
