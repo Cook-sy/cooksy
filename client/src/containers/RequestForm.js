@@ -10,6 +10,7 @@ import {
 } from '../utils/FormHelper';
 import RaisedButton from 'material-ui/RaisedButton';
 import { createRequest, fetchMealsByChef } from '../actions';
+import { decodeToken } from '../utils/IsAuthenticated';
 
 class RequestForm extends Component {
   constructor(props) {
@@ -23,6 +24,8 @@ class RequestForm extends Component {
       meal => meal.name === values.meal
     ).id;
     this.props.createRequest(values);
+    const id = decodeToken().sub;
+    this.props.history.push(`/chefs-profile/${id}`);
   }
 
   componentDidMount() {

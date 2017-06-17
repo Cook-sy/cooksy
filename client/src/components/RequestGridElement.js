@@ -3,6 +3,7 @@ import React from 'react';
 import RequestCard from './RequestCard';
 
 const RequestGridElement = function({ gridItem, orderRequestedMeal }) {
+
   return (
     <RequestCard
       requestId={gridItem.id}
