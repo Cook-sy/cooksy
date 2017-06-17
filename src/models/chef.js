@@ -1,6 +1,7 @@
 'use strict';
 
 var bcrypt = require('bcryptjs');
+var geocodeAddress = require('../utils/geocode-address');
 
 module.exports = function(sequelize, DataTypes) {
   var Chef = sequelize.define(
@@ -106,25 +107,18 @@ module.exports = function(sequelize, DataTypes) {
       });
   });
 
-  Chef.beforeCreate(function(chef, options) {
-    return sequelize.models.Zipcode.findById(chef.zipcode)
-      .then(function(zip) {
-        chef.point = {
-          type: 'POINT',
-          coordinates: [zip.lat, zip.lng]
-        };
-      });
+  Chef.beforeCreate(function(chef, options, cb) {
+    geocodeAddress(chef, options, cb);
   });
 
-  Chef.beforeUpdate(function(chef, options) {
-    if (chef.zipcode !== chef._previousDataValues.zipcode) {
-      return sequelize.models.Zipcode.findById(chef.zipcode)
-        .then(function(zip) {
-          chef.point = {
-            type: 'POINT',
-            coordinates: [zip.lat, zip.lng]
-          };
-        });
+  Chef.beforeUpdate(function(chef, options, cb) {
+    if (
+      chef.address !== chef._previousDataValues.address ||
+      chef.city !== chef._previousDataValues.city ||
+      chef.state !== chef._previousDataValues.state ||
+      chef.zipcode !== chef._previousDataValues.zipcode
+    ) {
+      geocodeAddress(chef, options, cb);
     }
   });
 
