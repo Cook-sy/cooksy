@@ -18,8 +18,8 @@ import './NearByMeals.css';
 // eslint-disable-next-line
 const geocoder = new google.maps.Geocoder();
 
-const defaultIcon = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
-const selectedIcon = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+const defaultIcon = 'https://maps.google.com/mapfiles/ms/icons/red-dot.png';
+const selectedIcon = 'https://maps.google.com/mapfiles/ms/icons/green-dot.png';
 
 const styles = {
   smallIcon: {
@@ -52,27 +52,21 @@ class NearByMeals extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let geocodedMeals = [];
-    let markers = [];
-
     if (this.props.meals !== nextProps.meals && _.size(nextProps.meals) !== 0) {
-      _.each(nextProps.meals, meal => {
-        geocodedMeals.push(this.geocodeMeal(meal));
-      });
+      const markers = _.map(nextProps.meals, (meal) => (
+        {
+          id: meal.id,
+          icon: defaultIcon,
+          position: {
+            lat: meal.point.coordinates[0],
+            lng: meal.point.coordinates[1]
+          },
+          showInfo: false,
+          infoContent: this.renderInfoContent(meal)
+        }
+      ));
 
-      Promise.all(geocodedMeals)
-        .then(res => {
-          markers = res.map(meal => (
-            {
-              id: meal.id,
-              icon: defaultIcon,
-              position: meal.location,
-              showInfo: false,
-              infoContent: this.renderInfoContent(meal)
-            }
-          ));
-          this.setState({markers});
-        });
+      this.setState({markers});
     }
   }
 
@@ -84,27 +78,6 @@ class NearByMeals extends Component {
           .scrollIntoView({ block: 'start', behavior: 'smooth' });
       }
     }
-  }
-
-  geocodeMeal = meal => {
-    const address = `${meal.address}, ${meal.city} ${meal.state}, ${meal.zipcode}`;
-
-    return new Promise((resolve, reject) => {
-      geocoder.geocode({address}, (results, status) => {
-        if (status === 'OK') {
-          const geocodedMeal = {
-            ...meal,
-            location: {
-              lat: results[0].geometry.location.lat(),
-              lng: results[0].geometry.location.lng(),
-            }
-          };
-          resolve(geocodedMeal);
-        } else {
-          reject(status);
-        }
-      });
-    });
   }
 
   getCurrentLocation = () => {
