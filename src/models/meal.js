@@ -1,5 +1,7 @@
 'use strict';
 
+var geocodeAddress = require('../utils/geocode-address');
+
 module.exports = function(sequelize, DataTypes) {
   var Meal = sequelize.define('Meal', {
     name: {
@@ -119,25 +121,18 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  Meal.beforeCreate(function(meal, options) {
-    return sequelize.models.Zipcode.findById(meal.zipcode)
-      .then(function(zip) {
-        meal.point = {
-          type: 'POINT',
-          coordinates: [zip.lat, zip.lng]
-        };
-      });
+  Meal.beforeCreate(function(meal, options, cb) {
+    geocodeAddress(meal, options, cb);
   });
 
-  Meal.beforeUpdate(function(meal, options) {
-    if (meal.zipcode !== meal._previousDataValues.zipcode) {
-      return sequelize.models.Zipcode.findById(meal.zipcode)
-        .then(function(zip) {
-          meal.point = {
-            type: 'POINT',
-            coordinates: [zip.lat, zip.lng]
-          };
-        });
+  Meal.beforeUpdate(function(meal, options, cb) {
+    if (
+      meal.address !== meal._previousDataValues.address ||
+      meal.city !== meal._previousDataValues.city ||
+      meal.state !== meal._previousDataValues.state ||
+      meal.zipcode !== meal._previousDataValues.zipcode
+    ) {
+      geocodeAddress(meal, options, cb);
     }
   });
 
