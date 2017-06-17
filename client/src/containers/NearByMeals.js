@@ -201,13 +201,15 @@ class NearByMeals extends Component {
 
   renderInfoContent = (meal) => {
     return (
-      <p>
-        <Link
-          to={`/meals/${meal.id}`}
-          className="NearByMeals-meal-heading"
-        >
-          {meal.name}
-        </Link>
+      <div>
+        <p>
+          <Link
+            to={`/meals/${meal.id}`}
+            className="NearByMeals-meal-heading"
+          >
+            {meal.name}
+          </Link>
+        </p>
 
         <Rating
           value={Math.ceil(meal.rating)}
@@ -217,11 +219,14 @@ class NearByMeals extends Component {
           itemIconStyle={styles.smallIcon}
         />
 
-        <span className="NearByMeals-meal-chef">{meal.chef.username}</span>
-        <p className="NearByMeals-meal-address">
-          {`${meal.address}, ${meal.city}`}
+        <p>
+          <span className="NearByMeals-meal-chef">{meal.chef.username}</span>
+          <br />
+          <span className="NearByMeals-meal-address">
+            {`${meal.address}, ${meal.city}`}
+          </span>
         </p>
-      </p>
+      </div>
     );
   }
 
