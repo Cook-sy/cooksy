@@ -2,6 +2,8 @@
 
 > Place to buy and sell home cooked meals locally
 
+See the app [https://cooksy.herokuapp.com](https://cooksy.herokuapp.com)
+
 ## Team
 - __Product Owner__: [Robert Si](https://github.com/rs214)
 - __Scrum Master__: [Obay Mardini](https://github.com/obay-mardini)
